@@ -1,0 +1,11 @@
+<ion-navbar *navbar>
+  <ion-title>
+    Blank Starter
+  </ion-title>
+</ion-navbar>
+
+<ion-content class="home" padding>
+  <h1 text-center>Press a button to navigate</h1>
+    <button [navPush]="textViewPage">Textedit</button>
+    <button primary (click)="scan()">Scan</button>
+</ion-content>

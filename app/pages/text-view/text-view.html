@@ -1,0 +1,29 @@
+<!--
+  Generated template for the TextViewPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-navbar *navbar>
+    <ion-header-bar class="bar-positive">
+            <button class="button" ng-click="doSomething()">Left Button</button>
+            <button class="button">Right Button</button>
+            <button class="button">Right Button</button>
+            <button class="button">Right Button</button>
+            <button class="button">Right Button</button>
+    </ion-header-bar>
+</ion-navbar>
+
+
+<ion-content padding class="text-view">
+    <ion-list inset>
+        <form #formData='ngForm' (ngSubmit)="onSubmit(formData.value)">
+            <ion-item>
+                <ion-label floating>Evaluations</ion-label>
+                <ion-textarea type="text" ngControl="name" value={{inputText}}></ion-textarea>
+            </ion-item>
+            <button block>
+                <ion-icon name="add"></ion-icon>Absenden</button>
+        </form>
+    </ion-list>
+</ion-content>
