@@ -1,11 +1,13 @@
 import {Page, Platform, Alert, NavController} from 'ionic-angular';
 import {TextViewPage} from '../text-view/text-view';
+import {CommentViewPage} from '../comment-view/comment-view';
 
 @Page({
     templateUrl: 'build/pages/home/home.html'
 })
 export class HomePage {
     textViewPage =  TextViewPage;
+    commentViewPage = CommentViewPage;
     static get parameters() {
         return [[Platform], [NavController]];
     }

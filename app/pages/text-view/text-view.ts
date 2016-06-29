@@ -8,21 +8,24 @@ import {globalVar} from "../../global";
   Ionic pages and navigation.
 */
 @Component({
-  templateUrl: 'build/pages/text-view/text-view.html'
+  templateUrl: 'build/pages/text-view/text-view.html',
 })
 export class TextViewPage {
     static get parameters() {
         return [];
     }
-    constructor(private nav: NavController, public inputText :String, private global: globalVar) {
+    public inputText :String;
+    public share : String;
+
+    constructor(private nav: NavController) {
         this.inputText = '';
     }
 
     onSubmit(formData) {
         // let's log our findings
         this.inputText = formData.name;
-        this.global.setText(this.inputText);
-        console.log('Texteingabe ', this.global.getText());
+        globalVar.optionalerText = (this.inputText);
+        console.log('Texteingabe ', globalVar.optionalerText);
     }
 
 }

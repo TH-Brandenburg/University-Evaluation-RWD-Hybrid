@@ -2,15 +2,13 @@ import {Component} from '@angular/core';
 import {Platform, ionicBootstrap} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {HomePage} from './pages/home/home';
-import {globalVar} from "./global";
 
 
 
 @Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav>',
-    providers: [globalVar]
+  template: '<ion-nav [root]="rootPage"></ion-nav>'
 })
-export class MyApp {
+export class EvaluationsApp {
   rootPage: any = HomePage;
 
   constructor(platform: Platform) {
@@ -22,4 +20,4 @@ export class MyApp {
   }
 }
 
-ionicBootstrap(MyApp);
+ionicBootstrap(EvaluationsApp);

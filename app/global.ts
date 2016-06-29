@@ -1,19 +1,6 @@
-import {Injectable}  from '@angular/core';
+export class globalVar {
 
-@Injectable()
-    export class globalVar {
-
-    constructor(public text: String) {
-        this.text = "";
-    }
-
-    setText(value) {
-        this.text = value;
-    }
-
-    getText() {
-        return this.text;
-    }
-
+    static optionalerText: String = "";
+    static base64Image: String = "";
 }
 
