@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-//import { QuestionDataService } from './questions.service';
+import { QuestionDataService } from './questions.service';
 
 export class Answer {
   text: string;
@@ -20,15 +20,17 @@ export class Question {
   selector: 'question-show',
   template: `
             <h1>In Survey</h1>
+			{{questions}}
             `
 })
 
 export class QuestionComponent implements OnInit {
   currentQuestion: Question;
+  questions;
   ngOnInit() {
-    //this.currentQuestion = this.surveyService.getQuestion();
+    this.questions = this.surveyService.getQuestionTest();
   }
-  //constructor(private surveyService: QuestionDataService) {
-  //}
+  constructor(private surveyService: QuestionDataService) {
+  }
   onSelect(answer: Answer) {this.currentQuestion.selectedAnswer = answer}
 }

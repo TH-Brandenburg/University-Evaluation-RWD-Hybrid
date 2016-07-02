@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
-//import { QuestionDataService } from './questions.service';
+import { QuestionDataService } from './questions.service';
 
 @Component({
   selector: 'navigation',
@@ -14,7 +14,7 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
             <router-outlet></router-outlet>
             `,
 directives: [ROUTER_DIRECTIVES],
-  //providers: [QuestionDataService]
+  providers: [QuestionDataService]
 })
 export class AppComponent {
 }
