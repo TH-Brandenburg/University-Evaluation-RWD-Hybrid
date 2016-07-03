@@ -1,20 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
-//import { QuestionDataService } from './questions.service';
+import { QuestionDataService, Question, Answer } from './questions.service';
 
 @Component({
   selector: 'navigation',
   template: `
                 <ul>
-                  <li><a [routerLink]="['/scan']" routerLinkActive="active">Scanner</a></li>
+                  <!--Course and Send Link coded in manually-->
                   <li><a [routerLink]="['/course']" routerLinkActive="active">Choose Course</a></li>
-                  <li><a [routerLink]="['/question']" routerLinkActive="active">Example Question</a></li>
+                  <!--insert new question link for every fetched question in init -->
+                  <li *ngFor="let question of questions"><a [routerLink]="['/question']"> Frage {{question.id}}</a></li>
                   <li><a [routerLink]="['/send']" routerLinkActive="active">Send</a></li>
                 </ul>
             <router-outlet></router-outlet>
             `,
 directives: [ROUTER_DIRECTIVES],
-  //providers: [QuestionDataService]
+providers: [QuestionDataService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  //Variable for storing survey data
+  questions: Question[];
+  ngOnInit() {
+  //get survey data on initialization
+  this.questions = this.dataService.getSurveyData();
+  }
+  constructor(private dataService: QuestionDataService){
+  }
 }
