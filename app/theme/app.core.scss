@@ -8,3 +8,15 @@
 // App Shared Sass variables belong in app.variables.scss.
 
 @import "../pages/home/home";
+@import "../pages/send-view/send-view";
+@import "../pages/comment-view/comment-view";
+
+.button {
+  background: #E91F1F;
+  color: #FFFFFF;
+}
+
+.button:hover {
+  background: #FE2E2E;
+  color: #FFFFFF;
+}

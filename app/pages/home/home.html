@@ -6,7 +6,15 @@
 
 <ion-content class="home" padding>
   <h1 text-center>Press a button to navigate</h1>
-    <button [navPush]="textViewPage">Textedit</button>
     <button [navPush]="commentViewPage">Camera</button>
     <button primary (click)="scan()">Scan</button>
+    <button [navPush]="sendViewPage">sendViewPage</button>
+
+
+<ion-slides (willChange)="updateNumbers($event)" [options]="{initialSlide: 3}">
+    <ion-slide *ngFor="let n of numbers">
+        <h2>{{n}}</h2>
+    </ion-slide>
+</ion-slides>
+
 </ion-content>

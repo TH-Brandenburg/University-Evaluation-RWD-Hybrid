@@ -1,13 +1,14 @@
 import {Page, Platform, Alert, NavController} from 'ionic-angular';
-import {TextViewPage} from '../text-view/text-view';
 import {CommentViewPage} from '../comment-view/comment-view';
+import {SendViewPage} from '../send-view/send-view';
+import {BarcodeScanner} from 'ionic-native';
 
 @Page({
     templateUrl: 'build/pages/home/home.html'
 })
 export class HomePage {
-    textViewPage =  TextViewPage;
     commentViewPage = CommentViewPage;
+    sendViewPage = SendViewPage;
     static get parameters() {
         return [[Platform], [NavController]];
     }
@@ -16,26 +17,15 @@ export class HomePage {
         this.barcode = "";
     }
 
-    // Webtest
 
-    scan(){}
-
-
-
-
-    // normal
-
-//    scan() {
-//        this.plt.ready().then(() => {
-//            cordova.plugins.barcodeScanner.scan((result) => {
-//                this.barcode = result.text;
-//            }, (error) => {
-//                this.nav.present(Alert.create({
-//                    title: "Attention!",
-//                    subTitle: error,
-//                    buttons: ["Close"]
-//                }));
-//            });
-//        });
- //   }
+    scan() {
+        this.plt.ready().then(() => {
+            BarcodeScanner.scan().then((barcodeData) => {
+                this.barcode = barcodeData.text
+                // Success! Barcode data is here
+            }, (err) => {
+                // An error occurred
+            });
+        });
+   }
 }
