@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { QuestionDataService } from './questions.service';
 
 @Component({
   selector: 'choose-course',
   template: `
               <div class="btn-group">
-                <button type="button" class="btn btn-primary">Bachelor Informatik</button>
-                <button type="button" class="btn btn-primary">Master Informatik</button>
-                <button type="button" class="btn btn-primary">Digitale Medien</button>
+                <button *ngFor="let class of availableCourses.studyPaths">{{ class }}</button>
               </div>
             `
 })
 
-export class ChooseCourseComponent {
-  constuctor() {
-
+export class ChooseCourseComponent implements OnInit {
+  availableCourses: any;
+  ngOnInit() {
+  //get survey data on initialization
+  this.availableCourses = JSON.parse(this.dataService.getQuestionTest());
+  }
+  constructor(private dataService: QuestionDataService){
   }
 }

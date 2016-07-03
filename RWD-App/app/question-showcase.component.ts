@@ -1,15 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { QuestionDataService } from './questions.service';
-import { Question, Answer } from './questions.service';
+import { QuestionDataService, Question, Answer, Survey } from './questions.service';
 
 @Component({
   selector: 'question-show',
   template: `
-            <h1>{{currentQuestion.text}}</h1>
+            <h1>{{currentQuestion.multipleChoiceQuestionDTOs[0].question}}</h1>
             <!--<div name="multiQuestion" [ngSwitch]="currentQuestion.type">
               <template [ngSwitchCase]="'text'">Hier wird Text eingefügt</template>
               <template ngSwitchDefault>-->
-                <button *ngFor="let answer of currentQuestion.answers" (click)=onClickAnswer()>{{ answer.text }}</button>
+                <button *ngFor="let answer of currentQuestion.multipleChoiceQuestionDTOs[0].choices" (click)=onClickAnswer()>{{ answer.choiceText }}</button>
+                {{ questions }}
               <!--</template>
             </div>-->
             `,
@@ -18,11 +18,11 @@ import { Question, Answer } from './questions.service';
 
 export class QuestionComponent implements OnInit {
   currentQuestion: Question;
+  questions;
   ngOnInit() {
-    //get currentQuestion on init, currently fixed fetch till I add query options to navigation
-    this.currentQuestion = this.surveyService.getQuestion(0);
+    this.currentQuestion = JSON.parse(this.dataService.getQuestionTest());
   }
-  constructor(private surveyService: QuestionDataService) {
+  constructor(private dataService: QuestionDataService) {
   }
   onClickAnswer(answer: string) {}
 }
