@@ -3,29 +3,29 @@ import { QuestionDataService, Question, Answer, Survey } from './questions.servi
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'question-show',
+  selector: 'test-question-show',
   template: `
-            <h1>{{currentQuestion[id].question}}</h1>
-                <button *ngFor="let answer of currentQuestion[id].choices" (click)=onClickAnswer()>{{ answer.choiceText }}</button>
+            <h1>{{currentQuestion[id].questionText}}</h1>
+                <form action="onClick(text)">
+                  <textarea cols="50" rows="10" placeholder="Hier bitte eintragen"></textarea>
+                </form>
+
             `,
   providers: [QuestionDataService]
 })
 
-export class QuestionComponent implements OnInit {
+export class TextQuestionComponent implements OnInit {
   currentQuestion: any;
   private sub: any;
   private id: any;
   ngOnInit() {
     this.currentQuestion = JSON.parse(this.dataService.getQuestionTest());
-    this.currentQuestion = this.currentQuestion.multipleChoiceQuestionDTOs;
+    this.currentQuestion = this.currentQuestion.textQuestions;
     this.sub = this.route.params.subscribe(params => {let id = +params['id'];
     this.id = id;
   });
 
   }
-	
-  onSelect(answer: Answer) {this.currentQuestion.selectedAnswer = answer}
-  
   ngOnDestroy() {
   this.sub.unsubscribe();
   }
@@ -34,7 +34,5 @@ export class QuestionComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router) {
   }
-  onClickAnswer(answer: string) {
-
-  }
+  onClickAnswer(answer: string) {}
 }

@@ -1,9 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Question, Answer } from './question-showcase.component';
 import {Http, Response} from '@angular/http';
 import {Headers} from '@angular/http';
 import {MultipartItem} from "./plugins/multipart-upload/multipart-item";
 import {MultipartUploader} from "./plugins/multipart-upload/multipart-uploader";
+
+export interface Answer {
+  choiceText: string;
+  grade: number;
+};
+
+export interface Question {
+  question: string;
+  choices: Answer[];
+};
+
+export interface Survey {
+  studyPaths: string[];
+  textQuestions: any[];
+  multipleChoiceQuestionDTOs: Question[];
+  textQuestionsFirst: boolean;
+};
 
 @Injectable()
 export class QuestionDataService{
@@ -72,10 +88,12 @@ export class QuestionDataService{
 	}
 	
 	addTextAnswer(questionID: number, questionText:string, answerText:string){
+		// addTextAnswer(3,"Welche Verbesserungsvorschläge würden Sie machen?","Antwort");
 		this.textAnswers.push({"questionID":questionID, "questionText":questionText, "answerText":answerText});
 	}
 	
 	addMultipleChoiceAnswer(questionText:string, choiceText:string, grade:number){
+		// addMultipleChoiceAnswer("Ging er/sie auf Fragen innerhalb der LV ein?", "oft",2);
 		this.multipleChoiceAnswers.push({"questionText":questionText, "choice":{"choiceText":choiceText,"grade":grade}});
 	}
   
