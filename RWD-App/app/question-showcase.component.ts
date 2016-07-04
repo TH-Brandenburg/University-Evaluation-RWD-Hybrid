@@ -5,8 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'question-show',
   template: `
-            <h1>{{currentQuestion.multipleChoiceQuestionDTOs[id].question}}</h1>
-                <button *ngFor="let answer of currentQuestion.multipleChoiceQuestionDTOs[id].choices" (click)=onClickAnswer()>{{ answer.choiceText }}</button>
+            <h1>{{currentQuestion[id].question}}</h1>
+                <button *ngFor="let answer of currentQuestion[id].choices" (click)=onClickAnswer()>{{ answer.choiceText }}</button>
             `,
   providers: [QuestionDataService]
 })
@@ -17,6 +17,7 @@ export class QuestionComponent implements OnInit {
   private id: any;
   ngOnInit() {
     this.currentQuestion = JSON.parse(this.dataService.getQuestionTest());
+    this.currentQuestion = this.currentQuestion.multipleChoiceQuestionDTOs;
     this.sub = this.route.params.subscribe(params => {let id = +params['id'];
     this.id = id;
   });
@@ -30,5 +31,7 @@ export class QuestionComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router) {
   }
-  onClickAnswer(answer: string) {}
+  onClickAnswer(answer: string) {
+
+  }
 }
