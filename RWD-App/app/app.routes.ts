@@ -9,7 +9,7 @@ const routes: RouterConfig = [
     { path: '', component: AppComponent },
     { path: 'scan', component: ScannerComponent },
     { path: 'course', component: ChooseCourseComponent },
-    { path: 'question', component: QuestionComponent },
+    { path: 'question/:id', component: QuestionComponent },
     { path: 'send', component: SenderComponent }
 ];
 
