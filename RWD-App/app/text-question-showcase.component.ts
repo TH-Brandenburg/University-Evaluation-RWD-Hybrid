@@ -6,20 +6,23 @@ import { Router, ActivatedRoute } from '@angular/router';
   selector: 'test-question-show',
   template: `
             <h1>{{currentQuestion[id].questionText}}</h1>
-                <form action="onClick(text)">
-                  <textarea cols="50" rows="10" placeholder="Hier bitte eintragen"></textarea>
-                </form>
+            <form #formData='ngForm' (ngSubmit)="onSubmit(formData.value)">
+                   <textarea type="text" ngControl="name" value="{{inputText}}"></textarea>
+                    <button block (click)="onSubmit()">Weiter</button>
+            </form>
 
             `,
   providers: [QuestionDataService]
 })
 
 export class TextQuestionComponent implements OnInit {
-  currentQuestion: any;
+  private currentQuestion: any;
   private sub: any;
   private id: any;
+  private textFirst: any;
   ngOnInit() {
     this.currentQuestion = JSON.parse(this.dataService.getQuestionTest());
+    this.textFirst = this.currentQuestion.textQuestionsFirst;
     this.currentQuestion = this.currentQuestion.textQuestions;
     this.sub = this.route.params.subscribe(params => {let id = +params['id'];
     this.id = id;
@@ -34,5 +37,16 @@ export class TextQuestionComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router) {
   }
-  onClickAnswer(answer: string) {}
+  onSubmit(value: any) {
+    this.dataService.addTextAnswer(this.currentQuestion[this.id].questionID,this.currentQuestion[this.id].questionText, value);
+    if ( this.id + 1 > this.currentQuestion.length) {
+      if (this.textFirst == true) {
+      this.router.navigate(['/question', 0])
+      }
+      else {
+        this.router.navigate(['/send'])
+      }
+    }
+    else this.router.navigate(['/text-question', this.id + 1]);
+  }
 }

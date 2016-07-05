@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { QuestionDataService, Question, Answer, Survey } from './questions.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -6,7 +6,9 @@ import { Router, ActivatedRoute } from '@angular/router';
   selector: 'question-show',
   template: `
             <h1>{{currentQuestion[id].question}}</h1>
-                <button *ngFor="let answer of currentQuestion[id].choices" (click)=onClickAnswer()>{{ answer.choiceText }}</button>
+                <button *ngFor="let answer of currentQuestion[id].choices" (click)=onClickAnswer(answer)>{{ answer.choiceText }}
+                </button>
+
             `,
   providers: [QuestionDataService]
 })
@@ -15,17 +17,19 @@ export class QuestionComponent implements OnInit {
   currentQuestion: any;
   private sub: any;
   private id: any;
+  private textFirst: boolean;
+  private currentAnswers: any;
   ngOnInit() {
     this.currentQuestion = JSON.parse(this.dataService.getQuestionTest());
+    this.currentAnswers = this.dataService.multipleChoiceAnswers;
+    this.textFirst = this.currentQuestion.textQuestionsFirst;
     this.currentQuestion = this.currentQuestion.multipleChoiceQuestionDTOs;
     this.sub = this.route.params.subscribe(params => {let id = +params['id'];
     this.id = id;
   });
 
   }
-	
-  onSelect(answer: Answer) {this.currentQuestion.selectedAnswer = answer}
-  
+  //needed to erase observer after leaving question area
   ngOnDestroy() {
   this.sub.unsubscribe();
   }
@@ -34,7 +38,16 @@ export class QuestionComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router) {
   }
-  onClickAnswer(answer: string) {
-
+  onClickAnswer(answer: any) {
+    this.dataService.addMultipleChoiceAnswer(this.currentQuestion[this.id].questionText, answer.choiceText, answer.grade);
+    if (this.id + 1 > this.currentQuestion.length) {
+      if (this.textFirst == true) {
+      this.router.navigate(['/send'])
+      }
+      else {
+        this.router.navigate(['/text-question',0])
+      }
+    }
+    else this.router.navigate(['/question', this.id + 1]);
   }
 }
