@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { QuestionDataService } from './questions.service';
+import { QuestionDataService } from '../questions.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'sender',
-  template: `
-            <h1>In Sending Process</h1>
-            <button (click)="onSubmit()">Submit</button>
-            `
+  moduleId: module.id,
+  templateUrl: 'sender.template.html',
 })
 
 export class SenderComponent {

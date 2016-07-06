@@ -1,0 +1,5 @@
+<h1>{{currentQuestion[id].questionText}}</h1>
+<form #formData='ngForm' (ngSubmit)="onSubmit(formData.value)">
+       <textarea type="text" ngControl="name" value="{{inputText}}"></textarea>
+        <button block (click)="onSubmit()">Weiter</button>
+</form>

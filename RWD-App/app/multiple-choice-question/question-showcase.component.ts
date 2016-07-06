@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { QuestionDataService, Question, Answer, Survey } from './questions.service';
+import { QuestionDataService, Question, Answer, Survey } from '../questions.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'question-show',
-  template: `
-            <h1>{{currentQuestion[id].question}}</h1>
-                <button *ngFor="let answer of currentQuestion[id].choices" (click)=onClickAnswer(answer)>{{ answer.choiceText }}
-                </button>
-
-            `,
+  moduleId: module.id,
+  templateUrl: 'question-showcase.template.html',
   providers: [QuestionDataService]
 })
 

@@ -1,17 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { QuestionDataService, Question, Answer, Survey } from './questions.service';
+import { QuestionDataService, Question, Answer, Survey } from '../questions.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'test-question-show',
-  template: `
-            <h1>{{currentQuestion[id].questionText}}</h1>
-            <form #formData='ngForm' (ngSubmit)="onSubmit(formData.value)">
-                   <textarea type="text" ngControl="name" value="{{inputText}}"></textarea>
-                    <button block (click)="onSubmit()">Weiter</button>
-            </form>
-
-            `,
+  moduleId: module.id,
+  templateUrl: 'text-question.template.html',
   providers: [QuestionDataService]
 })
 

@@ -1,10 +1,10 @@
 import { provideRouter, RouterConfig } from '@angular/router';
-import { QuestionComponent } from'./question-showcase.component';
-import { TextQuestionComponent } from'./text-question-showcase.component';
-import { ScannerComponent } from'./scanner.component';
-import { SenderComponent } from'./sender.component';
+import { QuestionComponent } from'./multiple-choice-question/question-showcase.component';
+import { TextQuestionComponent } from'./text-question/text-question-showcase.component';
+import { ScannerComponent } from'./scanner/scanner.component';
+import { SenderComponent } from'./sender/sender.component';
 import { AppComponent } from'./app.component';
-import { ChooseCourseComponent } from './choose-course.component';
+import { ChooseCourseComponent } from './choose-course/choose-course.component';
 
 const routes: RouterConfig = [
     { path: '', component: AppComponent },

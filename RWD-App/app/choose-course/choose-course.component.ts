@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { QuestionDataService } from './questions.service';
+import { QuestionDataService } from '../questions.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'choose-course',
-  template: `
-              <div class="btn-group">
-                <button *ngFor="let class of availableCourses.studyPaths"(click)="onClick(class)">{{ class }}</button>
-              </div>
-            `,
-    providers: [QuestionDataService]
+  moduleId: module.id,
+  templateUrl: 'choose-course.template.html',
+  providers: [QuestionDataService]
 })
 
 export class ChooseCourseComponent implements OnInit {

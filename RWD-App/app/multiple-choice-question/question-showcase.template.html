@@ -1,0 +1,3 @@
+<h1>{{currentQuestion[id].question}}</h1>
+    <button *ngFor="let answer of currentQuestion[id].choices" (click)=onClickAnswer(answer)>{{ answer.choiceText }}
+    </button>
