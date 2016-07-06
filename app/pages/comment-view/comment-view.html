@@ -1,0 +1,34 @@
+<ion-navbar *navbar>
+    <ion-navbar *navbar>
+        <ion-header-bar class="bar-positive">
+            <button class="button" ng-click="doSomething()">Left Button</button>
+        </ion-header-bar>
+    </ion-navbar>
+</ion-navbar>
+
+<ion-content class="home" padding>
+
+    <ion-grid>
+            <ion-row>
+                <ion-label>{{commmentView_editText}}</ion-label>
+            </ion-row>
+             <form #formData='ngForm' (ngSubmit)="next(formData.value)">
+                 <ion-row><ion-col id="textEdit">
+                    <ion-textarea type="text" ngControl="name" value="{{inputText}}"></ion-textarea>
+                 </ion-col>
+                 </ion-row>
+            </form>
+
+            <ion-row>
+                <ion-col item-left width-50><button (click)="takepic()"><ion-icon name="camera"></ion-icon> {{commmentView_camera_addText}}</button></ion-col>
+                <ion-col item-right width-50><button [disabled]="deleteButtonState" class="ion-android-delete"(click)="deletepic()"><ion-icon name="close-circle"></ion-icon>{{commmentView_camera_delText}}</button></ion-col>
+            </ion-row>
+    </ion-grid>
+
+
+
+
+    <ion-card>
+        <img [src]="base64Image" *ngIf="base64Image" />
+    </ion-card>
+</ion-content>

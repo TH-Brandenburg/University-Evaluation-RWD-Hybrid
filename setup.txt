@@ -1,0 +1,10 @@
+
+Node modules:
+npm install
+
+Ionic Plugins:
+ionic plugin add cordova-plugin-camera
+ionic plugin add phonegap-plugin-barcodescanner
+
+Platforms:
+ionic platform add android

@@ -1,0 +1,10 @@
+*.map
+*.cmd
+*.component.js
+*.routes.js
+*.service.js
+mock-survey.js
+node_modules/
+platforms/
+typings/
+main.js
