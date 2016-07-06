@@ -1,7 +1,9 @@
+/*CSS-Regeln für alle Ausgabegeräte */
+
 h1 {
   color: #369;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 250%;
+  font-size: 200%;
 }
 body {
   margin: 2em;
@@ -9,11 +11,12 @@ body {
 
 ul {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: scroll;
-    background-color: #333;
-    height: 10vh;
+    display: flex;
+    margin: auto;;
+    padding: auto;
+    overflow-x: scroll;
+    background-color: #99E3F5;
+    height: auto;
 }
 
 li {
@@ -22,20 +25,41 @@ li {
 
 li a {
     display: block;
-    color: white;
+    color: black;
     text-align: center;
     padding: 14px 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: auto;
     text-decoration: none;
-    overflow: scroll;
 }
 
 .active {
-    background-color: #4CAF50;
+    background-color: #CC0A2F;
+    color: white;
+    font-weight: bold;
 }
 
-/* Change the link color to #111 (black) on hover */
 li a:hover {
-    background-color: #111;
+  background-color: #CC0A2F;
+  color: white;
+  font-weight: bold;
+}
+
+button {
+    background-color: #CC0A2F;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    float: none;
+}
+
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
  /*
