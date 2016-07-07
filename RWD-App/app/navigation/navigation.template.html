@@ -1,0 +1,17 @@
+<div [ngSwitch]="questions.textQuestionsFirst">
+  <ul *ngSwitchCase="true">
+    <!--Course and Send Link coded in manually-->
+    <li><a [routerLink]="['/course']" routerLinkActive="active">Choose Course</a></li>
+    <li *ngFor="let question of questions.textQuestions; let i=index"><a [routerLink]="['/text-question', i]"> Textfrage {{i + 1}}</a></li>
+    <!--insert new question link for every fetched question in init -->
+    <li *ngFor="let question of questions.multipleChoiceQuestionDTOs; let i=index"><a [routerLink]="['/question', i]"> Frage {{i + 1}}</a></li>
+    <li><a [routerLink]="['/send']" routerLinkActive="active">Send</a></li>
+  </ul>
+  <ul *ngSwitchDefault>
+    <li><a [routerLink]="['/course']" routerLinkActive="active">Choose Course</a></li>
+    <!--insert new question link for every fetched question in init -->
+    <li *ngFor="let question of questions.multipleChoiceQuestionDTOs; let i=index"><a [routerLink]="['/question', i]"> Frage {{i + 1}}</a></li>
+    <li *ngFor="let question of questions.textQuestions; let i=index"><a [routerLink]="['/text-question', i]"> Textfrage {{i + 1}}</a></li>
+    <li><a [routerLink]="['/send']" routerLinkActive="active">Send</a></li>
+  </ul>
+</div>
