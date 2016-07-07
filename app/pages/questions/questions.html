@@ -8,8 +8,8 @@
 
 
     <h1>{{currentQuestion.question}}</h1>
-    <button *ngFor="let answer of currentQuestion.choices" (click)=onClickAnswer(answer)>{{ answer.choiceText }}
-    </button>
+    <div class="answer disabled" *ngFor="let answer of currentQuestion.choices" id="button_answer{{answer.grade}}" (click)=onClickAnswer(answer.grade)>{{ answer.choiceText }}
+    </div>
 
 
 

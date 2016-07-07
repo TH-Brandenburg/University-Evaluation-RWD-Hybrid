@@ -5,6 +5,8 @@ export class globalVar {
 
     static optionalerText: String = "";
     static base64Image: String = "";
+    static answers = new Array();
+
 }
 @Injectable()
 export class globalShare {
@@ -48,10 +50,48 @@ export class globalText {
 
 
 constructor() {
+  this.q1.choices = new Array();
+  this.q1.question = "Frage 1. Was auch immer";
+  this.q2.choices = new Array();
+  this.q2.question = "Frage 2. Was auch immer";
+  this.q3.choices = new Array();
+  this.q3.question = "Frage 3. Was auch immer";
+
+  this.a1.grade = 1;
+  this.a1.choiceText = "Sehr gut";
+
+  this.a2.grade = 2;
+  this.a2.choiceText = "Gut";
+
+  this.a3.grade = 3;
+  this.a3.choiceText = "Mittel";
+
+  this.a4.grade = 4;
+  this.a4.choiceText = "Schlecht";
 
 
+  this.q1.choices.push(this.a1);
+  this.q1.choices.push(this.a2);
+  this.q1.choices.push(this.a3);
+  this.q1.choices.push(this.a4);
 
+  this.q2.choices.push(this.a1);
+  this.q2.choices.push(this.a2);
+  this.q2.choices.push(this.a3);
+  this.q2.choices.push(this.a4);
 
+  this.q3.choices.push(this.a1);
+  this.q3.choices.push(this.a2);
+  this.q3.choices.push(this.a3);
+  this.q3.choices.push(this.a4);
+
+  this.questions.push(this.q1);
+  this.questions.push(this.q2);
+  this.questions.push(this.q3);
+
+  for(var i = 0; i < this.questions.length; i++){
+    globalVar.answers[i] = -1;
+  }
 
 
   }
@@ -71,46 +111,6 @@ constructor() {
     return this.sendView_LabelText;
   }
   getQuestions() {
-    this.q1.choices = new Array();
-    this.q1.question = "Frage 1. Was auch immer";
-    this.q2.choices = new Array();
-    this.q2.question = "Frage 2. Was auch immer";
-    this.q3.choices = new Array();
-    this.q3.question = "Frage 3. Was auch immer";
-
-    this.a1.grade = 1;
-    this.a1.choiceText = "Sehr gut";
-
-    this.a2.grade = 2;
-    this.a2.choiceText = "Gut";
-
-    this.a3.grade = 3;
-    this.a3.choiceText = "Mittel";
-
-    this.a4.grade = 4;
-    this.a4.choiceText = "Schlecht";
-
-
-    this.q1.choices.push(this.a1);
-    this.q1.choices.push(this.a2);
-    this.q1.choices.push(this.a3);
-    this.q1.choices.push(this.a4);
-
-    this.q2.choices.push(this.a1);
-    this.q2.choices.push(this.a2);
-    this.q2.choices.push(this.a3);
-    this.q2.choices.push(this.a4);
-
-    this.q3.choices.push(this.a1);
-    this.q3.choices.push(this.a2);
-    this.q3.choices.push(this.a3);
-    this.q3.choices.push(this.a4);
-
-    this.questions.push(this.q1);
-    this.questions.push(this.q2);
-    this.questions.push(this.q3);
-
-
     return this.questions;
   }
 }

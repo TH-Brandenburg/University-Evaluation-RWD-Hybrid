@@ -10,36 +10,49 @@ import {globalVar, globalText, Question} from '../../global'
 
 export class QuestionsPage{
 
-    hm: String;
-
     allQuestions: Question[];
     currentQuestion: Question;
+    currentQuestionID: number;
 
     constructor(private GlobalText: globalText) {
-        this.hm = this.GlobalText.getsendView_LabelText();
         this.allQuestions = this.GlobalText.getQuestions();
         this.currentQuestion = this.allQuestions[0];
+        this.currentQuestionID = 0;
+
+
     }
     
     LoadQuestion(number) {
         this.currentQuestion = this.allQuestions[number];
+        this.currentQuestionID = number;
+
+        for(var i = 1; i < this.currentQuestion.choices.length + 1; i++){
+
+            document.getElementById("button_answer"+i).className = "answer disabled";
+        }
+
+        if(globalVar.answers[this.currentQuestionID] != -1){
+            document.getElementById("button_answer"+globalVar.answers[this.currentQuestionID]).className = "answer enabled";
+        }
     }
     
-    Answered(number) {
-        document.getElementById("answer_div_"+number).className = "answer enabled";
-        this.DisableOtherAnswers(number);
-    }
+
 
     DisableOtherAnswers(number){
         var nextButtonNumber = number;
-        for(var i = 0; i < 5; i++){
+        for(var i = 0; i < this.currentQuestion.choices.length - 1; i++){
             nextButtonNumber++;
-            if(nextButtonNumber > 6)
-                nextButtonNumber = nextButtonNumber - 6;
+            if(nextButtonNumber > this.currentQuestion.choices.length)
+                nextButtonNumber = nextButtonNumber - this.currentQuestion.choices.length;
 
-            document.getElementById("answer_div_"+nextButtonNumber).className = "answer disabled";
+            document.getElementById("button_answer"+nextButtonNumber).className = "answer disabled";
 
         }
+    }
 
+    onClickAnswer(number){
+        document.getElementById("button_answer"+number).className = "answer enabled";
+        this.DisableOtherAnswers(number);
+        globalVar.answers[this.currentQuestionID] = number;
     }
 }
