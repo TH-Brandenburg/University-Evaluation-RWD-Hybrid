@@ -2,6 +2,7 @@ import {Page, Platform, Alert, NavController} from 'ionic-angular';
 import {CommentViewPage} from '../comment-view/comment-view';
 import {SendViewPage} from '../send-view/send-view';
 import {BarcodeScanner} from 'ionic-native';
+import {QuestionsPage} from '../questions/questions';
 
 @Page({
     templateUrl: 'build/pages/home/home.html'
@@ -9,6 +10,7 @@ import {BarcodeScanner} from 'ionic-native';
 export class HomePage {
     commentViewPage = CommentViewPage;
     sendViewPage = SendViewPage;
+    questionsPage = QuestionsPage;
     static get parameters() {
         return [[Platform], [NavController]];
     }
@@ -16,7 +18,6 @@ export class HomePage {
     constructor(private plt: Platform, private nav : NavController, public barcode: String) {
         this.barcode = "";
     }
-
 
     scan() {
         this.plt.ready().then(() => {
@@ -27,5 +28,5 @@ export class HomePage {
                 // An error occurred
             });
         });
-   }
+    }
 }

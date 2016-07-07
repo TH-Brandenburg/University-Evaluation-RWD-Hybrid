@@ -1,0 +1,16 @@
+
+<ion-content class="questions" padding>
+
+
+    <button (click)="LoadQuestion(0)">Frage 1</button>
+    <button (click)="LoadQuestion(1)">Frage 2</button>
+    <button (click)="LoadQuestion(2)">Frage 3</button>
+    <button (click)="LoadQuestion(3)">Frage 4</button>
+
+    <h1>{{currentQuestion.question}}</h1>
+    <button *ngFor="let answer of currentQuestion.choices" (click)=onClickAnswer(answer)>{{ answer.choiceText }}
+    </button>
+
+
+
+</ion-content>
