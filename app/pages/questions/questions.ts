@@ -2,22 +2,25 @@ import {Page, Platform, Alert, NavController} from 'ionic-angular';
 import {globalVar, globalText, Question} from '../../global'
 
 @Page({
-    templateUrl: 'build/pages/questions/questions.html'
+    templateUrl: 'build/pages/questions/questions.html',
+    providers : [globalText]
 })
 
 
 
 export class QuestionsPage{
 
+    hm: String;
+
     allQuestions: Question[];
     currentQuestion: Question;
 
-    constructor(private nav: NavController, private GlobalText: globalText) {
-        this.allQuestions = this.GlobalText.getQuestions();     
+    constructor(private GlobalText: globalText) {
+        this.hm = this.GlobalText.getsendView_LabelText();
+        this.allQuestions = this.GlobalText.getQuestions();
         this.currentQuestion = this.allQuestions[0];
     }
-
-
+    
     LoadQuestion(number) {
         this.currentQuestion = this.allQuestions[number];
     }
