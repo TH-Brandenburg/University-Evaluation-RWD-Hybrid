@@ -6,8 +6,18 @@ export class globalVar {
     static optionalerText: String = "";
     static base64Image: String = "";
     static answers = new Array();
-
 }
+
+export interface Question {
+  question: String;
+  choices: Answer[];
+};
+
+export interface Answer {
+  choiceText: String;
+  grade: Number;
+
+};
 @Injectable()
 export class globalShare {
   questionCounter: Number = 1;
@@ -17,15 +27,7 @@ export class globalShare {
 
 
 
-export class Question {
-  question: String;
-  choices: Answer[];
-};
 
-export class Answer {
-  choiceText: String;
-  grade: Number;
-};
 
 @Injectable()
 export class globalText {
@@ -35,64 +37,54 @@ export class globalText {
   commmentView_camera_delText: String = "löschen";
   sendView_LabelText: String = "Abschicken";
 
-  questions: Question[] = new Array();
+  questions: Question[];
 
-  q1: Question = new Question();
-  q2: Question = new Question();
-  q3: Question = new Question();
-  a1: Answer = new Answer();
-  a2: Answer = new Answer();
-  a3: Answer = new Answer();
-  a4: Answer = new Answer();
-  a5: Answer = new Answer();
-
+  q1: Question;
+  q2: Question;
+  q3: Question;
+  a1: Answer;
+  a2: Answer;
+  a3: Answer;
+  a4: Answer;
+  a5: Answer;
 
 
 
 constructor() {
-  this.q1.choices = new Array();
-  this.q1.question = "Frage 1. Was auch immer";
-  this.q2.choices = new Array();
-  this.q2.question = "Frage 2. Was auch immer";
-  this.q3.choices = new Array();
-  this.q3.question = "Frage 3. Was auch immer";
 
+  this.q1.question = "Frage 1. Was auch immer"
+  this.q2.question = "Frage 2. Was auch immer"
+  this.q2.question = "Frage 3. Was auch immer"
+
+  this.a1.choiceText = "Sehr Gut";
   this.a1.grade = 1;
-  this.a1.choiceText = "Sehr gut";
-
-  this.a2.grade = 2;
-  this.a2.choiceText = "Gut";
-
-  this.a3.grade = 3;
-  this.a3.choiceText = "Mittel";
-
-  this.a4.grade = 4;
-  this.a4.choiceText = "Schlecht";
-
-
   this.q1.choices.push(this.a1);
-  this.q1.choices.push(this.a2);
-  this.q1.choices.push(this.a3);
-  this.q1.choices.push(this.a4);
-
   this.q2.choices.push(this.a1);
-  this.q2.choices.push(this.a2);
-  this.q2.choices.push(this.a3);
-  this.q2.choices.push(this.a4);
-
   this.q3.choices.push(this.a1);
+
+  this.a2.choiceText = "Gut";
+  this.a2.grade = 2;
+  this.q1.choices.push(this.a2);
+  this.q2.choices.push(this.a2);
   this.q3.choices.push(this.a2);
+
+  this.a3.choiceText = "Mittel";
+  this.a3.grade = 3;
+  this.q1.choices.push(this.a3);
+  this.q2.choices.push(this.a3);
   this.q3.choices.push(this.a3);
+
+  this.a4.choiceText = "Schlecht";
+  this.a4.grade = 4;
+  this.q1.choices.push(this.a4);
+  this.q2.choices.push(this.a4);
   this.q3.choices.push(this.a4);
 
-  this.questions.push(this.q1);
-  this.questions.push(this.q2);
-  this.questions.push(this.q3);
-
-  for(var i = 0; i < this.questions.length; i++){
-    globalVar.answers[i] = -1;
-  }
-
+  this.a5.choiceText = "Sehr Schlecht";
+  this.a5.grade = 5;
+  this.q1.choices.push(this.a5);
+  this.q2.choices.push(this.a5);
+  this.q3.choices.push(this.a5);
 
   }
   getcommmentView_editText(){

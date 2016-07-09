@@ -3,9 +3,12 @@ import {CommentViewPage} from '../comment-view/comment-view';
 import {SendViewPage} from '../send-view/send-view';
 import {BarcodeScanner} from 'ionic-native';
 import {QuestionsPage} from '../questions/questions';
+import {globalVar} from '../../global'
+import {QuestionDataService} from '../../QuestionDataService';
 
 @Page({
-    templateUrl: 'build/pages/home/home.html'
+    templateUrl: 'build/pages/home/home.html',
+    providers : [QuestionDataService]
 })
 export class HomePage {
     commentViewPage = CommentViewPage;
@@ -15,14 +18,13 @@ export class HomePage {
         return [[Platform], [NavController]];
     }
 
-    constructor(private plt: Platform, private nav : NavController, public barcode: String) {
-        this.barcode = "";
+    constructor(private plt: Platform, private nav : NavController, private questionDataService : QuestionDataService) {
     }
 
     scan() {
         this.plt.ready().then(() => {
             BarcodeScanner.scan().then((barcodeData) => {
-                this.barcode = barcodeData.text
+                this.questionDataService.setBarcodeData(barcodeData.text);
                 // Success! Barcode data is here
             }, (err) => {
                 // An error occurred
