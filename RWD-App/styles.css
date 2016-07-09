@@ -62,6 +62,30 @@ button {
   cursor: not-allowed;
 }
 
+.answer-0 {
+  background-color: grey;
+}
+
+.answer-1 {
+  background-color: green;
+}
+
+.answer-2 {
+  background-color: greenyellow;
+}
+
+.answer-3 {
+  background-color: lightcoral;
+}
+
+.answer-4 {
+  background-color: coral;
+}
+
+.answer-5 {
+  background-color: red;
+}
+
  /*
   * See https://github.com/angular/angular.io/blob/master/public/docs/_examples/styles.css
   * for the full set of master styles used by the documentation samples
