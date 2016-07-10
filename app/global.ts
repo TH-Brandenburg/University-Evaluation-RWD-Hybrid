@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-
+import {NavController} from 'ionic-angular';
+import {CommentViewPage} from './pages/comment-view/comment-view';
+import {QuestionsPage} from './pages/questions/questions';
+import {SendViewPage} from './pages/send-view/send-view';
 
 export class globalVar {
 
@@ -16,18 +19,55 @@ export interface Question {
 export interface Answer {
   choiceText: String;
   grade: Number;
-
 };
+
+export class NavigationItem {
+  constructor(type : String,counter : Number){
+    this.type = type;
+    this.counter = counter;
+  };
+  type : String;
+  counter : Number;
+};
+
 @Injectable()
 export class globalShare {
   questionCounter: Number = 1;
   constructor() {
   }
 }
-
-
-
-
+@Injectable()
+export class globalNavigation{
+  TextQuestionsLenght : Number = 5;
+  TextmultipleChoiceAnswersLength : Number = 2;
+  navigationArray = new Array();
+  completeQuestionLenght = 0;
+  nav : NavController;
+  generateNavigation(){
+    // Adding Questions with uniqui Number
+    for (; this.completeQuestionLenght < this.TextQuestionsLenght; this.completeQuestionLenght++) {
+      this.navigationArray.push(new NavigationItem("TextQuestion",this.completeQuestionLenght));
+    }
+    for (; this.completeQuestionLenght < this.TextmultipleChoiceAnswersLength; this.completeQuestionLenght++) {
+        this.navigationArray.push(new NavigationItem("TextmultipleChoiceAnswers",this.completeQuestionLenght));
+    }
+    this.navigationArray.push(new NavigationItem("Comments",0));
+    this.navigationArray.push(new NavigationItem("Send",0));
+  }
+  goTo(type: String){
+//    var site: any;
+//    if (type=="TextQuestion" || type=="TextmultipleChoiceAnswers"){
+//      site=QuestionsPage;
+//    }
+//    else if (type=="Comments"){
+//      site=CommentViewPage;
+//    }
+//    else if (type=="Send"){
+//      site=SendViewPage;
+//    }
+    return SendViewPage
+  }
+}
 
 @Injectable()
 export class globalText {
@@ -37,55 +77,7 @@ export class globalText {
   commmentView_camera_delText: String = "löschen";
   sendView_LabelText: String = "Abschicken";
 
-  questions: Question[];
-
-  q1: Question;
-  q2: Question;
-  q3: Question;
-  a1: Answer;
-  a2: Answer;
-  a3: Answer;
-  a4: Answer;
-  a5: Answer;
-
-
-
 constructor() {
-
-  this.q1.question = "Frage 1. Was auch immer"
-  this.q2.question = "Frage 2. Was auch immer"
-  this.q2.question = "Frage 3. Was auch immer"
-
-  this.a1.choiceText = "Sehr Gut";
-  this.a1.grade = 1;
-  this.q1.choices.push(this.a1);
-  this.q2.choices.push(this.a1);
-  this.q3.choices.push(this.a1);
-
-  this.a2.choiceText = "Gut";
-  this.a2.grade = 2;
-  this.q1.choices.push(this.a2);
-  this.q2.choices.push(this.a2);
-  this.q3.choices.push(this.a2);
-
-  this.a3.choiceText = "Mittel";
-  this.a3.grade = 3;
-  this.q1.choices.push(this.a3);
-  this.q2.choices.push(this.a3);
-  this.q3.choices.push(this.a3);
-
-  this.a4.choiceText = "Schlecht";
-  this.a4.grade = 4;
-  this.q1.choices.push(this.a4);
-  this.q2.choices.push(this.a4);
-  this.q3.choices.push(this.a4);
-
-  this.a5.choiceText = "Sehr Schlecht";
-  this.a5.grade = 5;
-  this.q1.choices.push(this.a5);
-  this.q2.choices.push(this.a5);
-  this.q3.choices.push(this.a5);
-
   }
   getcommmentView_editText(){
     return this.commmentView_editText;
@@ -101,8 +93,5 @@ constructor() {
   }
   getsendView_LabelText(){
     return this.sendView_LabelText;
-  }
-  getQuestions() {
-    return this.questions;
   }
 }

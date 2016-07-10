@@ -15,13 +15,13 @@ export class QuestionsPage{
     currentQuestionID: number;
 
     constructor(private GlobalText: globalText) {
-        this.allQuestions = this.GlobalText.getQuestions();
+//        this.allQuestions = this.GlobalText.getQuestions();
         this.currentQuestion = this.allQuestions[0];
         this.currentQuestionID = 0;
 
 
     }
-    
+
     LoadQuestion(number) {
         this.currentQuestion = this.allQuestions[number];
         this.currentQuestionID = number;
@@ -35,7 +35,7 @@ export class QuestionsPage{
             document.getElementById("button_answer"+globalVar.answers[this.currentQuestionID]).className = "answer enabled";
         }
     }
-    
+
 
 
     DisableOtherAnswers(number){

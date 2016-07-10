@@ -1,13 +1,12 @@
 import {Page,NavController,Alert} from 'ionic-angular';
 import { Camera } from 'ionic-native';
 import { Component } from '@angular/core';
-import {globalVar,globalText} from "../../global";
+import {globalVar,globalText,globalNavigation} from "../../global";
+import {QuestionsPage} from '../questions/questions';
 import {SendViewPage} from '../send-view/send-view';
-
-
 @Page({
     templateUrl: 'build/pages/comment-view/comment-view.html',
-    providers : [globalText]
+    providers : [globalText,globalNavigation]
 })
 
 export class CommentViewPage {
@@ -19,8 +18,10 @@ export class CommentViewPage {
     private commmentView_sendText: String;
     private commmentView_camera_addText: String;
     private commmentView_camera_delText: String;
+    navList = [];
+    test : any;
 
-    constructor(private nav: NavController, private GlobalText: globalText) {
+    constructor(private nav: NavController, private GlobalText: globalText,private globNav :globalNavigation) {
         this.commmentView_editText = this.GlobalText.getcommmentView_editText();
         this.commmentView_sendText = this.GlobalText.getsendView_LabelText();
         this.commmentView_camera_addText = this.GlobalText.getcommmentView_camera_addText();
@@ -28,7 +29,8 @@ export class CommentViewPage {
         this.nav = nav;
         this.inputText = '';
         this.deleteButtonState = true;
-
+        this.globNav.generateNavigation();
+        this.navList = globNav.navigationArray;
     }
 
     takepic() {
@@ -49,8 +51,9 @@ export class CommentViewPage {
         globalVar.base64Image = "";
         this.deleteButtonState = true;
     }
-    next(){
-        globalVar.optionalerText = (this.inputText);
-        this.nav.push(SendViewPage);
+    goTo(type : string, counter : Number){
+//      this.test = this.globNav.goTo(type)
+//      console.log(this.test)
+      this.nav.push(this.globNav.goTo(type));
     }
 }

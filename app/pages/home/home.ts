@@ -3,24 +3,22 @@ import {CommentViewPage} from '../comment-view/comment-view';
 import {SendViewPage} from '../send-view/send-view';
 import {BarcodeScanner} from 'ionic-native';
 import {QuestionsPage} from '../questions/questions';
-import {globalVar} from '../../global'
+import {globalVar,globalNavigation} from '../../global';
 import {QuestionDataService} from '../../QuestionDataService';
 
 @Page({
     templateUrl: 'build/pages/home/home.html',
-    providers : [QuestionDataService]
+    providers : [QuestionDataService,globalNavigation]
 })
 export class HomePage {
     commentViewPage = CommentViewPage;
     sendViewPage = SendViewPage;
     questionsPage = QuestionsPage;
-    static get parameters() {
-        return [[Platform], [NavController]];
+    navList = [];
+    constructor(private plt: Platform, private nav : NavController, private questionDataService : QuestionDataService,private globNav :globalNavigation) {
+      this.globNav.generateNavigation();
+      this.navList = globNav.navigationArray;
     }
-
-    constructor(private plt: Platform, private nav : NavController, private questionDataService : QuestionDataService) {
-    }
-
     scan() {
         this.plt.ready().then(() => {
             BarcodeScanner.scan().then((barcodeData) => {

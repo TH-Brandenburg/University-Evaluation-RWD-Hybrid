@@ -1,5 +1,5 @@
 import { Page,NavController } from 'ionic-angular';
-import {globalText} from "../../global";
+import {globalText,globalNavigation} from "../../global";
 import {QuestionDataService} from '../../QuestionDataService';
 
 /*
