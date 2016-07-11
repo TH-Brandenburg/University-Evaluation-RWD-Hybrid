@@ -23,11 +23,11 @@ export interface Survey {
 
 
 @Injectable()
-export class QuestionDataService{
+export class QuestionDataService {
 	voteToken = "0e17372a-3566-4b6f-b32e-43ebbe98a720";
 	deviceID = "123";
 	address = 'http://localhost:8080/v1';
-	infos;
+	questions;
 	studyPath = "Technologie- und Innovationsmanagement";
 	textAnswers = [];
 	multipleChoiceAnswers = [];
@@ -39,6 +39,7 @@ export class QuestionDataService{
 	}
 
 	getSurveyData() {
+
 	}
 
 	setVoteToken(token) {
@@ -57,8 +58,7 @@ export class QuestionDataService{
 		return this.address;
 	}
 
-	/*
-		Example Barcode Data
+	 /*	Example Barcode Data
 	 {"voteToken":"30a8e652-8068-4dad-b9b8-42006a65d1e5","host":"http://172.17.0.18:8080"}
 	 */
 	setBarcodeData(barcodeString) {
@@ -79,18 +79,22 @@ export class QuestionDataService{
 		this.file = file;
 	}
 
-	getQuestion(){
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/json')
+	getQuestion(): Survey {
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+		let result: Survey;
+		
+		result = <Survey>JSON.parse(this.getQuestionTest()); //testcode for example data
+		
+		/* this is working code!
 		this.http.post(this.address + '/questions', JSON.stringify({"voteToken":this.voteToken, "deviceID":this.deviceID}), { headers: headers })
 		.map(res => res.text())
 		.subscribe(
-		  data => this.infos = data,
+		  data => result = <Survey>JSON.parse(data),
 		  err => this.logError(err),
 		  () => console.log('Request questions completed')
-		);
-		alert();
-		return this.infos;
+		);*/
+		return result;
 	}
 
 	getQuestionTest(){
