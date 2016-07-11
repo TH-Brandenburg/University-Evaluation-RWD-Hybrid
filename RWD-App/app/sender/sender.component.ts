@@ -13,8 +13,8 @@ export class SenderComponent {
   private givenAnswers: any;
   ngOnInit() {
     this.currentSurvey = JSON.parse(this.dataService.getQuestionTest());
-    this.currentSurvey = this.currentSurvey.multipleChoiceQuestionDTOs;
-    this.givenAnswers = this.dataService.getMultipleChoiceAnswers();
+    this.currentSurvey = this.currentSurvey.multipleChoiceQuestionDTOs.length;
+    this.givenAnswers = this.dataService.getMultipleChoiceAnswersSize() + this.dataService.getTextAnswersSize();
   }
   constructor(private dataService: QuestionDataService, private router: Router) {
   }
@@ -23,7 +23,7 @@ export class SenderComponent {
       console.log('Zu wenige Antworten gegeben');
     }
     else {
-    console.log(this.dataService.getTextAnswers());
+    console.log("send answers");
     this.dataService.sendAnswers();
     this.router.navigate(['/']);
   }

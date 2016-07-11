@@ -24,15 +24,12 @@ export interface Survey {
 @Injectable()
 export class QuestionDataService{
 	private voteToken:string = "specific";
-	private deviceID = "123";
-	private adress:string = 'http://localhost:8080/v1';
-	private infos;
+	private deviceID:string = "123";
+	private address:string = 'http://localhost:8080/v1';
 	private studyPath:string = "Technologie- und Innovationsmanagement";
 	private textAnswers = [];
 	private multipleChoiceAnswers = [];
-	private uploader = new MultipartUploader(this.adress);
-	private multipartItem = new MultipartItem(this.uploader);
-	private files: File[] = [];
+	private imageAnswers: File[] = [];
 	
 	constructor(private http:Http){
 	}
@@ -40,14 +37,15 @@ export class QuestionDataService{
 	}
 	
 	getQuestion(){
-		this.http.post(this.adress + "/questions", {"voteToken":this.voteToken, "deviceID":this.deviceID},{})
+		let infos;
+		this.http.post(this.address + "/questions", {"voteToken":this.voteToken, "deviceID":this.deviceID},{})
 		.map(res => res.text())
 		.subscribe(
-		  data => this.infos = data,
+		  data => infos = data,
 		  err => this.logError(err),
 		  () => console.log('Request questions completed')
 		);
-		return this.infos;
+		return infos;
 	}
 	
 	getQuestionTest(){
@@ -55,28 +53,30 @@ export class QuestionDataService{
 	}
 	
 	sendAnswers(){
-		this.uploader = new MultipartUploader(this.adress + "/answers");
-		this.uploader.url = this.adress + "/answers";
-		this.multipartItem = new MultipartItem(this.uploader);
-		this.multipartItem.url = this.adress + "/answers";
+		let uploader = new MultipartUploader(this.address);
+		let multipartItem = new MultipartItem(uploader);
+		uploader = new MultipartUploader(this.address + "/answers");
+		uploader.url = this.address + "/answers";
+		multipartItem = new MultipartItem(uploader);
+		multipartItem.url = this.address + "/answers";
 		var body = JSON.stringify({"voteToken":this.voteToken, "studyPath":this.studyPath, "textAnswers":this.textAnswers, "mcAnswers":this.multipleChoiceAnswers, "deviceID":this.deviceID});
-		if (this.multipartItem == null){
-			this.multipartItem = new MultipartItem(this.uploader);
+		if (multipartItem == null){
+			multipartItem = new MultipartItem(uploader);
 		}
-		if (this.multipartItem.formData == null){
-			this.multipartItem.formData = new FormData();
+		if (multipartItem.formData == null){
+			multipartItem.formData = new FormData();
 		}
-		this.multipartItem.formData.append("answers-dto",  body);
-		if(this.files == null || this.files == undefined || this.files.length == 0){
+		multipartItem.formData.append("answers-dto",  body);
+		if(this.imageAnswers == null || this.imageAnswers == undefined || this.imageAnswers.length == 0){
 			var blob = new Blob();
-			this.multipartItem.formData.append("images",  blob);
+			multipartItem.formData.append("images",  blob);
 		}else{
-			for(let i = 0; i < this.files.length; i++){
-				this.multipartItem.formData.append("images",  this.files[i]);
+			for(let i = 0; i < this.imageAnswers.length; i++){
+				multipartItem.formData.append("images",  this.imageAnswers[i]);
 			}
 		}
-		this.multipartItem.callback = this.uploadCallback;
-		this.multipartItem.upload();
+		multipartItem.callback = this.uploadCallback;
+		multipartItem.upload();
 	}
 	
 	uploadCallback = (data) => {
@@ -87,8 +87,8 @@ export class QuestionDataService{
 		}
 	}
 	
-	addFile(file:File){
-		this.files.push(file);
+	addImageAnswer(file:File){
+		this.imageAnswers.push(file);
 	}
 	
 	addTextAnswer(questionID: number, questionText:string, answerText:string){
@@ -113,16 +113,16 @@ export class QuestionDataService{
 		this.studyPath = studyPath;
 	}
 
-	setAdress(adress:string){
-		this.adress = adress;
+	setAddress(adress:string){
+		this.address = adress;
 	}
 
-	getMultipleChoiceAnswers(){
-		return this.multipleChoiceAnswers;
+	getMultipleChoiceAnswersSize(){
+		return this.multipleChoiceAnswers.length;
 	}
 
-	getTextAnswers(){
-		return this.textAnswers;
+	getTextAnswersSize(){
+		return this.textAnswers.length;
 	}
   
   logError(err) {

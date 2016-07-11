@@ -13,10 +13,8 @@ export class QuestionComponent implements OnInit {
   private sub: any;
   private id: any;
   private textFirst: boolean;
-  private currentAnswers: any;
   ngOnInit() {
     this.currentQuestion = JSON.parse(this.dataService.getQuestionTest());
-    this.currentAnswers = this.dataService.getMultipleChoiceAnswers();
     this.textFirst = this.currentQuestion.textQuestionsFirst;
     this.currentQuestion = this.currentQuestion.multipleChoiceQuestionDTOs;
     this.sub = this.route.params.subscribe(params => {let id = +params['id'];
@@ -34,7 +32,7 @@ export class QuestionComponent implements OnInit {
     private router: Router) {
   }
   onClickAnswer(answer: any) {
-    this.dataService.addMultipleChoiceAnswer(this.currentQuestion[this.id].questionText, answer.choiceText, answer.grade);
+    this.dataService.addMultipleChoiceAnswer(this.currentQuestion[this.id].question, answer.choiceText, answer.grade);
     if (this.id + 1 > this.currentQuestion.length) {
       if (this.textFirst == true) {
       this.router.navigate(['/send'])
