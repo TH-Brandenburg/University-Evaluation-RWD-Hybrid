@@ -16,7 +16,7 @@ export class QuestionComponent implements OnInit {
   private currentAnswers: any;
   ngOnInit() {
     this.currentQuestion = JSON.parse(this.dataService.getQuestionTest());
-    this.currentAnswers = this.dataService.multipleChoiceAnswers;
+    this.currentAnswers = this.dataService.getMultipleChoiceAnswers();
     this.textFirst = this.currentQuestion.textQuestionsFirst;
     this.currentQuestion = this.currentQuestion.multipleChoiceQuestionDTOs;
     this.sub = this.route.params.subscribe(params => {let id = +params['id'];

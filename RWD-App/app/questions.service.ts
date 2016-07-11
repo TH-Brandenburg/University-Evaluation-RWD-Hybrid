@@ -23,16 +23,16 @@ export interface Survey {
 
 @Injectable()
 export class QuestionDataService{
-	voteToken:string = "specific";
-	deviceID = "123";
-	adress:string = 'http://localhost:8080/v1';
-	infos;
-	studyPath:string = "Technologie- und Innovationsmanagement";
-	textAnswers = [];
-	multipleChoiceAnswers = [];
-	uploader = new MultipartUploader(this.adress);
-	multipartItem = new MultipartItem(this.uploader);
-	files: File[] = [];
+	private voteToken:string = "specific";
+	private deviceID = "123";
+	private adress:string = 'http://localhost:8080/v1';
+	private infos;
+	private studyPath:string = "Technologie- und Innovationsmanagement";
+	private textAnswers = [];
+	private multipleChoiceAnswers = [];
+	private uploader = new MultipartUploader(this.adress);
+	private multipartItem = new MultipartItem(this.uploader);
+	private files: File[] = [];
 	
 	constructor(private http:Http){
 	}
@@ -115,6 +115,14 @@ export class QuestionDataService{
 
 	setAdress(adress:string){
 		this.adress = adress;
+	}
+
+	getMultipleChoiceAnswers(){
+		return this.multipleChoiceAnswers;
+	}
+
+	getTextAnswers(){
+		return this.textAnswers;
 	}
   
   logError(err) {
