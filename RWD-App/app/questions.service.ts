@@ -113,8 +113,8 @@ export class QuestionDataService{
 		this.studyPath = studyPath;
 	}
 
-	setAddress(adress:string){
-		this.address = adress;
+	setAddress(address:string){
+		this.address = address;
 	}
 
 	getMultipleChoiceAnswersSize(){
