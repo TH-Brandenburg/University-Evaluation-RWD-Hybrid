@@ -1,9 +1,11 @@
-import {Page, Platform, Alert, NavController} from 'ionic-angular';
-import {globalVar, globalText, Question} from '../../global'
+import {Page, Platform, Alert, NavController,NavParams} from 'ionic-angular';
+import {globalVar, globalText, Question,globalNavigation} from '../../global'
+import {CommentViewPage} from '../comment-view/comment-view';
+import {SendViewPage} from '../send-view/send-view';
 
 @Page({
     templateUrl: 'build/pages/questions/questions.html',
-    providers : [globalText]
+    providers : [globalText,globalNavigation]
 })
 
 
@@ -14,14 +16,31 @@ export class QuestionsPage{
     currentQuestion: Question;
     currentQuestionID: number;
 
-    constructor(private GlobalText: globalText) {
+    commentViewPage = CommentViewPage;
+    sendViewPage = SendViewPage;
+
+
+    type : String;
+    counter : Number;
+    navList = [];
+
+    constructor(private GlobalText: globalText,private navParams: NavParams,private nav : NavController,private globNav :globalNavigation) {
         this.allQuestions = this.GlobalText.getQuestions();
         this.currentQuestion = this.allQuestions[0];
         this.currentQuestionID = 0;
+        this.type = navParams.get('type');
+        this.counter = navParams.get('counter');
+        this.navList = globNav.generateNavigation();
+
+
+//    constructor(private GlobalText: globalText) {
+//        this.allQuestions = this.GlobalText.getQuestions();
+//        this.currentQuestion = this.allQuestions[0];
+//        this.currentQuestionID = 0;
 
 
     }
-    
+
     LoadQuestion(number) {
         this.currentQuestion = this.allQuestions[number];
         this.currentQuestionID = number;
@@ -35,7 +54,7 @@ export class QuestionsPage{
             document.getElementById("button_answer"+globalVar.answers[this.currentQuestionID]).className = "answer enabled";
         }
     }
-    
+
 
 
     DisableOtherAnswers(number){
@@ -54,5 +73,11 @@ export class QuestionsPage{
         document.getElementById("button_answer"+number).className = "answer enabled";
         this.DisableOtherAnswers(number);
         globalVar.answers[this.currentQuestionID] = number;
+    }
+
+    goTo(type: String, counter:Number){
+      this.nav.push(QuestionsPage, {
+        questiontype: type, pagecounter: counter
+      });
     }
 }

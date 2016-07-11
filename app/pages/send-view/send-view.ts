@@ -1,5 +1,8 @@
 import { Page,NavController } from 'ionic-angular';
-import {globalText} from "../../global";
+import {globalText,globalNavigation} from "../../global";
+import {QuestionDataService} from '../../QuestionDataService';
+import {CommentViewPage} from '../comment-view/comment-view';
+import {QuestionsPage} from '../questions/questions';
 
 /*
   Generated class for the SendViewPage page.
@@ -9,11 +12,22 @@ import {globalText} from "../../global";
 */
 @Page({
   templateUrl: 'build/pages/send-view/send-view.html',
-  providers : [globalText]
+  providers : [globalText,globalNavigation,QuestionDataService]
 })
 export class SendViewPage {
     private sendView_LabelText: String;
-  constructor(private nav: NavController,private GlobalText: globalText) {
+    commentViewPage = CommentViewPage;
+    navList = [];
+  constructor(private nav: NavController, private GlobalText: globalText, private questionDataService : QuestionDataService,private globNav :globalNavigation) {
     this.sendView_LabelText = this.GlobalText.getsendView_LabelText();
-  }
+      this.navList = globNav.generateNavigation();
+    }
+    sendResult(){
+      this.questionDataService.sendAnswers()
+    }
+    goTo(type: String, counter:Number){
+      this.nav.push(QuestionsPage, {
+        questiontype: type, pagecounter: counter
+      });
+    }
 }

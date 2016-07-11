@@ -1,9 +1,19 @@
 <ion-navbar *navbar>
-  <ion-title>send-view</ion-title>
+  <ion-slides [options]="{initialSlide: 2}">
+      <ion-slide>
+          <button *ngFor="let navitem of navList" (click)="goTo(navitem.type,navitem.counter)">{{navitem.type}} {{navitem.counter}}</button>
+      </ion-slide>
+      <ion-slide>
+        <button [navPush]="commentViewPage">Camera</button>
+      </ion-slide>
+      <ion-slide>
+        <button [navPush]="sendViewPage">sendViewPage</button>
+      </ion-slide>
+  </ion-slides>
 </ion-navbar>
 
 <ion-content padding class="send-view">
     <ion-label>{{commmentView_editText}}</ion-label>
-   <button id="sendBotton" (click)="send()"><ion-icon name="mail"></ion-icon> {{sendView_LabelText}}</button>
+   <button id="sendBotton" (click)="sendResult()"><ion-icon name="mail"></ion-icon> {{sendView_LabelText}}</button>
 
 </ion-content>

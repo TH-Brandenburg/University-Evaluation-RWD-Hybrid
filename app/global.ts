@@ -1,20 +1,53 @@
 import { Injectable } from '@angular/core';
-
+import {NavController} from 'ionic-angular';
+import {CommentViewPage} from './pages/comment-view/comment-view';
+import {QuestionsPage} from './pages/questions/questions';
+import {SendViewPage} from './pages/send-view/send-view';
 
 export class globalVar {
 
     static optionalerText: String = "";
     static base64Image: String = "";
     static answers = new Array();
-
 }
+
+
+export class NavigationItem {
+  constructor(type : String,counter : Number){
+    this.type = type;
+    this.counter = counter;
+  };
+  type : String;
+  counter : Number;
+};
+
 @Injectable()
 export class globalShare {
   questionCounter: Number = 1;
   constructor() {
   }
 }
+@Injectable()
+export class globalNavigation{
+  TextQuestionsLenght : Number = 5;
+  TextmultipleChoiceAnswersLength : Number = 2;
+  nav : NavController;
+  generateNavigation(){
+    var navArray = [];
+    var completeQuestionLenght = 0;
+    // Adding Questions with uniqui Number
+    for (; completeQuestionLenght < this.TextQuestionsLenght; completeQuestionLenght++) {
+      navArray.push(new NavigationItem("TextQuestion",completeQuestionLenght));
+    }
+    for (; completeQuestionLenght < this.TextmultipleChoiceAnswersLength; completeQuestionLenght++) {
+        navArray.push(new NavigationItem("TextmultipleChoiceAnswers",completeQuestionLenght));
+    }
+    return navArray
+//    this.navigationArray.push(new NavigationItem("Comments",0));
+//    this.navigationArray.push(new NavigationItem("Send",0));
+  }
 
+}
 
 
 export class Question {
@@ -46,51 +79,48 @@ export class globalText {
   a4: Answer = new Answer();
   a5: Answer = new Answer();
 
-
-
-
 constructor() {
   this.q1.choices = new Array();
-  this.q1.question = "Frage 1. Was auch immer";
-  this.q2.choices = new Array();
-  this.q2.question = "Frage 2. Was auch immer";
-  this.q3.choices = new Array();
-  this.q3.question = "Frage 3. Was auch immer";
+    this.q1.question = "Frage 1. Was auch immer";
+    this.q2.choices = new Array();
+    this.q2.question = "Frage 2. Was auch immer";
+    this.q3.choices = new Array();
+    this.q3.question = "Frage 3. Was auch immer";
 
-  this.a1.grade = 1;
-  this.a1.choiceText = "Sehr gut";
+    this.a1.grade = 1;
+    this.a1.choiceText = "Sehr gut";
 
-  this.a2.grade = 2;
-  this.a2.choiceText = "Gut";
+    this.a2.grade = 2;
+    this.a2.choiceText = "Gut";
 
-  this.a3.grade = 3;
-  this.a3.choiceText = "Mittel";
+    this.a3.grade = 3;
+    this.a3.choiceText = "Mittel";
 
-  this.a4.grade = 4;
-  this.a4.choiceText = "Schlecht";
+    this.a4.grade = 4;
+    this.a4.choiceText = "Schlecht";
 
 
-  this.q1.choices.push(this.a1);
-  this.q1.choices.push(this.a2);
-  this.q1.choices.push(this.a3);
-  this.q1.choices.push(this.a4);
+    this.q1.choices.push(this.a1);
+    this.q1.choices.push(this.a2);
+    this.q1.choices.push(this.a3);
+    this.q1.choices.push(this.a4);
 
-  this.q2.choices.push(this.a1);
-  this.q2.choices.push(this.a2);
-  this.q2.choices.push(this.a3);
-  this.q2.choices.push(this.a4);
+    this.q2.choices.push(this.a1);
+    this.q2.choices.push(this.a2);
+    this.q2.choices.push(this.a3);
+    this.q2.choices.push(this.a4);
 
-  this.q3.choices.push(this.a1);
-  this.q3.choices.push(this.a2);
-  this.q3.choices.push(this.a3);
-  this.q3.choices.push(this.a4);
+    this.q3.choices.push(this.a1);
+    this.q3.choices.push(this.a2);
+    this.q3.choices.push(this.a3);
+    this.q3.choices.push(this.a4);
 
-  this.questions.push(this.q1);
-  this.questions.push(this.q2);
-  this.questions.push(this.q3);
+    this.questions.push(this.q1);
+    this.questions.push(this.q2);
+    this.questions.push(this.q3);
 
-  for(var i = 0; i < this.questions.length; i++){
-    globalVar.answers[i] = -1;
+    for(var i = 0; i < this.questions.length; i++){
+      globalVar.answers[i] = -1;
   }
 
 
@@ -111,6 +141,6 @@ constructor() {
     return this.sendView_LabelText;
   }
   getQuestions() {
-    return this.questions;
-  }
+   return this.questions;
+}
 }
