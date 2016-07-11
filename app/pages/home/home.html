@@ -11,11 +11,4 @@
     <button [navPush]="questionsPage">Zu den Fragen</button>
     <button [navPush]="sendViewPage">sendViewPage</button>
 
-
-<ion-slides (willChange)="updateNumbers($event)" [options]="{initialSlide: 1}">
-    <ion-slide *ngFor="let navitem of navList">
-        <button (click)="goTo(navitem.type,navitem.counter)">{{navitem.type}} {{navitem.counter}}</button>
-    </ion-slide>
-</ion-slides>
-
 </ion-content>

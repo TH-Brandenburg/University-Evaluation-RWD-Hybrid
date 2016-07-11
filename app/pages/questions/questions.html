@@ -1,4 +1,16 @@
-
+<ion-navbar *navbar>
+  <ion-slides [options]="{initialSlide: 2}">
+      <ion-slide>
+          <button *ngFor="let navitem of navList" (click)="goTo(navitem.type,navitem.counter)">{{navitem.type}} {{navitem.counter}}</button>
+      </ion-slide>
+      <ion-slide>
+        <button [navPush]="commentViewPage">Camera</button>
+      </ion-slide>
+      <ion-slide>
+        <button [navPush]="sendViewPage">sendViewPage</button>
+      </ion-slide>
+  </ion-slides>
+</ion-navbar>
 <ion-content class="questions" padding>
 
 

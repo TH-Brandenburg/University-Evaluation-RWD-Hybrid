@@ -1,5 +1,5 @@
 import {Page,NavController,Alert} from 'ionic-angular';
-import { Camera } from 'ionic-native';
+import { Camera,File } from 'ionic-native';
 import { Component } from '@angular/core';
 import {globalVar,globalText,globalNavigation} from "../../global";
 import {QuestionsPage} from '../questions/questions';
@@ -18,8 +18,10 @@ export class CommentViewPage {
     private commmentView_sendText: String;
     private commmentView_camera_addText: String;
     private commmentView_camera_delText: String;
+    sendViewPage = SendViewPage;
     navList = [];
-    test : any;
+    private testFile : File;
+
 
     constructor(private nav: NavController, private GlobalText: globalText,private globNav :globalNavigation) {
         this.commmentView_editText = this.GlobalText.getcommmentView_editText();
@@ -29,8 +31,7 @@ export class CommentViewPage {
         this.nav = nav;
         this.inputText = '';
         this.deleteButtonState = true;
-        this.globNav.generateNavigation();
-        this.navList = globNav.navigationArray;
+        this.navList = globNav.generateNavigation();
     }
 
     takepic() {
@@ -42,6 +43,7 @@ export class CommentViewPage {
             // imageData is a base64 encoded string
             this.base64Image = "data:image/jpeg;base64," + imageData;
             globalVar.base64Image = this.base64Image;
+            this.testFile = new File([],"")
             this.deleteButtonState = false;
         }, (err) => {
             console.log(err);
@@ -51,9 +53,9 @@ export class CommentViewPage {
         globalVar.base64Image = "";
         this.deleteButtonState = true;
     }
-    goTo(type : string, counter : Number){
-//      this.test = this.globNav.goTo(type)
-//      console.log(this.test)
-      this.nav.push(this.globNav.goTo(type));
+    goTo(type: String, counter:Number){
+      this.nav.push(QuestionsPage, {
+        questiontype: type, pagecounter: counter
+      });
     }
 }
