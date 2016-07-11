@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Http, Response} from '@angular/http';
-import {Headers} from '@angular/http';
+import {Http, Headers, Response} from '@angular/http';
 import {MultipartItem} from "./plugins/multipart-upload/multipart-item";
 import {MultipartUploader} from "./plugins/multipart-upload/multipart-uploader";
 
@@ -25,7 +24,7 @@ export interface Survey {
 
 @Injectable()
 export class QuestionDataService{
-	voteToken = "specific";
+	voteToken = "0e17372a-3566-4b6f-b32e-43ebbe98a720";
 	deviceID = "123";
 	address = 'http://localhost:8080/v1';
 	infos;
@@ -35,7 +34,7 @@ export class QuestionDataService{
 	uploader = new MultipartUploader(this.address);
 	multipartItem = new MultipartItem(this.uploader);
 	file: File;
-	
+
 	constructor(private http:Http){
 	}
 
@@ -81,13 +80,16 @@ export class QuestionDataService{
 	}
 
 	getQuestion(){
-		this.http.post(this.address + "/questions", {"voteToken":this.voteToken, "deviceID":this.deviceID},{})
+		var headers = new Headers();
+		headers.append('Content-Type', 'application/json')
+		this.http.post(this.address + '/questions', JSON.stringify({"voteToken":this.voteToken, "deviceID":this.deviceID}), { headers: headers })
 		.map(res => res.text())
 		.subscribe(
 		  data => this.infos = data,
 		  err => this.logError(err),
 		  () => console.log('Request questions completed')
 		);
+		alert();
 		return this.infos;
 	}
 	
