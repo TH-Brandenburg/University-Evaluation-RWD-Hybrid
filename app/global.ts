@@ -4,11 +4,17 @@ import {CommentViewPage} from './pages/comment-view/comment-view';
 import {QuestionsPage} from './pages/questions/questions';
 import {SendViewPage} from './pages/send-view/send-view';
 
+export class Course {
+    course: String;
+    id: Number;
+};
+
 export class globalVar {
 
     static optionalerText: String = "";
     static base64Image: String = "";
     static answers = new Array();
+    static selectedCourse: String = "";
 }
 
 
@@ -68,6 +74,8 @@ export class globalText {
   commmentView_camera_delText: String = "löschen";
   sendView_LabelText: String = "Abschicken";
 
+  studyPaths: Course[] = new Array();
+
   questions: Question[] = new Array();
 
   q1: Question = new Question();
@@ -79,8 +87,31 @@ export class globalText {
   a4: Answer = new Answer();
   a5: Answer = new Answer();
 
-constructor() {
-  this.q1.choices = new Array();
+  c1: Course = new Course();
+  c2: Course = new Course();
+  c3: Course = new Course();
+  c4: Course = new Course();
+
+    constructor() {
+
+    this.c1.course = "Master Informatik";
+    this.c1.id = 0;
+
+    this.c2.course = "Bachelor Informatik";
+    this.c2.id = 1;
+
+    this.c3.course = "Master BWL";
+    this.c3.id = 2;
+
+    this.c4.course = "Bachelor BWL";
+    this.c4.id = 3;
+
+    this.studyPaths.push(this.c1);
+    this.studyPaths.push(this.c2);
+    this.studyPaths.push(this.c3);
+    this.studyPaths.push(this.c4);
+
+    this.q1.choices = new Array();
     this.q1.question = "Frage 1. Was auch immer";
     this.q2.choices = new Array();
     this.q2.question = "Frage 2. Was auch immer";
@@ -142,5 +173,8 @@ constructor() {
   }
   getQuestions() {
    return this.questions;
-}
+  }
+  getStudyPaths() {
+      return this.studyPaths;
+  }
 }

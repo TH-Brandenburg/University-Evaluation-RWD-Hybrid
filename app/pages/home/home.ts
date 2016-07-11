@@ -4,6 +4,7 @@ import {SendViewPage} from '../send-view/send-view';
 import {QuestionDataService} from '../../QuestionDataService';
 import {BarcodeScanner} from 'ionic-native';
 import {QuestionsPage} from '../questions/questions';
+import {CoursesPage} from '../choose-course/choose-course';
 import {globalVar,globalNavigation} from '../../global';
 
 @Page({
@@ -14,6 +15,7 @@ export class HomePage {
     commentViewPage = CommentViewPage;
     sendViewPage = SendViewPage;
     questionsPage = QuestionsPage;
+    coursesPage = CoursesPage;
     constructor(private plt: Platform, private nav : NavController, private questionDataService : QuestionDataService,private globNav :globalNavigation) {
     }
     scan() {

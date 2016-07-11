@@ -3,6 +3,7 @@ import {Http, Response} from '@angular/http';
 import {Headers} from '@angular/http';
 import {MultipartItem} from "./plugins/multipart-upload/multipart-item";
 import {MultipartUploader} from "./plugins/multipart-upload/multipart-uploader";
+import 'rxjs/add/operator/map';
 
 export interface Answer {
   choiceText: string;
