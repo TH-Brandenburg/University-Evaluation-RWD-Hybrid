@@ -23,16 +23,16 @@ export interface Survey {
 
 @Injectable()
 export class QuestionDataService{
-	voteToken = "specific";
+	voteToken:string = "specific";
 	deviceID = "123";
-	adress = 'http://localhost:8080/v1';
+	adress:string = 'http://localhost:8080/v1';
 	infos;
-	studyPath = "Technologie- und Innovationsmanagement";
+	studyPath:string = "Technologie- und Innovationsmanagement";
 	textAnswers = [];
 	multipleChoiceAnswers = [];
 	uploader = new MultipartUploader(this.adress);
 	multipartItem = new MultipartItem(this.uploader);
-	file: File;
+	files: File[] = [];
 	
 	constructor(private http:Http){
 	}
@@ -61,30 +61,34 @@ export class QuestionDataService{
 		this.multipartItem.url = this.adress + "/answers";
 		var body = JSON.stringify({"voteToken":this.voteToken, "studyPath":this.studyPath, "textAnswers":this.textAnswers, "mcAnswers":this.multipleChoiceAnswers, "deviceID":this.deviceID});
 		if (this.multipartItem == null){
-				this.multipartItem = new MultipartItem(this.uploader);
+			this.multipartItem = new MultipartItem(this.uploader);
 		}
 		if (this.multipartItem.formData == null){
 			this.multipartItem.formData = new FormData();
 		}
-
 		this.multipartItem.formData.append("answers-dto",  body);
-		this.multipartItem.formData.append("images",  this.file);
+		if(this.files == null || this.files == undefined || this.files.length == 0){
+			var blob = new Blob();
+			this.multipartItem.formData.append("images",  blob);
+		}else{
+			for(let i = 0; i < this.files.length; i++){
+				this.multipartItem.formData.append("images",  this.files[i]);
+			}
+		}
 		this.multipartItem.callback = this.uploadCallback;
 		this.multipartItem.upload();
 	}
 	
 	uploadCallback = (data) => {
-		console.debug("home.ts & uploadCallback() ==>");
-		this.file = null;
 		if (data){
-			console.debug("home.ts & uploadCallback() upload file success.");
+			console.debug("Upload success");
 		}else{
-			console.error("home.ts & uploadCallback() upload file false.");
+			console.error("Upload error");
 		}
 	}
 	
-	setFile(file:File){
-		this.file = file;
+	addFile(file:File){
+		this.files.push(file);
 	}
 	
 	addTextAnswer(questionID: number, questionText:string, answerText:string){
@@ -95,6 +99,22 @@ export class QuestionDataService{
 	addMultipleChoiceAnswer(questionText:string, choiceText:string, grade:number){
 		// addMultipleChoiceAnswer("Ging er/sie auf Fragen innerhalb der LV ein?", "oft",2);
 		this.multipleChoiceAnswers.push({"questionText":questionText, "choice":{"choiceText":choiceText,"grade":grade}});
+	}
+
+	setVoteToken(voteToken:string){
+		this.voteToken = voteToken;
+	}
+
+	setDeviceId(devideId:string){
+		this.deviceID = devideId;
+	}
+
+	setStudyPath(studyPath: string){
+		this.studyPath = studyPath;
+	}
+
+	setAdress(adress:string){
+		this.adress = adress;
 	}
   
   logError(err) {

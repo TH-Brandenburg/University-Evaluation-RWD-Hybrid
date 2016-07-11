@@ -5,8 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'question-show',
   moduleId: module.id,
-  templateUrl: 'question-showcase.template.html',
-  providers: [QuestionDataService]
+  templateUrl: 'question-showcase.template.html'
 })
 
 export class QuestionComponent implements OnInit {

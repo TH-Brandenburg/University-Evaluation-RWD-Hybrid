@@ -5,8 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'choose-course',
   moduleId: module.id,
-  templateUrl: 'choose-course.template.html',
-  providers: [QuestionDataService]
+  templateUrl: 'choose-course.template.html'
 })
 
 export class ChooseCourseComponent implements OnInit {
@@ -19,7 +18,7 @@ export class ChooseCourseComponent implements OnInit {
   private router: Router){
   }
   onClick(value: any) {
-    this.dataService.studyPath = value;
+    this.dataService.setStudyPath(value);
     if (this.availableCourses.textQuestionsFirst == true) {
       this.router.navigate(['/text-question', 0]);
     }

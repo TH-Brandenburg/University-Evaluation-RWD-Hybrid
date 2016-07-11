@@ -24,7 +24,7 @@ export class SenderComponent {
     }
     else {
     console.log(this.dataService.textAnswers);
-    //this.dataService.sendAnswers();
+    this.dataService.sendAnswers();
     this.router.navigate(['/']);
   }
   }

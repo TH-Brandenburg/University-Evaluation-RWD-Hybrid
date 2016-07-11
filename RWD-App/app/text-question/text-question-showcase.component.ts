@@ -5,8 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'test-question-show',
   moduleId: module.id,
-  templateUrl: 'text-question.template.html',
-  providers: [QuestionDataService]
+  templateUrl: 'text-question.template.html'
 })
 
 export class TextQuestionComponent implements OnInit {
