@@ -22,8 +22,7 @@ export class TextQuestionComponent implements OnInit {
         this.textFirst = this.fetchedQuestions.textQuestionsFirst;
         this.fetchedQuestions = this.fetchedQuestions.textQuestions;
         this.givenTextAnswers = this.dataService.getTextAnswers();
-        this.sub = this.route.params.subscribe(params => {
-            let id = +params['id'];
+        this.sub = this.route.params.subscribe(params => {let id = +params['id'];
             this.id = id;
         });
         this.givenImages = this.dataService.getImages();
@@ -44,7 +43,7 @@ export class TextQuestionComponent implements OnInit {
         if (this.photo) {
             this.dataService.addImageAnswer(this.photo);
         };
-        if ((this.id + 1) <= this.dataService.getMultipleChoiceAnswersSize()) {
+        if ((this.id + 1) < this.dataService.getMultipleChoiceAnswersSize()) {
             this.router.navigate(['/text-question', this.id + 1]);
         } else {
             if (this.textFirst == true) {

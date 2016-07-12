@@ -19,12 +19,10 @@ export class QuestionComponent implements OnInit {
         this.currentQuestion = JSON.parse(this.dataService.getQuestionTest());
         this.textFirst = this.currentQuestion.textQuestionsFirst;
         this.currentQuestion = this.currentQuestion.multipleChoiceQuestionDTOs;
-        this.sub = this.route.params.subscribe(params => {
-            let id = +params['id'];
+        this.sub = this.route.params.subscribe(params => {let id = +params['id'];
             this.id = id;
-            this.givenMCAnswers = this.dataService.getMultipleChoiceAnswers();
         });
-
+        this.givenMCAnswers = this.dataService.getMultipleChoiceAnswers();
         for (var givenAnswer of this.givenMCAnswers) {
             if (givenAnswer.questionText == this.currentQuestion[this.id].questionText) {
                 this.chosenChoice = givenAnswer.choice;

@@ -64,6 +64,8 @@ button {
 
 .answer-0 {
   background-color: grey;
+  align-self: stretch;
+  float: right;
 }
 
 .answer-1 {
@@ -85,6 +87,194 @@ button {
 .answer-5 {
   background-color: darkred;
 }
+
+@media
+  (max-device-width: 800px)
+  and (orientation: portrait) {
+    img {
+      width: 700px;
+      height: auto;
+      margin: auto;
+      padding: auto;
+      float: left;
+    }
+    .startButton {
+      float: right;
+      size: 200%;
+      font-size: 36px;
+      margin-right: 45%;
+      margin-top: 45%;
+      padding: auto;
+    }
+
+    ul {
+        list-style-type: none;
+        display: flex;
+        margin: auto;;
+        padding: auto;
+        overflow-x: scroll;
+        background-color: #99E3F5;
+        height: auto;
+    }
+
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        font-family: "Gotham", Arial, Helvetica, sans-serif;
+        font-size: 24px;
+        text-decoration: none;
+    }
+
+    .active {
+        background-color: #CC0A2F;
+        color: white;
+        font-weight: bold;
+    }
+
+    li a:hover {
+      background-color: #CC0A2F;
+      color: white;
+      font-weight: bold;
+    }
+
+    button {
+        background-color: #CC0A2F;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 24px;
+        float: none;
+    }
+
+    .questionText {
+      font-size: 350%;
+      text-align: center;
+    }
+
+    .answer-group {
+      margin-top: 45%;
+      display: -webkit-block; /* Safari */
+      -webkit-align-items: center; /* Safari 7.0+ */
+      display: block;
+      align-items: center;
+      vertical-align: middle;
+    }
+
+    .answer-button {
+      font-size: 36px;
+      display: inline-block;
+      padding: 400px 100px;
+    }
+}
+
+@media
+  (max-device-width: 1280px)
+  and (orientation: landscape) {
+    img {
+      width: 900px;
+      height: auto;
+      margin: auto;
+      padding: auto;
+      float: left;
+    }
+    .startButton {
+      float: right;
+      size: 200%;
+      font-size: 36px;
+      margin-top: 15%;
+      margin-right: 5%;
+      margin-bottom: auto;
+      padding: auto;
+    }
+
+    ul {
+        list-style-type: none;
+        display: flex;
+        margin: auto;;
+        padding: auto;
+        overflow-x: scroll;
+        background-color: #99E3F5;
+        height: auto;
+    }
+
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        font-family: "Gotham", Arial, Helvetica, sans-serif;
+        font-size: 24px;
+        text-decoration: none;
+    }
+
+    .active {
+        background-color: #CC0A2F;
+        color: white;
+        font-weight: bold;
+    }
+
+    li a:hover {
+      background-color: #CC0A2F;
+      color: white;
+      font-weight: bold;
+    }
+
+    button {
+        background-color: #CC0A2F;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 24px;
+        float: none;
+    }
+
+    .disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .questionText {
+      font-size: 300%;
+      text-align: center;
+      margin-right: 50%;
+      margin-top: 5%;
+      align-self: center;
+    }
+
+    .answer-group {
+      margin-top: auto;
+      margin-left: 50%;
+      display: -webkit-block; /* Safari */
+      -webkit-align-items: center; /* Safari 7.0+ */
+      display: block;
+      align-items: center;
+      vertical-align: middle;
+    }
+
+    .answer-button {
+      font-size: 36px;
+      display: inline-block;
+      padding: 400px 100px;
+    }
+}
+
+
 
  /*
   * See https://github.com/angular/angular.io/blob/master/public/docs/_examples/styles.css
