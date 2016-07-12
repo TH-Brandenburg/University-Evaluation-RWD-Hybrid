@@ -2,7 +2,7 @@
 
 h1 {
   color: #369;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Gotham", Arial, Helvetica, sans-serif;
   font-size: 200%;
 }
 body {
@@ -28,7 +28,7 @@ li a {
     color: black;
     text-align: center;
     padding: 14px 16px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Gotham", Arial, Helvetica, sans-serif;
     font-size: auto;
     text-decoration: none;
 }
@@ -67,23 +67,23 @@ button {
 }
 
 .answer-1 {
-  background-color: green;
+  background-color: darkgreen;
 }
 
 .answer-2 {
-  background-color: greenyellow;
+  background-color: forestgreen;
 }
 
 .answer-3 {
-  background-color: lightcoral;
+  background-color: indianred;
 }
 
 .answer-4 {
-  background-color: coral;
+  background-color: crimson;
 }
 
 .answer-5 {
-  background-color: red;
+  background-color: darkred;
 }
 
  /*
