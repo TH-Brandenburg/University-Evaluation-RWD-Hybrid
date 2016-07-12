@@ -1,5 +1,6 @@
 <h1>{{currentQuestion[id].questionText}}</h1>
-<form #formData='ngForm' (ngSubmit)="onSubmit(formData.value)">
-       <textarea type="text" ngControl="name" value="{{inputText}}"></textarea>
+<form #formData='ngForm' (ngSubmit)="onSubmit()">
+       <textarea type="text" [ngModel]="textAns" (ngModelChange)="textAns = $event" value="{{textAns}}"></textarea>
+       <input type="file" accept="image/*;capture=camera">
         <button block (click)="onSubmit()">Weiter</button>
 </form>

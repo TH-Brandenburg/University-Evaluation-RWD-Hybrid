@@ -13,12 +13,18 @@ export class TextQuestionComponent implements OnInit {
   private sub: any;
   private id: any;
   private textFirst: any;
+  private textAns: string;
+  private photo: any;
+  private textAnswers: any;
   ngOnInit() {
     this.currentQuestion = JSON.parse(this.dataService.getQuestionTest());
     this.textFirst = this.currentQuestion.textQuestionsFirst;
     this.currentQuestion = this.currentQuestion.textQuestions;
+    this.textAnswers = this.dataService.textAnswers;
     this.sub = this.route.params.subscribe(params => {let id = +params['id'];
     this.id = id;
+    this.textAns = '';
+    this.photo = null;
   });
 
   }
@@ -30,9 +36,14 @@ export class TextQuestionComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router) {
   }
-  onSubmit(value: any) {
-    this.dataService.addTextAnswer(this.currentQuestion[this.id].questionID,this.currentQuestion[this.id].questionText, value);
-    if ( this.id + 1 > this.currentQuestion.length) {
+  onSubmit() {
+    this.dataService.addTextAnswer(this.currentQuestion[this.id].questionID,this.currentQuestion[this.id].questionText, this.textAns);
+    if (this.photo) {
+      this.dataService.addFile(this.photo);
+    };
+    if (typeof this.currentQuestion[this.id + 1] !== null) {
+      this.router.navigate(['/text-question', this.id + 1]);
+    } else {
       if (this.textFirst == true) {
       this.router.navigate(['/question', 0])
       }
@@ -40,6 +51,5 @@ export class TextQuestionComponent implements OnInit {
         this.router.navigate(['/send'])
       }
     }
-    else this.router.navigate(['/text-question', this.id + 1]);
   }
 }
