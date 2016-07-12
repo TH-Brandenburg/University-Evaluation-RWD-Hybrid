@@ -8,8 +8,9 @@ import { NavigationComponent } from './navigation/navigation.component';
   selector: 'body',
   template: `
             <navigation *ngIf="appStarted"></navigation>
-            <button *ngIf="!appStarted" (click)="startApp()">Start App</button>
-            <router-outlet *ngIf="appStarted"></router-outlet>
+            <img src="" alt="TH Brandenburg Logo" class="startImage" *ngIf="!appStarted" />
+            <button class="startButton" *ngIf="!appStarted" (click)="startApp()">Start App</button>
+            <router-outlet></router-outlet>
             `,
 directives: [ROUTER_DIRECTIVES, NavigationComponent],
 providers: [QuestionDataService]
