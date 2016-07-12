@@ -23,21 +23,25 @@ export class HomePage {
         this.plt.ready().then(() => {
             BarcodeScanner.scan().then((barcodeData) => {
                 this.questionDataService.setBarcodeData(barcodeData.text);
+                this.questionDataService.getQuestionFailedCallback = (errData) => {
+                  let alert = Alert.create({
+                    title: String(errData.type),
+                    subTitle: errData.message,
+                    buttons: ['YEAH']
+                  });
+                  this.nav.present(alert);
+                }
                 if (this.questionDataService.getQuestion()){
                   this.nav.push(QuestionsPage, {
                     questiontype: "TextQuestion", pagecounter: 1
                   });
                 }
-                else {
-                  this.questionDataService.getQuestionFailedCallback = (errData) => {
-                    let alert = Alert.create({
-                      title: String(errData.type),
-                      subTitle: errData.message,
-                      buttons: ['YEAH']
-                    });
-                    this.nav.present(alert);
-                  }
-
+                else{
+                  let alert = Alert.create({
+                    title: String("Verbindungsfehler"),
+                    subTitle: "Server antwortet nicht",
+                    buttons: ['YEAH']
+                  });
                 }
             }, (err) => {
                 // An error occurred
