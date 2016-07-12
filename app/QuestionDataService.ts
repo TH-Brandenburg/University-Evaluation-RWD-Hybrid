@@ -3,6 +3,7 @@ import {Http, Headers, Response} from '@angular/http';
 import {MultipartItem} from "./plugins/multipart-upload/multipart-item";
 import {MultipartUploader} from "./plugins/multipart-upload/multipart-uploader";
 import 'rxjs/add/operator/map';
+import {isUndefined} from "ionic-angular/util";
 
 export interface Answer {
   choiceText: string;
@@ -21,6 +22,10 @@ export interface Survey {
   textQuestionsFirst: boolean;
 };
 
+export interface GetQuestionError {
+	message: string;
+	type: number;
+}
 
 
 @Injectable()
@@ -34,7 +39,10 @@ export class QuestionDataService {
 	multipleChoiceAnswers = [];
 	uploader = new MultipartUploader(this.address);
 	multipartItem = new MultipartItem(this.uploader);
-	file: File;
+	file: File
+
+	public getQuestionFailedCallback: (error: GetQuestionError) => void;
+
 
 	constructor(private http:Http){
 	}
@@ -83,18 +91,19 @@ export class QuestionDataService {
 	getQuestion(): Survey {
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
-		let result: Survey;
-		
-		result = <Survey>JSON.parse(this.getQuestionTest()); //testcode for example data
-		
-		/* this is working code!
-		this.http.post(this.address + '/questions', JSON.stringify({"voteToken":this.voteToken, "deviceID":this.deviceID}), { headers: headers })
-		.map(res => res.text())
+
+		let result: Survey = <Survey>JSON.parse(this.getQuestionTest()); //testcode for example data
+
+		/*
+		let result: Survey = null;
+		let body = JSON.stringify({"voteToken":this.voteToken, "deviceID":this.deviceID});
+		this.http.post(this.address + '/questions', body, { headers: headers })
+		.map(res => res.json())
 		.subscribe(
 		  data => result = <Survey>JSON.parse(data),
-		  err => this.logError(err),
+		  err => this.handleGetQuestionError(err),
 		  () => console.log('Request questions completed')
-		);*/
+		); */
 		return result;
 	}
 
@@ -141,7 +150,24 @@ export class QuestionDataService {
 		this.multipleChoiceAnswers.push({"questionText":questionText, "choice":{"choiceText":choiceText,"grade":grade}});
 	}
 
-  logError(err) {
-	console.error('There was an error: ' + err);
-  }
+	/* Example Error Data
+	 {
+		 "_body" : "{"message":"Invalid vote token","type":1}",
+		 "status" : 400,
+		 "ok" : false,
+		 "statusText" : "Ok",
+		 "headers" : {
+			 "Cache-Control" : ["no-cache", " no-store", " max-age=0", " must-revalidate"],
+			 "Pragma" : ["no-cache"],
+			 "Expires" : ["0"],
+			 "Content-Type" : ["application/json;charset=UTF-8"]
+		 },
+		 "type" : 2,
+		 "url" : "http://localhost:8080/v1/questions"
+	 }	*/
+	private handleGetQuestionError(err) {
+		console.error('There was an error: ' + err);
+		let errData: GetQuestionError = <GetQuestionError>(JSON.parse(err._body));
+		this.getQuestionFailedCallback(errData);
+	}
 }
