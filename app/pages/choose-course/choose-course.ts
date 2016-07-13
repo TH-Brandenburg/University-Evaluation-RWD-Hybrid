@@ -9,8 +9,6 @@ import {QuestionsPage} from '../questions/questions';
     providers : [globalText,globalNavigation]
 })
 
-
-
 export class CoursesPage{
     allCourses: Course[];
 
@@ -29,7 +27,7 @@ export class CoursesPage{
         this.counter = navParams.get('counter');
         this.navList = globNav.generateNavigation();
     }
-    
+
 
     DisableOtherCourses(number){
         var nextButtonNumber = number;

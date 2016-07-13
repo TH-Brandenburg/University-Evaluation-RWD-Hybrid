@@ -20,7 +20,6 @@ export class CommentViewPage {
     private commmentView_camera_delText: String;
     sendViewPage = SendViewPage;
     navList = [];
-    private testFile : File;
 
 
     constructor(private nav: NavController, private GlobalText: globalText,private globNav :globalNavigation) {
@@ -43,7 +42,6 @@ export class CommentViewPage {
             // imageData is a base64 encoded string
             this.base64Image = "data:image/jpeg;base64," + imageData;
             globalVar.base64Image = this.base64Image;
-            this.testFile = new File([],"")
             this.deleteButtonState = false;
         }, (err) => {
             console.log(err);

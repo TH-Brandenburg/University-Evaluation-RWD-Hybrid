@@ -29,17 +29,17 @@ export interface GetQuestionError {
 
 
 @Injectable()
-export class QuestionDataService {
+export class QuestionDataService{
 	voteToken = "0e17372a-3566-4b6f-b32e-43ebbe98a720";
 	deviceID = "123";
 	address = 'http://localhost:8080/v1';
-	questions;
+	infos;
 	studyPath = "Technologie- und Innovationsmanagement";
 	textAnswers = [];
 	multipleChoiceAnswers = [];
 	uploader = new MultipartUploader(this.address);
 	multipartItem = new MultipartItem(this.uploader);
-	file: File
+  file: File
 
 	public getQuestionFailedCallback: (error: GetQuestionError) => void;
 
@@ -48,7 +48,6 @@ export class QuestionDataService {
 	}
 
 	getSurveyData() {
-
 	}
 
 	setVoteToken(token) {
@@ -67,7 +66,8 @@ export class QuestionDataService {
 		return this.address;
 	}
 
-	 /*	Example Barcode Data
+	/*
+		Example Barcode Data
 	 {"voteToken":"30a8e652-8068-4dad-b9b8-42006a65d1e5","host":"http://172.17.0.18:8080"}
 	 */
 	setBarcodeData(barcodeString) {
@@ -88,11 +88,10 @@ export class QuestionDataService {
 		this.file = file;
 	}
 
-	getQuestion(): Survey {
-		let headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-
-		let result: Survey = <Survey>JSON.parse(this.getQuestionTest()); //testcode for example data
+	getQuestion(){
+		var headers = new Headers();
+		headers.append('Content-Type', 'application/json')
+    let result: Survey = <Survey>JSON.parse(this.getQuestionTest()); //testcode for example data
 
 		/*
 		let result: Survey = null;
@@ -100,11 +99,12 @@ export class QuestionDataService {
 		this.http.post(this.address + '/questions', body, { headers: headers })
 		.map(res => res.json())
 		.subscribe(
-		  data => result = <Survey>JSON.parse(data),
+		  data => this.infos = data,
 		  err => this.handleGetQuestionError(err),
 		  () => console.log('Request questions completed')
-		); */
-		return result;
+		);
+	); */
+		return result;;
 	}
 
 	getQuestionTest(){
@@ -150,7 +150,7 @@ export class QuestionDataService {
 		this.multipleChoiceAnswers.push({"questionText":questionText, "choice":{"choiceText":choiceText,"grade":grade}});
 	}
 
-	/* Example Error Data
+  /* Example Error Data
 	 {
 		 "_body" : "{"message":"Invalid vote token","type":1}",
 		 "status" : 400,
