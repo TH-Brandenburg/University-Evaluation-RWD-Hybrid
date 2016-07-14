@@ -10,13 +10,13 @@ angular.module('qrScanner', ["ng"]).directive('qrScanner', ['$interval', '$windo
       ngVideoError: '&ngVideoError'
     },
     link: function(scope, element, attrs) {
-    
+
       window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-    
+
       var height = attrs.height || 300;
       var width = attrs.width || 250;
-    
+
       var video = $window.document.createElement('video');
       video.setAttribute('width', width);
       video.setAttribute('height', height);
@@ -25,13 +25,13 @@ angular.module('qrScanner', ["ng"]).directive('qrScanner', ['$interval', '$windo
       canvas.setAttribute('id', 'qr-canvas');
       canvas.setAttribute('width', width);
       canvas.setAttribute('height', height);
-      canvas.setAttribute('style', 'display:none;'); 
-    
+      canvas.setAttribute('style', 'display:none;');
+
       angular.element(element).append(video);
       angular.element(element).append(canvas);
-      var context = canvas.getContext('2d'); 
+      var context = canvas.getContext('2d');
       var stopScan;
-    
+
       var scan = function() {
         if ($window.localMediaStream) {
           context.drawImage(video, 0, 0, 307,250);

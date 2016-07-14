@@ -24,7 +24,7 @@
 
 
 Decoder={};
-Decoder.rsDecoder = new ReedSolomonDecoder(GF256.QR_CODE_FIELD);
+Decoder.rsDecoder = new ReedSolomonDecoder(GF256.DATA_MATRIX_FIELD);
 
 Decoder.correctErrors=function( codewordBytes,  numDataCodewords)
 {
