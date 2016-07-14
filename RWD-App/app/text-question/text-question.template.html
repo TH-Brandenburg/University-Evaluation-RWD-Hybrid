@@ -1,5 +1,8 @@
-<h1>{{currentQuestion[id].questionText}}</h1>
-<form #formData='ngForm' (ngSubmit)="onSubmit(formData.value)">
-       <textarea type="text" ngControl="name" value="{{inputText}}"></textarea>
+<h1 class="questionText">{{fetchedQuestions[id].questionText}}</h1>
+<div class="answer-group">
+<form #formData='ngForm' (ngSubmit)="onSubmit()">
+       <textarea type="text" ([ngModel])="textAns" value="{{textAns}}"></textarea>
+       <input type="file" accept="image/*;capture=camera, image/*" ([ngModel])="photo">
         <button block (click)="onSubmit()">Weiter</button>
 </form>
+</div>

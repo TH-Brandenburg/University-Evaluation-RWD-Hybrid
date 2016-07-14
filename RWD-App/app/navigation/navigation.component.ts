@@ -7,8 +7,7 @@ import { QuestionDataService, Question, Answer, Survey } from '../questions.serv
   selector: 'navigation',
   moduleId: module.id,
   templateUrl: 'navigation.template.html',
-  directives: [ROUTER_DIRECTIVES],
-  providers: [QuestionDataService]
+  directives: [ROUTER_DIRECTIVES]
 })
 export class NavigationComponent implements OnInit {
   //Variable for storing survey data
