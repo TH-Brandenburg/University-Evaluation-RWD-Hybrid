@@ -91,11 +91,25 @@ export class QuestionDataService{
 
 	addTextAnswer(questionID: number, questionText:string, answerText:string){
 		// addTextAnswer(3,"Welche Verbesserungsvorschläge würden Sie machen?","Antwort");
+    //erase array entry if the question is answered a second time
+    for (var givenAnswer of this.textAnswers) {
+      if (givenAnswer['questionID'] === questionID) {
+        let index = this.textAnswers.indexOf(givenAnswer);
+        this.textAnswers.splice(index, 1);
+      }
+    }
 		this.textAnswers.push({"questionID":questionID, "questionText":questionText, "answerText":answerText});
 	}
 
 	addMultipleChoiceAnswer(questionText:string, choiceText:string, grade:number){
 		// addMultipleChoiceAnswer("Ging er/sie auf Fragen innerhalb der LV ein?", "oft",2);
+    //erase entry if question is answered a second time
+    for (var givenAnswer of this.multipleChoiceAnswers) {
+      if (givenAnswer['questionText'] === questionText) {
+        let index = this.multipleChoiceAnswers.indexOf(givenAnswer);
+        this.multipleChoiceAnswers.splice(index, 1);
+      }
+    }
 		this.multipleChoiceAnswers.push({"questionText":questionText, "choice":{"choiceText":choiceText,"grade":grade}});
 	}
 
