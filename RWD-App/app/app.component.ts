@@ -10,7 +10,7 @@ import { NavigationComponent } from './navigation/navigation.component';
             <navigation *ngIf="appStarted"></navigation>
             <img src="app/img/fh-logo.jpg" alt="TH Brandenburg Logo" class="startImage" *ngIf="!appStarted" />
             <button class="startButton" *ngIf="!appStarted" (click)="startApp()">Start App</button>
-            <router-outlet *ngIf="appStarted"></router-outlet>
+            <router-outlet></router-outlet>
             `,
 directives: [ROUTER_DIRECTIVES, NavigationComponent],
 providers: [QuestionDataService]
