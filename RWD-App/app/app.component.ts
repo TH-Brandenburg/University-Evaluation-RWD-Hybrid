@@ -15,14 +15,13 @@ import { NavigationComponent } from './navigation/navigation.component';
 directives: [ROUTER_DIRECTIVES, NavigationComponent],
 providers: [QuestionDataService]
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   //Variable for storing survey data
   appStarted: boolean = false;
   ngOnInit() {
   //get survey data on initialization
   }
-  constructor(private dataService: QuestionDataService,
-  private router: Router){
+  constructor(){
   }
   startApp() {
     this.appStarted = true;
