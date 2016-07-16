@@ -13,20 +13,29 @@ export class SenderComponent {
     private givenAnswers: any;
     ngOnInit() {
         this.currentSurvey = JSON.parse(this.dataService.getQuestionTest());
-        this.currentSurvey = this.currentSurvey.multipleChoiceQuestionDTOs.length;
-        this.givenAnswers = this.dataService.getMultipleChoiceAnswersSize();
+        this.currentSurvey = this.currentSurvey.multipleChoiceQuestionDTOs.length + this.currentSurvey.textQuestions.length;
+        this.givenAnswers = this.dataService.getMultipleChoiceAnswersSize() + this.dataService.getTextAnswersSize();
     }
     constructor(private dataService: QuestionDataService, private router: Router) {
     }
     onSubmit() {
         if (this.givenAnswers < this.currentSurvey) {
+          if (confirm('Sie haben bisher nur ' + this.givenAnswers + ' von ' + this.currentSurvey + ' Fragen beantwortet. Sind sie sicher, dass sie die Evaluation abschließen wollen?')) {
+            console.log("send finished answers");
+            console.log(this.dataService.getMultipleChoiceAnswers());
+            console.log(this.dataService.getTextAnswers());
+          }
+          else {
             console.log('Zu wenige Antworten gegeben');
-            alert("Sie haben nicht alle Fragen beantwortet.");
+            }
         }
         else {
-            console.log("send answers");
-            this.dataService.sendAnswers();
-            this.router.navigate(['/']);
+            console.log("send all answers");
+            console.log(this.dataService.getMultipleChoiceAnswers());
+            console.log(this.dataService.getTextAnswers());
+
+            //this.dataService.sendAnswers();
+            //this.router.navigate(['/']);
         }
     }
 }
