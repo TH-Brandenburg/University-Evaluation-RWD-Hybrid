@@ -37,9 +37,7 @@ export class QuestionDataService {
 	studyPath = "Technologie- und Innovationsmanagement";
 	textAnswers = [];
 	multipleChoiceAnswers = [];
-	uploader = new MultipartUploader(this.address);
-	multipartItem = new MultipartItem(this.uploader);
-	file: File
+	answerFiles: File[] = [];
 
 	public getQuestionFailedCallback: (error: GetQuestionError) => void;
 
@@ -84,8 +82,8 @@ export class QuestionDataService {
 		return this.deviceID;
 	}
 
-	setFile(file:File){
-		this.file = file;
+	addAnswerImage(file:File){
+		this.answerFiles.push(file);
 	}
 
 	getQuestion(): Survey {
@@ -112,41 +110,58 @@ export class QuestionDataService {
 	}
 
 	sendAnswers(){
-		this.uploader = new MultipartUploader(this.address + "/answers");
-		this.uploader.url = this.address + "/answers";
-		this.multipartItem = new MultipartItem(this.uploader);
-		this.multipartItem.url = this.address + "/answers";
+		let uploader = new MultipartUploader(this.address + "/answers");
+		uploader.url = this.address + "/answers";
+		let multipartItem = new MultipartItem(uploader);
+		multipartItem.url = this.address + "/answers";
+
 		var body = JSON.stringify({"voteToken":this.voteToken, "studyPath":this.studyPath, "textAnswers":this.textAnswers, "mcAnswers":this.multipleChoiceAnswers, "deviceID":this.deviceID});
-		if (this.multipartItem == null){
-				this.multipartItem = new MultipartItem(this.uploader);
-		}
-		if (this.multipartItem.formData == null){
-			this.multipartItem.formData = new FormData();
+		let formData = new FormData();
+		formData.append("answers-dto", body);
+
+		if(this.answerFiles.length == 0){
+			formData.append("images",  new Blob());
+		}else{
+			for(let i = 0; i < this.answerFiles.length; i++){
+				formData.append("images",  this.answerFiles[i]);
+			}
 		}
 
-		this.multipartItem.formData.append("answers-dto",  body);
-		this.multipartItem.formData.append("images",  this.file);
-		this.multipartItem.callback = this.uploadCallback;
-		this.multipartItem.upload();
+		multipartItem.callback = this.uploadCallback;
+		multipartItem.formData = formData;
+		multipartItem.upload();
 	}
 
 	uploadCallback = (data) => {
-		console.debug("home.ts & uploadCallback() ==>");
-		this.file = null;
+		this.answerFiles = [];
 		if (data){
-			console.debug("home.ts & uploadCallback() upload file success.");
+			console.debug("uploadCallback() file upload successful");
 		}else{
-			console.error("home.ts & uploadCallback() upload file false.");
+			console.error("uploadCallback() fil upload error", data);
 		}
 	}
 
+	//example: addTextAnswer (3,"Welche Verbesserungsvorschläge würden Sie machen?","Antwort");
 	addTextAnswer(questionID: number, questionText:string, answerText:string){
-		// addTextAnswer(3,"Welche Verbesserungsvorschläge würden Sie machen?","Antwort");
+		//erase array entry if the question is answered a second time
+		for (var givenAnswer of this.textAnswers) {
+			if (givenAnswer['questionID'] === questionID) {
+				let index = this.textAnswers.indexOf(givenAnswer);
+				this.textAnswers.splice(index, 1);
+			}
+		}
 		this.textAnswers.push({"questionID":questionID, "questionText":questionText, "answerText":answerText});
 	}
 
+	//example: addMultipleChoiceAnswer ("Ging er/sie auf Fragen innerhalb der LV ein?", "oft",2);
 	addMultipleChoiceAnswer(questionText:string, choiceText:string, grade:number){
-		// addMultipleChoiceAnswer("Ging er/sie auf Fragen innerhalb der LV ein?", "oft",2);
+		//erase entry if question is answered a second time
+		for (var givenAnswer of this.multipleChoiceAnswers) {
+			if (givenAnswer['questionText'] === questionText) {
+				let index = this.multipleChoiceAnswers.indexOf(givenAnswer);
+				this.multipleChoiceAnswers.splice(index, 1);
+			}
+		}
 		this.multipleChoiceAnswers.push({"questionText":questionText, "choice":{"choiceText":choiceText,"grade":grade}});
 	}
 
