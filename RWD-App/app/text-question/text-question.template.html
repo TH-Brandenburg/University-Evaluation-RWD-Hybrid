@@ -5,7 +5,8 @@
                id="textInput"
                placeholder="Geben sie eine Antwort ein."
                [formControl]="answerForm.controls['text']">
-    <input type="file" accept="image/*;capture=camera, image/*" [formControl]="answerForm.controls['image']">
-    <button type="submit" class="ui button">Submit</button>
+    <input type="file" accept="image/*;capture=camera, image/*" [formControl]="answerForm.controls['image']" id="fileInput">
+    <button type="submit" class="ui button">Weiter</button>
    </form>
+   <img src="" *ngIf="fileUploaded"/>
 </div>

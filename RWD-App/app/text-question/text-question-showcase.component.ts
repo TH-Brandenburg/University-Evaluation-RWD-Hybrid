@@ -23,6 +23,8 @@ export class TextQuestionComponent implements OnInit {
     private alreadyAnswered: boolean = false;
     public base64Image: String;
     private fileUploaded: boolean = false;
+    private fileName: File;
+
     ngOnInit() {
         this.fetchedQuestions = JSON.parse(this.dataService.getQuestionTest());
         this.textFirst = this.fetchedQuestions.textQuestionsFirst;
@@ -37,6 +39,26 @@ export class TextQuestionComponent implements OnInit {
             this.id = id;
         });
         this.givenImages = this.dataService.getImages();
+        document.getElementById("fileInput").addEventListener("change",  e => {this.readImageFile(e);}, false);
+
+        //empty answer and Image
+        this.base64Image = '';
+        this.fileName = undefined;
+    }
+
+    readImageFile(e) {
+      console.log("Image wird gelesen");
+      this.fileName = e.target.files[0];
+      console.log(this.fileName);
+      if (!this.fileName) {
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = file => {
+        var contents: any = file.target;
+        this.base64Image = contents.result;
+      }
+      reader.readAsBinaryString(this.fileName);
     }
 
     ngOnDestroy() {
@@ -52,20 +74,15 @@ export class TextQuestionComponent implements OnInit {
           });
     }
 
+
     onSubmit(value: string) {
         if (value['text'] != ''){
         this.dataService.addTextAnswer(this.fetchedQuestions[this.id].questionID, this.fetchedQuestions[this.id].questionText, value['text']);
       }
         console.log('Image: ' + value['image']);
         console.log(this.dataService.getTextAnswersSize());
-        if (value['image']) {
-          //Read Image
-          let fileReader = new FileReader();
-          let fileDest = value['image'];
-          fileReader.readAsText(fileDest);
-          this.fileUploaded = true;
-          //this.dataService.addImageAnswer(value['image']);
-          console.log(value['image']);
+        if (this.base64Image != '') {
+          this.dataService.addImageAnswer(this.fileName);
         };
         if ((this.id + 1) < this.fetchedQuestions.length) {
             this.router.navigate(['/text-question', this.id + 1]);
