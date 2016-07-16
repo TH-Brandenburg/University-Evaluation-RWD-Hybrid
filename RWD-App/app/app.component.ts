@@ -25,6 +25,7 @@ export class AppComponent {
   }
   startApp() {
     this.appStarted = true;
-    //this.router.navigate(['/scan']);
+    window.location.href = '/app/scanner/scanner.template.html';
+    //this.router.navigate('/app/scanner/scanner.template.html');
   }
 }

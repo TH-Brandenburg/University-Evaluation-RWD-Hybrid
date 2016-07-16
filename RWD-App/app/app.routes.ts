@@ -7,8 +7,8 @@ import { AppComponent } from'./app.component';
 import { ChooseCourseComponent } from './choose-course/choose-course.component';
 
 const routes: RouterConfig = [
-    { path: 'scan', component: ScannerComponent },
     { path: '', component: AppComponent },
+    { path: 'scan', component: ScannerComponent },
     { path: 'course', component: ChooseCourseComponent },
     { path: 'question/:id', component: QuestionComponent },
     { path: 'text-question/:id', component: TextQuestionComponent },
