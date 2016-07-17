@@ -41,7 +41,8 @@ export class QuestionComponent implements OnInit {
     }
     onClickAnswer(answer: any) {
         this.dataService.addMultipleChoiceAnswer(this.currentQuestion[this.id].question, answer.choiceText, answer.grade);
-        if (this.id + 1 > this.currentQuestion.length) {
+        console.log(this.currentQuestion.length);
+        if (this.id + 1 >= this.currentQuestion.length) {
             if (this.textFirst == true) {
                 this.router.navigate(['/send'])
             }

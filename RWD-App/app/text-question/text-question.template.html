@@ -1,4 +1,4 @@
-<h1 class="questionText">{{fetchedQuestions[id].questionText}}</h1>
+<h1 class="questionText">{{fetchedQuestions[id]?.questionText}}</h1>
 <div class="answer-group">
   <form [formGroup]="answerForm" (ngSubmit)="onSubmit(answerForm.value)" class="ui form">
     <input type="text"
