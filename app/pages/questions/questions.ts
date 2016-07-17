@@ -1,5 +1,5 @@
 import {Page, Platform, Alert, NavController,NavParams} from 'ionic-angular';
-import {globalVar, globalText, Question,globalNavigation} from '../../global'
+import {globalVar, globalText, Question,globalNavigation,QuestionDataService} from '../../global'
 import {CommentViewPage} from '../comment-view/comment-view';
 import {SendViewPage} from '../send-view/send-view';
 
@@ -18,19 +18,18 @@ export class QuestionsPage{
 
     commentViewPage = CommentViewPage;
     sendViewPage = SendViewPage;
+    QuestionDataService: any;
 
 
     type : String;
     counter : Number;
-    navList = [];
 
     constructor(private GlobalText: globalText,private navParams: NavParams,private nav : NavController,private globNav :globalNavigation) {
         this.allQuestions = this.GlobalText.getQuestions();
         this.currentQuestion = this.allQuestions[0];
         this.currentQuestionID = 0;
-        this.type = navParams.get('type');
         this.counter = navParams.get('counter');
-        this.navList = globNav.generateNavigation();
+        this.QuestionDataService = QuestionDataService;
 
 
 //    constructor(private GlobalText: globalText) {
@@ -75,9 +74,15 @@ export class QuestionsPage{
         globalVar.answers[this.currentQuestionID] = number;
     }
 
-    goTo(type: String, counter:Number){
+    goTo(type: String,counter:Number){
+      if (type == "textQuestions"){
+        this.nav.push(CommentViewPage, {
+          pagecounter: counter
+        });
+      }
+      if (type == "multipleChoiceQuestionDTOs"){
       this.nav.push(QuestionsPage, {
-        questiontype: type, pagecounter: counter
-      });
+        pagecounter: counter
+      });}
     }
 }
