@@ -2,11 +2,10 @@ import {Page, Platform, Alert, NavController,NavParams} from 'ionic-angular';
 import {globalVar, globalText, Question,globalNavigation} from '../../global'
 import {CommentViewPage} from '../comment-view/comment-view';
 import {SendViewPage} from '../send-view/send-view';
-import {QuestionDataService} from "../../QuestionDataService";
 
 @Page({
     templateUrl: 'build/pages/questions/questions.html',
-    providers : [globalText,globalNavigation, QuestionDataService]
+    providers : [globalText,globalNavigation]
 })
 
 
@@ -25,12 +24,7 @@ export class QuestionsPage{
     counter : Number;
     navList = [];
 
-    constructor(private GlobalText: globalText,
-                private navParams: NavParams,
-                private nav : NavController,
-                private globNav :globalNavigation,
-                private qService: QuestionDataService) {
-        
+    constructor(private GlobalText: globalText,private navParams: NavParams,private nav : NavController,private globNav :globalNavigation) {
         this.allQuestions = this.GlobalText.getQuestions();
         this.currentQuestion = this.allQuestions[0];
         this.currentQuestionID = 0;
@@ -38,10 +32,12 @@ export class QuestionsPage{
         this.counter = navParams.get('counter');
         this.navList = globNav.generateNavigation();
 
+
 //    constructor(private GlobalText: globalText) {
 //        this.allQuestions = this.GlobalText.getQuestions();
 //        this.currentQuestion = this.allQuestions[0];
 //        this.currentQuestionID = 0;
+
 
     }
 

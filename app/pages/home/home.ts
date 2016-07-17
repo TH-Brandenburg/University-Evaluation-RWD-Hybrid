@@ -1,7 +1,7 @@
 import {Page, Platform, Alert, NavController} from 'ionic-angular';
 import {CommentViewPage} from '../comment-view/comment-view';
 import {SendViewPage} from '../send-view/send-view';
-import {QuestionDataService} from '../../QuestionDataService';
+import {QuestionDataService, Survey, GetQuestionError} from '../../QuestionDataService';
 import {BarcodeScanner} from 'ionic-native';
 import {QuestionsPage} from '../questions/questions';
 import {globalVar,globalNavigation} from '../../global';
@@ -23,26 +23,20 @@ export class HomePage {
         this.plt.ready().then(() => {
             BarcodeScanner.scan().then((barcodeData) => {
                 this.questionDataService.setBarcodeData(barcodeData.text);
-                this.questionDataService.getQuestionFailedCallback = (errData) => {
-                  let alert = Alert.create({
-                    title: String(errData.type),
-                    subTitle: errData.message,
-                    buttons: ['YEAH']
-                  });
-                  this.nav.present(alert);
+                this.questionDataService.getQuestionFailedCallback = (errData: GetQuestionError) => {
+                    let alert = Alert.create({
+                        title: "Error!", //String(errData.type),
+                        subTitle: errData.message,
+                        buttons: ['YEAH']
+                    });
+                    this.nav.present(alert);
                 }
-                if (this.questionDataService.getQuestion()){
-                  this.nav.push(QuestionsPage, {
-                    questiontype: "TextQuestion", pagecounter: 1
-                  });
+                this.questionDataService.getQuestionSucceedCallback = (survey: Survey) => {
+                    this.nav.push(QuestionsPage, {
+                        questiontype: "TextQuestion", pagecounter: 1
+                    });
                 }
-                else{
-                  let alert = Alert.create({
-                    title: String("Verbindungsfehler"),
-                    subTitle: "Server antwortet nicht",
-                    buttons: ['YEAH']
-                  });
-                }
+                this.questionDataService.getQuestion();
             }, (err) => {
                 // An error occurred
             });

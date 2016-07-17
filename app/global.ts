@@ -75,7 +75,6 @@ export class globalText {
   sendView_LabelText: String = "Abschicken";
 
   studyPaths: Course[] = new Array();
-
   questions: Question[] = new Array();
 
   q1: Question = new Question();
@@ -92,9 +91,8 @@ export class globalText {
   c3: Course = new Course();
   c4: Course = new Course();
 
-    constructor() {
-
-    this.c1.course = "Master Informatik";
+constructor() {
+  this.c1.course = "Master Informatik";
     this.c1.id = 0;
 
     this.c2.course = "Bachelor Informatik";
@@ -173,8 +171,8 @@ export class globalText {
   }
   getQuestions() {
    return this.questions;
-  }
-  getStudyPaths() {
-      return this.studyPaths;
-  }
+}
+getStudyPaths() {
+    return this.studyPaths;
+}
 }

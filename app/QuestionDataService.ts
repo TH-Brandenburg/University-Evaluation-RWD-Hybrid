@@ -29,24 +29,23 @@ export interface GetQuestionError {
 
 
 @Injectable()
-export class QuestionDataService {
+export class QuestionDataService{
 	voteToken = "0e17372a-3566-4b6f-b32e-43ebbe98a720";
 	deviceID = "123";
-	address = 'http://localhost:8080/v1';
-	questions;
+	address = 'http://localhost:8080';
+	api = "v1";
 	studyPath = "Technologie- und Innovationsmanagement";
 	textAnswers = [];
 	multipleChoiceAnswers = [];
 	answerFiles: File[] = [];
 
-	public getQuestionFailedCallback: (error: GetQuestionError) => void;
-
+	public getQuestionFailedCallback: (data: GetQuestionError) => void;
+	public getQuestionSucceedCallback: (data: Survey) => void;
 
 	constructor(private http:Http){
 	}
 
 	getSurveyData() {
-
 	}
 
 	setVoteToken(token) {
@@ -65,7 +64,8 @@ export class QuestionDataService {
 		return this.address;
 	}
 
-	 /*	Example Barcode Data
+	/*
+		Example Barcode Data
 	 {"voteToken":"30a8e652-8068-4dad-b9b8-42006a65d1e5","host":"http://172.17.0.18:8080"}
 	 */
 	setBarcodeData(barcodeString) {
@@ -86,23 +86,19 @@ export class QuestionDataService {
 		this.answerFiles.push(file);
 	}
 
-	getQuestion(): Survey {
-		let headers = new Headers();
+	getQuestion(){
+		var headers = new Headers();
 		headers.append('Content-Type', 'application/json');
-
-		let result: Survey = <Survey>JSON.parse(this.getQuestionTest()); //testcode for example data
-
-		/*
-		let result: Survey = null;
 		let body = JSON.stringify({"voteToken":this.voteToken, "deviceID":this.deviceID});
-		this.http.post(this.address + '/questions', body, { headers: headers })
+		let requestURI = this.address + '/' + this.api + '/questions';
+
+		this.http.post(requestURI, body, { headers: headers })
 		.map(res => res.json())
 		.subscribe(
-		  data => result = <Survey>JSON.parse(data),
+		  data => this.getQuestionSucceedCallback(<Survey>data),
 		  err => this.handleGetQuestionError(err),
 		  () => console.log('Request questions completed')
-		); */
-		return result;
+		);
 	}
 
 	getQuestionTest(){
@@ -165,7 +161,8 @@ export class QuestionDataService {
 		this.multipleChoiceAnswers.push({"questionText":questionText, "choice":{"choiceText":choiceText,"grade":grade}});
 	}
 
-	/* Example Error Data
+  /*
+  Example Error Data
 	 {
 		 "_body" : "{"message":"Invalid vote token","type":1}",
 		 "status" : 400,
@@ -181,8 +178,12 @@ export class QuestionDataService {
 		 "url" : "http://localhost:8080/v1/questions"
 	 }	*/
 	private handleGetQuestionError(err) {
-		console.error('There was an error: ' + err);
-		let errData: GetQuestionError = <GetQuestionError>(JSON.parse(err._body));
+		if (err._body instanceof Object) {
+			console.log('QuestionDataService.handleGetQuestionError()', err);
+			this.getQuestionFailedCallback(<GetQuestionError>{"message": "Server antwortet nicht", "type": 0});
+			return;
+		}
+		let errData:GetQuestionError = <GetQuestionError>(JSON.parse(err._body));
 		this.getQuestionFailedCallback(errData);
 	}
 }
