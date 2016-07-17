@@ -26,7 +26,7 @@
 
         $scope.onSuccess = function(data) {
             $scope.data = data;
-            $window.location.url('../index.html');
+            location.replace('../../course');
         };
         $scope.onError = function(error) {
             $scope.error = error;
