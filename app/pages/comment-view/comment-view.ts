@@ -34,7 +34,7 @@ export class CommentViewPage {
         this.commmentView_camera_addText = this.GlobalText.getcommmentView_camera_addText();
         this.commmentView_camera_delText = this.GlobalText.getcommmentView_camera_delText();
         this.nav = nav;
-        this.inputText = '';
+        this.inputText = globalVar.textAnswers[this.counter];
         this.deleteButtonState = true;
         this.QuestionDataService = QuestionDataService;
     }
@@ -70,7 +70,8 @@ export class CommentViewPage {
       });}
     }
     saveText(text) {
-      globalVar.textAnswers.push(text);
+      globalVar.textAnswers[this.counter] = text.name;
+      alert(globalVar.textAnswers[this.counter]);
     }
     convertImage(base64str,fileName){
       var binary = atob(base64str.replace(/\s/g, ''));
