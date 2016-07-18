@@ -21,12 +21,13 @@ export class CoursesPage{
     QuestionDataService: any;
 
     constructor(private GlobalText: globalText,private navParams: NavParams,private nav : NavController,private globNav :globalNavigation) {
-        this.allCourses = this.GlobalText.getStudyPaths();
+        //this.allCourses = this.GlobalText.getStudyPaths();
         this.QuestionDataService = QuestionDataService;
 
         this.type = navParams.get('type');
         this.counter = navParams.get('counter');
         this.QuestionDataService = QuestionDataService;
+        this.allCourses = this.QuestionDataService.survey.studyPaths;
     }
 
 

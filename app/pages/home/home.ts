@@ -23,7 +23,10 @@ export class HomePage {
 //      QuestionDataService.getQuestion();
       if(this.plt.is('core'))
       {
-        QuestionDataService.setTestData()
+        QuestionDataService.setTestData();
+        for(var i = 0; i < QuestionDataService.multipleChoiceQuestionDTOs.length; i++) {
+            globalVar.choiceAnswers[i] = -1;
+        }
         this.nav.push(CommentViewPage, {
           pagecounter: 1
         });

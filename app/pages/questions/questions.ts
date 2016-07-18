@@ -20,47 +20,38 @@ export class QuestionsPage{
     sendViewPage = SendViewPage;
     QuestionDataService: any;
 
-
     type : String;
-    counter : Number;
+    counter : number;
 
     constructor(private GlobalText: globalText,private navParams: NavParams,private nav : NavController,private globNav :globalNavigation) {
-        this.allQuestions = this.GlobalText.getQuestions();
-        this.currentQuestion = this.allQuestions[0];
-        this.currentQuestionID = 0;
-        this.counter = navParams.get('counter');
+        //this.allQuestions = this.GlobalText.getQuestions();
+        this.counter = navParams.get('pagecounter');
+        //alert(this.counter);
+        //this.LoadQuestion(this.counter);
         this.QuestionDataService = QuestionDataService;
+        this.currentQuestion = this.QuestionDataService.multipleChoiceQuestionDTOs[this.counter];
+        this.currentQuestionID = this.counter;
+        //this.QuestionDataService.setTestData();
+        //alert(QuestionDataService.multipleChoiceQuestionDTOs.length);
+        //this.LoadQuestion(this.counter);
+
+        alert(globalVar.choiceAnswers[this.counter]);
+        if(globalVar.choiceAnswers[this.counter] != -1){
+            document.getElementById("button_answer"+this.counter).className = "answer enabled";
+        }
 
 
-//    constructor(private GlobalText: globalText) {
-//        this.allQuestions = this.GlobalText.getQuestions();
-//        this.currentQuestion = this.allQuestions[0];
-//        this.currentQuestionID = 0;
 
 
     }
-
-    LoadQuestion(number) {
-        this.currentQuestion = this.allQuestions[number];
-        this.currentQuestionID = number;
-
-        for(var i = 1; i < this.currentQuestion.choices.length + 1; i++){
-
-            document.getElementById("button_answer"+i).className = "answer disabled";
-        }
-
-        if(globalVar.answers[this.currentQuestionID] != -1){
-            document.getElementById("button_answer"+globalVar.answers[this.currentQuestionID]).className = "answer enabled";
-        }
-    }
-
 
 
     DisableOtherAnswers(number){
         var nextButtonNumber = number;
         for(var i = 0; i < this.currentQuestion.choices.length - 1; i++){
+
             nextButtonNumber++;
-            if(nextButtonNumber > this.currentQuestion.choices.length)
+            if(nextButtonNumber > this.currentQuestion.choices.length - 1)
                 nextButtonNumber = nextButtonNumber - this.currentQuestion.choices.length;
 
             document.getElementById("button_answer"+nextButtonNumber).className = "answer disabled";
@@ -69,9 +60,10 @@ export class QuestionsPage{
     }
 
     onClickAnswer(number){
+
         document.getElementById("button_answer"+number).className = "answer enabled";
         this.DisableOtherAnswers(number);
-        globalVar.answers[this.currentQuestionID] = number;
+        globalVar.choiceAnswers[this.currentQuestionID] = number;
     }
 
     goTo(type: String,counter:Number){
