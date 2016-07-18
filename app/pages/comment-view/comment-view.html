@@ -1,13 +1,13 @@
 <ion-navbar *navbar>
   <ion-slides [options]="{initialSlide: 1}">
-      <ion-slide>
-          <button *ngFor="let navitem of navList" (click)="goTo(navitem.type,navitem.counter)">{{navitem.type}} {{navitem.counter}}</button>
+      <ion-slide *ngFor="let navitem of QuestionDataService.textQuestions; let i = index">
+          <button (click)="goTo('textQuestions',(i+1))" type="submit" form="textInput"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Auswahlfrage<ion-icon name="arrow-forward"></ion-icon></button>
+      </ion-slide>
+      <ion-slide *ngFor="let navitem of QuestionDataService.multipleChoiceQuestionDTOs; let i = index">
+          <button (click)="goTo('multipleChoiceQuestionDTOs',(i+1))" type="submit" form="textInput"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Frage<ion-icon name="arrow-forward"></ion-icon></button>
       </ion-slide>
       <ion-slide>
-        <button [navPush]="commentViewPage">Camera</button>
-      </ion-slide>
-      <ion-slide>
-        <button [navPush]="sendViewPage">sendViewPage</button>
+        <button [navPush]="sendViewPage" type="submit" form="textInput"><ion-icon name="arrow-back"></ion-icon>sendViewPage<ion-icon name="arrow-forward"></ion-icon></button>
       </ion-slide>
   </ion-slides>
 </ion-navbar>
@@ -18,13 +18,12 @@
             <ion-row>
                 <ion-label>{{commmentView_editText}}</ion-label>
             </ion-row>
-             <form #formData='ngForm' (ngSubmit)="next(formData.value)">
+             <form id="textInput" #formData='ngForm' (ngSubmit)="saveText(formData.value)">
                  <ion-row><ion-col id="textEdit">
                     <ion-textarea type="text" ngControl="name" value="{{inputText}}"></ion-textarea>
                  </ion-col>
                  </ion-row>
             </form>
-
             <ion-row>
                 <ion-col item-left width-50><button (click)="takepic()"><ion-icon name="camera"></ion-icon> {{commmentView_camera_addText}}</button></ion-col>
                 <ion-col item-right width-50><button [disabled]="deleteButtonState" class="ion-android-delete"(click)="deletepic()"><ion-icon name="close-circle"></ion-icon>{{commmentView_camera_delText}}</button></ion-col>
