@@ -24,26 +24,20 @@ export class QuestionsPage{
     counter : number;
 
     constructor(private GlobalText: globalText,private navParams: NavParams,private nav : NavController,private globNav :globalNavigation) {
-        //this.allQuestions = this.GlobalText.getQuestions();
+
         this.counter = navParams.get('pagecounter');
-        //alert(this.counter);
-        //this.LoadQuestion(this.counter);
         this.QuestionDataService = QuestionDataService;
         this.currentQuestion = this.QuestionDataService.multipleChoiceQuestionDTOs[this.counter];
         this.currentQuestionID = this.counter;
-        //this.QuestionDataService.setTestData();
-        //alert(QuestionDataService.multipleChoiceQuestionDTOs.length);
-        //this.LoadQuestion(this.counter);
 
         alert(globalVar.choiceAnswers[this.counter]);
         if(globalVar.choiceAnswers[this.counter] != -1){
-            document.getElementById("button_answer"+this.counter).className = "answer enabled";
+            document.getElementById("button_answer"+globalVar.choiceAnswers[this.counter]).className = "answer enabled";
         }
 
-
-
-
     }
+
+
 
 
     DisableOtherAnswers(number){
