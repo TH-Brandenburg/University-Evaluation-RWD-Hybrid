@@ -30,14 +30,15 @@ export class QuestionsPage{
         this.currentQuestion = this.QuestionDataService.multipleChoiceQuestionDTOs[this.counter];
         this.currentQuestionID = this.counter;
 
-        alert(globalVar.choiceAnswers[this.counter]);
-        if(globalVar.choiceAnswers[this.counter] != -1){
-            document.getElementById("button_answer"+globalVar.choiceAnswers[this.counter]).className = "answer enabled";
-        }
-
     }
 
 
+    GetClass(grade: number){
+      if(grade == globalVar.choiceAnswers[this.counter])
+        return "answer enabled";
+
+      return "answer disabled";
+    }
 
 
     DisableOtherAnswers(number){
@@ -61,14 +62,17 @@ export class QuestionsPage{
     }
 
     goTo(type: String,counter:Number){
-      if (type == "textQuestions"){
-        this.nav.push(CommentViewPage, {
-          pagecounter: counter
-        });
-      }
-      if (type == "multipleChoiceQuestionDTOs"){
-      this.nav.push(QuestionsPage, {
-        pagecounter: counter
-      });}
-    }
+       if (type == "textQuestions"){
+         this.nav.setPages([{
+               page: CommentViewPage,
+               params: {pagecounter: counter}
+             }]);
+       }
+       if (type == "multipleChoiceQuestionDTOs"){
+         this.nav.setPages([{
+               page: QuestionsPage,
+               params: {pagecounter: counter}
+             }]);
+       ;}
+     }
 }
