@@ -12,7 +12,7 @@
     </ion-slides>
 </ion-navbar>
 
-<ion-content class="questions" padding>
+<ion-content padding>
     <h1>Wählen Sie einen Studiengang</h1>
     <div class="course_overview">
         <div class="course disabled" *ngFor="let course of allCourses" id="button_course{{course.id}}" (click)=onClickCourse(course.id,course.course)>{{ course.course }}
