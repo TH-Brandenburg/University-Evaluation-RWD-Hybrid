@@ -34,9 +34,10 @@ export class CommentViewPage {
         this.commmentView_camera_addText = this.GlobalText.getcommmentView_camera_addText();
         this.commmentView_camera_delText = this.GlobalText.getcommmentView_camera_delText();
         this.nav = nav;
-        this.inputText = '';
+        this.inputText = QuestionDataService.textAnswers[this.counter];
         this.deleteButtonState = true;
         this.QuestionDataService = QuestionDataService;
+        //alert(QuestionDataService.textAnswers[this.counter]);
     }
 
     takepic() {
@@ -81,7 +82,9 @@ export class CommentViewPage {
       ;}
     }
     saveText(text) {
-      QuestionDataService.textAnswers.push(text);
+
+      QuestionDataService.textAnswers[this.counter] = text.name;
+      //alert(QuestionDataService.textAnswers[this.counter]);
     }
     convertImage(base64str,fileName){
       var binary = atob(base64str.replace(/\s/g, ''));

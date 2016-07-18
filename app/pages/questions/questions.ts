@@ -32,9 +32,14 @@ export class QuestionsPage{
         console.log("Question",this.currentQuestion)
         this.currentQuestionID = this.counter;
 
-       if(QuestionDataService.multipleChoiceAnswers[this.counter] != -1){
-           document.getElementById("button_answer"+this.counter).className = "answer enabled";
-       }
+
+    }
+
+    GetClass(grade: number){
+      if(grade == QuestionDataService.multipleChoiceAnswers[this.counter])
+        return "answer enabled";
+
+      return "answer disabled";
     }
 
     DisableOtherAnswers(number){
