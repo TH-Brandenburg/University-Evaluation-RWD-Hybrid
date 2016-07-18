@@ -21,7 +21,7 @@ export class TextQuestionComponent implements OnInit {
     private answerImage: File;
     private answerForm: FormGroup;
     private alreadyAnswered: boolean = false;
-    public base64Image: String;
+    public base64Image: File;
     private fileUploaded: boolean = false;
     private fileName: File;
 
@@ -42,7 +42,7 @@ export class TextQuestionComponent implements OnInit {
         document.getElementById("fileInput").addEventListener("change",  e => {this.readImageFile(e);}, false);
 
         //empty answer and Image
-        this.base64Image = '';
+        this.base64Image = undefined;
         this.fileName = undefined;
     }
 
@@ -81,8 +81,8 @@ export class TextQuestionComponent implements OnInit {
       }
         console.log('Image: ' + value['image']);
         console.log(this.dataService.getTextAnswersSize());
-        if (this.base64Image != '') {
-          this.dataService.addImageAnswer(this.fileName);
+        if (this.base64Image != undefined) {
+          this.dataService.addImageAnswer(this.base64Image);
         };
         if ((this.id + 1) < this.fetchedQuestions.length) {
             this.router.navigate(['/text-question', this.id + 1]);
