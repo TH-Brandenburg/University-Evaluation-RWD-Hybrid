@@ -22,3 +22,18 @@
   background: #FE2E2E;
   color: #FFFFFF;
 }
+
+.ion-md-arrow-back{
+  margin-left:0;
+  margin-right:auto;
+}
+.ion-md-arrow-forward{
+  margin-left:auto;
+  margin-right:0;
+}
+
+.swiper-slide{
+  .button{
+      width: 100%;
+  }
+}

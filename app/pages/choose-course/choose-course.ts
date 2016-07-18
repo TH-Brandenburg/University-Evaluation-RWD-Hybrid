@@ -1,12 +1,12 @@
 import {Page, Platform, Alert, NavController,NavParams} from 'ionic-angular';
-import {globalVar, globalText, Question,globalNavigation, Course,QuestionDataService} from '../../global'
+import {globalText, Question, Course,QuestionDataService} from '../../global'
 import {CommentViewPage} from '../comment-view/comment-view';
 import {SendViewPage} from '../send-view/send-view';
 import {QuestionsPage} from '../questions/questions';
 
 @Page({
     templateUrl: 'build/pages/choose-course/choose-course.html',
-    providers : [globalText,globalNavigation]
+    providers : [globalText]
 })
 
 export class CoursesPage{
@@ -20,8 +20,7 @@ export class CoursesPage{
     counter : Number;
     QuestionDataService: any;
 
-    constructor(private GlobalText: globalText,private navParams: NavParams,private nav : NavController,private globNav :globalNavigation) {
-        //this.allCourses = this.GlobalText.getStudyPaths();
+    constructor(private GlobalText: globalText,private navParams: NavParams,private nav : NavController) {
         this.QuestionDataService = QuestionDataService;
 
         this.type = navParams.get('type');
@@ -49,16 +48,28 @@ export class CoursesPage{
         this.DisableOtherCourses(number);
         QuestionDataService.studyPath = course;
     }
-
     goTo(type: String,counter:Number){
       if (type == "textQuestions"){
-        this.nav.push(CommentViewPage, {
-          pagecounter: counter
-        });
+        this.nav.setPages([{
+              page: CommentViewPage,
+              params: {pagecounter: counter}
+            }]);
       }
       if (type == "multipleChoiceQuestionDTOs"){
-      this.nav.push(QuestionsPage, {
-        pagecounter: counter
-      });}
+        this.nav.setPages([{
+              page: QuestionsPage,
+              params: {pagecounter: counter}
+            }]);
+      ;}
+      if (type == "sendPage"){  this.nav.setPages([{
+              page: SendViewPage,
+              params: {pagecounter: counter}
+            }]);
+      ;}
+      if (type == "choosePage"){  this.nav.setPages([{
+              page: CoursesPage,
+              params: {pagecounter: counter}
+            }]);
+      ;}
     }
 }

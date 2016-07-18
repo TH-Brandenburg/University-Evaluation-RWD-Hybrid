@@ -39,55 +39,6 @@ export class Answer {
 };
 
 
-export class globalVar {
-    static optionalerText: String = "";
-    static base64Image: String = "";
-    static choiceAnswers = new Array();
-    static selectedCourse: String = "";
-    static textAnswers = [];
-    static fileList = [];
-}
-
-
-export class NavigationItem {
-  constructor(type : String,counter : Number){
-    this.type = type;
-    this.counter = counter;
-  };
-  type : String;
-  counter : Number;
-};
-
-@Injectable()
-export class globalShare {
-  questionCounter: Number = 1;
-  constructor() {
-  }
-}
-
-@Injectable()
-export class globalNavigation{
-  TextQuestionsLenght : Number = 5;
-  TextmultipleChoiceAnswersLength : Number = 2;
-  nav : NavController;
-  generateNavigation(){
-    var navArray = [];
-    var completeQuestionLenght = 0;
-    // Adding Questions with uniqui Number
-    for (; completeQuestionLenght < this.TextQuestionsLenght; completeQuestionLenght++) {
-      navArray.push(new NavigationItem("TextQuestion",completeQuestionLenght));
-    }
-    for (; completeQuestionLenght < this.TextmultipleChoiceAnswersLength; completeQuestionLenght++) {
-        navArray.push(new NavigationItem("TextmultipleChoiceAnswers",completeQuestionLenght));
-    }
-    return navArray
-//    this.navigationArray.push(new NavigationItem("Comments",0));
-//    this.navigationArray.push(new NavigationItem("Send",0));
-  }
-
-}
-
-
 @Injectable()
 export class globalText {
   commmentView_editText: String = "Haben sie weitere Anmerkungen?";
@@ -95,13 +46,6 @@ export class globalText {
   commmentView_camera_addText: String = "aufnehmen";
   commmentView_camera_delText: String = "löschen";
   sendView_LabelText: String = "Abschicken";
-
-
-
-constructor() {
-
-
-  }
 
   getcommmentView_editText(){
     return this.commmentView_editText;
@@ -118,10 +62,7 @@ constructor() {
   getsendView_LabelText(){
     return this.sendView_LabelText;
   }
-
 }
-
-
 
 
 export class QuestionDataService{
@@ -136,14 +77,12 @@ export class QuestionDataService{
 
 	static getQuestionFailedCallback: (data: GetQuestionError) => void;
 	static getQuestionSucceedCallback: (data: Survey) => void;
-    static http:Http;
-    static survey : Survey;
-    static textQuestions = [];
-    static multipleChoiceQuestionDTOs = [];
-    
+  static http:Http;
+  static survey : Survey;
+  static textQuestions = [];
+  static multipleChoiceQuestionDTOs = [];
 
 	constructor(){
-        
 	}
 
 	static getSurveyData() {

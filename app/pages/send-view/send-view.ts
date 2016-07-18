@@ -1,7 +1,8 @@
 import { Page,NavController } from 'ionic-angular';
-import {globalText,globalNavigation,QuestionDataService} from "../../global";
+import {globalText,QuestionDataService} from "../../global";
 import {CommentViewPage} from '../comment-view/comment-view';
 import {QuestionsPage} from '../questions/questions';
+import {CoursesPage} from '../choose-course/choose-course';
 
 /*
   Generated class for the SendViewPage page.
@@ -11,13 +12,13 @@ import {QuestionsPage} from '../questions/questions';
 */
 @Page({
   templateUrl: 'build/pages/send-view/send-view.html',
-  providers : [globalText,globalNavigation]
+  providers : [globalText]
 })
 export class SendViewPage {
     private sendView_LabelText: String;
     commentViewPage = CommentViewPage;
     QuestionDataService: any;
-  constructor(private nav: NavController, private GlobalText: globalText,private globNav :globalNavigation) {
+  constructor(private nav: NavController, private GlobalText: globalText) {
     this.sendView_LabelText = this.GlobalText.getsendView_LabelText();
       this.QuestionDataService = QuestionDataService;
     }
@@ -26,13 +27,26 @@ export class SendViewPage {
     }
     goTo(type: String,counter:Number){
       if (type == "textQuestions"){
-        this.nav.push(CommentViewPage, {
-          pagecounter: counter
-        });
+        this.nav.setPages([{
+              page: CommentViewPage,
+              params: {pagecounter: counter}
+            }]);
       }
       if (type == "multipleChoiceQuestionDTOs"){
-      this.nav.push(QuestionsPage, {
-        pagecounter: counter
-      });}
+        this.nav.setPages([{
+              page: QuestionsPage,
+              params: {pagecounter: counter}
+            }]);
+      ;}
+      if (type == "sendPage"){  this.nav.setPages([{
+              page: SendViewPage,
+              params: {pagecounter: counter}
+            }]);
+      ;}
+      if (type == "choosePage"){  this.nav.setPages([{
+              page: CoursesPage,
+              params: {pagecounter: counter}
+            }]);
+      ;}
     }
-}
+  }

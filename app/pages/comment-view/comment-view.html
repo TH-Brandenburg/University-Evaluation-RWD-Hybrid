@@ -1,13 +1,16 @@
-<ion-navbar *navbar>
+<ion-navbar *navbar swipe-back-enabled="false">
   <ion-slides [options]="{initialSlide: 1}">
+    <ion-slide>
+      <button (click)="goTo('choosePage',-1)" type="submit" form="textInput"><ion-icon name="arrow-back"></ion-icon>Kurswahl <ion-icon name="arrow-forward"></ion-icon></button>
+    </ion-slide>
       <ion-slide *ngFor="let navitem of QuestionDataService.textQuestions; let i = index">
-          <button (click)="goTo('textQuestions',(i+1))" type="submit" form="textInput"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Auswahlfrage<ion-icon name="arrow-forward"></ion-icon></button>
+          <button (click)="goTo('textQuestions',(i+1))" type="submit" form="textInput"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Auswahlfrage <ion-icon name="arrow-forward"></ion-icon></button>
       </ion-slide>
       <ion-slide *ngFor="let navitem of QuestionDataService.multipleChoiceQuestionDTOs; let i = index">
-          <button (click)="goTo('multipleChoiceQuestionDTOs',(i+1))" type="submit" form="textInput"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Frage<ion-icon name="arrow-forward"></ion-icon></button>
+          <button (click)="goTo('multipleChoiceQuestionDTOs',(i+1))" type="submit" form="textInput"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Frage <ion-icon name="arrow-forward"></ion-icon></button>
       </ion-slide>
       <ion-slide>
-        <button [navPush]="sendViewPage" type="submit" form="textInput"><ion-icon name="arrow-back"></ion-icon>sendViewPage<ion-icon name="arrow-forward"></ion-icon></button>
+        <button (click)="goTo('sendPage',-1)" type="submit" form="textInput"><ion-icon name="arrow-back"></ion-icon>Absenden <ion-icon name="arrow-forward"></ion-icon></button>
       </ion-slide>
   </ion-slides>
 </ion-navbar>
