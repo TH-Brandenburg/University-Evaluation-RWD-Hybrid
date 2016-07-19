@@ -24,6 +24,7 @@ export class TextQuestionComponent implements OnInit {
     public base64Image: File;
     private fileUploaded: boolean = false;
     private fileName: File;
+    private thumbUrl: string;
 
     ngOnInit() {
         this.fetchedQuestions = JSON.parse(this.dataService.getQuestionTest());
@@ -49,7 +50,6 @@ export class TextQuestionComponent implements OnInit {
     readImageFile(e) {
       console.log("Image wird gelesen");
       this.fileName = e.target.files[0];
-      console.log(this.fileName);
       if (!this.fileName) {
         return;
       }
@@ -59,7 +59,15 @@ export class TextQuestionComponent implements OnInit {
         this.base64Image = contents.result;
       }
       reader.readAsBinaryString(this.fileName);
-    }
+
+      var readerThumbnail = new FileReader();
+      readerThumbnail.onloadend = file => {
+        this.thumbUrl = readerThumbnail.result;
+        console.log(this.thumbUrl);
+      }
+     readerThumbnail.readAsDataURL(this.fileName);
+     //this.fileUploaded = true;
+   }
 
     ngOnDestroy() {
         this.sub.unsubscribe();

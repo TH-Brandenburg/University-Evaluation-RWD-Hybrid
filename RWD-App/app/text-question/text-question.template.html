@@ -8,5 +8,5 @@
     <input type="file" accept="image/*;capture=camera, image/*" [formControl]="answerForm.controls['image']" id="fileInput">
     <button type="submit" class="ui button">Weiter</button>
    </form>
-   <img src="" *ngIf="fileUploaded"/>
+   <img src="{{thumbUrl}}" *ngIf="thumbUrl"/>
 </div>
