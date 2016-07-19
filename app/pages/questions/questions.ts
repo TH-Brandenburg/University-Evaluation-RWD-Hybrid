@@ -31,8 +31,6 @@ export class QuestionsPage{
         this.currentQuestion = QuestionDataService.multipleChoiceQuestionDTOs[this.counter];
         console.log("Question",this.currentQuestion)
         this.currentQuestionID = this.counter;
-
-
     }
 
     GetClass(grade: number){

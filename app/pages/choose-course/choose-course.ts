@@ -21,8 +21,6 @@ export class CoursesPage{
     QuestionDataService: any;
 
     constructor(private GlobalText: globalText,private navParams: NavParams,private nav : NavController) {
-        this.QuestionDataService = QuestionDataService;
-
         this.type = navParams.get('type');
         this.counter = navParams.get('counter');
         this.QuestionDataService = QuestionDataService;

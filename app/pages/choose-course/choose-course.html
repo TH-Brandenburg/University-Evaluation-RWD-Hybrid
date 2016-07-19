@@ -15,7 +15,7 @@
 <ion-content class="questions" padding>
     <h1>Wählen Sie einen Studiengang</h1>
     <div class="course_overview">
-        <div class="course disabled" *ngFor="let course of allCourses" id="button_course{{course.id}}" (click)=onClickCourse(course.id,course.course)>{{ course.course }}
+        <div class="course disabled" *ngFor="let course of allCourses; let i = index" id="button_course{{i}}" (click)=onClickCourse(i,course)>{{ course }}
         </div>
     </div>
 

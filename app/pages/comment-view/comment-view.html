@@ -21,9 +21,9 @@
             <ion-row>
                 <ion-label>{{commmentView_editText}}</ion-label>
             </ion-row>
-             <form id="textInput" #formData='ngForm' (ngSubmit)="saveText(formData.value)">
+             <form #formData='ngForm' id="textInput" (ngSubmit)="saveText(formData.value)">
                  <ion-row><ion-col id="textEdit">
-                    <ion-textarea type="text" ngControl="name" value="jo"></ion-textarea>
+                    <ion-textarea id="textInputArea" type="text" ngControl="name"></ion-textarea>
                  </ion-col>
                  </ion-row>
             </form>
@@ -31,6 +31,7 @@
                 <ion-col item-left width-50><button (click)="takepic()"><ion-icon name="camera"></ion-icon> {{commmentView_camera_addText}}</button></ion-col>
                 <ion-col item-right width-50><button [disabled]="deleteButtonState" class="ion-android-delete"(click)="deletepic()"><ion-icon name="close-circle"></ion-icon>{{commmentView_camera_delText}}</button></ion-col>
             </ion-row>
+            <button (click)="saveText()"><ion-icon name="arrow-back"></ion-icon>Absenden <ion-icon name="arrow-forward"></ion-icon></button>
     </ion-grid>
 
 

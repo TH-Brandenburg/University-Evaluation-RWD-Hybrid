@@ -1,5 +1,5 @@
 import {Page,NavController,ViewController,NavParams,Alert} from 'ionic-angular';
-import { Camera,File } from 'ionic-native';
+import { Camera } from 'ionic-native';
 import {globalText,QuestionDataService} from "../../global";
 import {QuestionsPage} from '../questions/questions';
 import {SendViewPage} from '../send-view/send-view';
@@ -34,10 +34,12 @@ export class CommentViewPage {
         this.commmentView_camera_addText = this.GlobalText.getcommmentView_camera_addText();
         this.commmentView_camera_delText = this.GlobalText.getcommmentView_camera_delText();
         this.nav = nav;
-        this.inputText = QuestionDataService.textAnswers[this.counter];
         this.deleteButtonState = true;
         this.QuestionDataService = QuestionDataService;
-        //alert(QuestionDataService.textAnswers[this.counter]);
+    }
+
+    ionViewLoaded() {
+    document.getElementsByClassName('text-input').item(0).setAttribute("placeholder",QuestionDataService.textAnswers[this.counter]);
     }
 
     takepic() {
@@ -46,9 +48,7 @@ export class CommentViewPage {
             targetWidth: 1000,
             targetHeight: 1000
         }).then((imageData) => {
-            // imageData is a base64 encoded string
-//            this.base64Image = "data:image/jpeg;base64," + imageData;
-//            QuestionDataService.answerFiles.push(this.convertImage("data:image/jpeg;base64," + imageData,this.commmentView_editText));
+            QuestionDataService.answerFiles.push(this.convertImage("data:image/jpeg;base64," + imageData,this.commmentView_editText));
             this.deleteButtonState = false;
         }, (err) => {
             console.log(err);
@@ -82,9 +82,8 @@ export class CommentViewPage {
       ;}
     }
     saveText(text) {
-
-      QuestionDataService.textAnswers[this.counter] = text.name;
-      //alert(QuestionDataService.textAnswers[this.counter]);
+//      let test = document.getElementsByClassName('text-input').item(0).setAttribute("placeholder","peter");
+      QuestionDataService.textAnswers[this.counter] = text;
     }
     convertImage(base64str,fileName){
       var binary = atob(base64str.replace(/\s/g, ''));
@@ -101,6 +100,7 @@ export class CommentViewPage {
 
     blobToFile(blob: Blob, fileName:string): File {
     var b: any = blob;
+    var f: File;
     b.lastModifiedDate = new Date();
     b.name = fileName;
     return <File>blob;
