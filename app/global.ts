@@ -73,7 +73,7 @@ export class QuestionDataService{
 	static studyPath = "Technologie- und Innovationsmanagement";
 	static textAnswers = [];
 	static multipleChoiceAnswers = [];
-	static answerFiles: File[] = [];
+	static answerFiles: String[] = [];
 
 	static getQuestionFailedCallback: (data: GetQuestionError) => void;
 	static getQuestionSucceedCallback: (data: Survey) => void;
@@ -122,9 +122,9 @@ export class QuestionDataService{
 		return QuestionDataService.deviceID;
 	}
 
-	static addAnswerImage(file:File){
-		QuestionDataService.answerFiles.push(file);
-	}
+	//static addAnswerImage(file:File){
+	//	QuestionDataService.answerFiles.push(file);
+	//}
 
 	static getQuestion(){
 		var headers = new Headers();
@@ -166,7 +166,7 @@ export class QuestionDataService{
 			formData.append("images",  new Blob());
 		}else{
 			for(let i = 0; i < QuestionDataService.answerFiles.length; i++){
-				formData.append("images",  this.answerFiles[i]);
+				formData.append("images",  QuestionDataService.convertImage(QuestionDataService.answerFiles[i],QuestionDataService.textQuestions[i].questionText));
 			}
 		}
 
@@ -233,4 +233,25 @@ export class QuestionDataService{
 		let errData:GetQuestionError = <GetQuestionError>(JSON.parse(err._body));
 		QuestionDataService.getQuestionFailedCallback(errData);
 	}
+
+  static convertImage(base64str,fileName){
+    var binary = atob(base64str.replace(/\s/g, ''));
+    var len = binary.length;
+    var buffer = new ArrayBuffer(len);
+    var view = new Uint8Array(buffer);
+    for (var i = 0; i < len; i++) {
+     view[i] = binary.charCodeAt(i);
+    }
+    var blob = new Blob( [view], { type: "application/pdf" });
+    var file = this.blobToFile(blob,fileName);
+    return file
+    }
+
+  static blobToFile(blob: Blob, fileName:string): File {
+  var b: any = blob;
+  var f: File;
+  b.lastModifiedDate = new Date();
+  b.name = fileName;
+  return <File>blob;
+  }
 }

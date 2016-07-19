@@ -32,6 +32,7 @@ export class CommentViewPage {
         this.commmentView_sendText = this.GlobalText.getsendView_LabelText();
         this.commmentView_camera_addText = this.GlobalText.getcommmentView_camera_addText();
         this.commmentView_camera_delText = this.GlobalText.getcommmentView_camera_delText();
+        this.base64Image = QuestionDataService.answerFiles[this.counter];
         this.nav = nav;
         this.deleteButtonState = true;
         this.QuestionDataService = QuestionDataService;
@@ -51,7 +52,7 @@ export class CommentViewPage {
             targetWidth: 1000,
             targetHeight: 1000
         }).then((imageData) => {
-            QuestionDataService.answerFiles.push(this.convertImage("data:image/jpeg;base64," + imageData,this.commmentView_editText));
+            QuestionDataService.answerFiles.push("data:image/jpeg;base64," + imageData,this.commmentView_editText);
             this.deleteButtonState = false;
         }, (err) => {
             console.log(err);
@@ -88,25 +89,5 @@ export class CommentViewPage {
 //    console.log(this.counter);
      QuestionDataService.textAnswers[this.counter] = text.name;
 //     console.log(QuestionDataService.textAnswers[this.counter]);
-    }
-    convertImage(base64str,fileName){
-      var binary = atob(base64str.replace(/\s/g, ''));
-      var len = binary.length;
-      var buffer = new ArrayBuffer(len);
-      var view = new Uint8Array(buffer);
-      for (var i = 0; i < len; i++) {
-       view[i] = binary.charCodeAt(i);
-      }
-      var blob = new Blob( [view], { type: "application/pdf" });
-      var file = this.blobToFile(blob,fileName);
-      return file
-      }
-
-    blobToFile(blob: Blob, fileName:string): File {
-    var b: any = blob;
-    var f: File;
-    b.lastModifiedDate = new Date();
-    b.name = fileName;
-    return <File>blob;
     }
   }
