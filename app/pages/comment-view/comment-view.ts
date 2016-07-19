@@ -4,8 +4,7 @@ import {globalText,QuestionDataService} from "../../global";
 import {QuestionsPage} from '../questions/questions';
 import {SendViewPage} from '../send-view/send-view';
 import {CoursesPage} from '../choose-course/choose-course';
-
-//import {QuestionDataService} from '../../QuestionDataService';
+import {isUndefined} from "ionic-angular/util";
 
 @Page({
     templateUrl: 'build/pages/comment-view/comment-view.html',
@@ -28,8 +27,8 @@ export class CommentViewPage {
     QuestionDataService: any;
 
     constructor(private nav: NavController, private GlobalText: globalText,private navParams: NavParams,private viewCtrl: ViewController) {
-        this.counter = navParams.get('pagecounter');
-        this.commmentView_editText = QuestionDataService.textQuestions[this.counter-1].questionText;
+        this.counter = navParams.get('pagecounter') -1;
+        this.commmentView_editText = QuestionDataService.textQuestions[this.counter].questionText;
         this.commmentView_sendText = this.GlobalText.getsendView_LabelText();
         this.commmentView_camera_addText = this.GlobalText.getcommmentView_camera_addText();
         this.commmentView_camera_delText = this.GlobalText.getcommmentView_camera_delText();
@@ -39,8 +38,12 @@ export class CommentViewPage {
     }
 
     ionViewLoaded() {
-    document.getElementsByClassName('text-input').item(0).setAttribute("placeholder",QuestionDataService.textAnswers[this.counter]);
-    }
+     if (typeof QuestionDataService.textAnswers[this.counter] != 'undefined' ){
+        document.getElementsByClassName('text-input').item(0).setAttribute("placeholder",QuestionDataService.textAnswers[this.counter]);
+      }
+
+   }
+
 
     takepic() {
         Camera.getPicture({
@@ -82,8 +85,9 @@ export class CommentViewPage {
       ;}
     }
     saveText(text) {
-//      let test = document.getElementsByClassName('text-input').item(0).setAttribute("placeholder","peter");
-      QuestionDataService.textAnswers[this.counter] = text;
+//    console.log(this.counter);
+     QuestionDataService.textAnswers[this.counter] = text.name;
+//     console.log(QuestionDataService.textAnswers[this.counter]);
     }
     convertImage(base64str,fileName){
       var binary = atob(base64str.replace(/\s/g, ''));

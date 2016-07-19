@@ -1,16 +1,16 @@
 <ion-navbar *navbar swipe-back-enabled="false">
   <ion-slides [options]="{initialSlide: 1}">
     <ion-slide>
-      <button (click)="goTo('choosePage',-1)" type="submit" form="textInput"><ion-icon name="arrow-back"></ion-icon>Kurswahl <ion-icon name="arrow-forward"></ion-icon></button>
+      <button (click)="goTo('choosePage',-1);saveText(formData.value)"><ion-icon name="arrow-back"></ion-icon>Kurswahl <ion-icon name="arrow-forward"></ion-icon></button>
     </ion-slide>
       <ion-slide *ngFor="let navitem of QuestionDataService.textQuestions; let i = index">
-          <button (click)="goTo('textQuestions',(i+1))" type="submit" form="textInput"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Auswahlfrage <ion-icon name="arrow-forward"></ion-icon></button>
+          <button (click)="goTo('textQuestions',(i+1));saveText(formData.value)"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Auswahlfrage <ion-icon name="arrow-forward"></ion-icon></button>
       </ion-slide>
       <ion-slide *ngFor="let navitem of QuestionDataService.multipleChoiceQuestionDTOs; let i = index">
-          <button (click)="goTo('multipleChoiceQuestionDTOs',(i+1))" type="submit" form="textInput"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Frage <ion-icon name="arrow-forward"></ion-icon></button>
+          <button (click)="goTo('multipleChoiceQuestionDTOs',(i+1));saveText(formData.value)"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Frage <ion-icon name="arrow-forward"></ion-icon></button>
       </ion-slide>
       <ion-slide>
-        <button (click)="goTo('sendPage',-1)" type="submit" form="textInput"><ion-icon name="arrow-back"></ion-icon>Absenden <ion-icon name="arrow-forward"></ion-icon></button>
+        <button (click)="goTo('sendPage',-1);saveText(formData.value)"><ion-icon name="arrow-back"></ion-icon>Absenden <ion-icon name="arrow-forward"></ion-icon></button>
       </ion-slide>
   </ion-slides>
 </ion-navbar>
@@ -21,7 +21,7 @@
             <ion-row>
                 <ion-label>{{commmentView_editText}}</ion-label>
             </ion-row>
-             <form #formData='ngForm' id="textInput" (ngSubmit)="saveText(formData.value)">
+             <form #formData='ngForm' id="textInput">
                  <ion-row><ion-col id="textEdit">
                     <ion-textarea id="textInputArea" type="text" ngControl="name"></ion-textarea>
                  </ion-col>
@@ -31,7 +31,6 @@
                 <ion-col item-left width-50><button (click)="takepic()"><ion-icon name="camera"></ion-icon> {{commmentView_camera_addText}}</button></ion-col>
                 <ion-col item-right width-50><button [disabled]="deleteButtonState" class="ion-android-delete"(click)="deletepic()"><ion-icon name="close-circle"></ion-icon>{{commmentView_camera_delText}}</button></ion-col>
             </ion-row>
-            <button (click)="saveText()"><ion-icon name="arrow-back"></ion-icon>Absenden <ion-icon name="arrow-forward"></ion-icon></button>
     </ion-grid>
 
 
