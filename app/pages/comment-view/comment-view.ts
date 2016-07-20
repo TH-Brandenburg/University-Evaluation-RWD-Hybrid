@@ -38,12 +38,12 @@ export class CommentViewPage {
         this.QuestionDataService = QuestionDataService;
     }
 
-    ionViewLoaded() {
-     if (typeof QuestionDataService.textAnswers[this.counter] != 'undefined' ){
-        document.getElementsByClassName('text-input').item(0).setAttribute("placeholder",QuestionDataService.textAnswers[this.counter]);
-      }
-
-   }
+   //  ionViewLoaded() {
+   //   if (typeof QuestionDataService.textAnswers[this.counter] != 'undefined' ){
+   //      document.getElementsByClassName('text-input').item(0).setAttribute("placeholder",QuestionDataService.textAnswers[this.counter]);
+   //    }
+   //
+   // }
 
 
     takepic() {
@@ -86,8 +86,10 @@ export class CommentViewPage {
       ;}
     }
     saveText(text) {
-//    console.log(this.counter);
-     QuestionDataService.textAnswers[this.counter] = text.name;
-//     console.log(QuestionDataService.textAnswers[this.counter]);
+     QuestionDataService.textAnswers[this.counter] = document.getElementsByTagName('textarea').item(0).value;
+    }
+
+    fillTextarea() {
+        return QuestionDataService.textAnswers[this.counter];
     }
   }

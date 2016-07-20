@@ -23,7 +23,7 @@
             </ion-row>
              <form #formData='ngForm' id="textInput">
                  <ion-row><ion-col id="textEdit">
-                    <ion-textarea id="textInputArea" type="text" ngControl="name"></ion-textarea>
+                     <textarea>{{fillTextarea()}}</textarea>
                  </ion-col>
                  </ion-row>
             </form>
@@ -39,4 +39,5 @@
     <ion-card>
         <img [src]="base64Image" *ngIf="base64Image" />
     </ion-card>
+
 </ion-content>
