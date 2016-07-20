@@ -3,11 +3,12 @@ import { QuestionComponent } from'./multiple-choice-question/question-showcase.c
 import { TextQuestionComponent } from'./text-question/text-question-showcase.component';
 import { ScannerComponent } from'./scanner/scanner.component';
 import { SenderComponent } from'./sender/sender.component';
+import {StartComponent} from './start/start.component';
 import { AppComponent } from'./app.component';
 import { ChooseCourseComponent } from './choose-course/choose-course.component';
 
 const routes: RouterConfig = [
-    { path: '', component: AppComponent },
+    { path: '', component: StartComponent },
     { path: 'scan', component: ScannerComponent },
     { path: 'course', component: ChooseCourseComponent },
     { path: 'question/:id', component: QuestionComponent },
