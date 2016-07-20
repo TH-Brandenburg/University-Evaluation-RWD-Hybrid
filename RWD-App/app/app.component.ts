@@ -7,7 +7,6 @@ import { NavigationComponent } from './navigation/navigation.component';
 @Component({
   selector: 'body',
   template: `
-            <navigation *ngIf="appStarted"></navigation>
             <router-outlet></router-outlet>
             `,
 directives: [ROUTER_DIRECTIVES, NavigationComponent],
