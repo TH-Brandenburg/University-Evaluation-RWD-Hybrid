@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionDataService, Question, Answer, Survey } from '../questions.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
     selector: 'question-show',
     moduleId: module.id,
-    templateUrl: 'question-showcase.template.html'
+    templateUrl: 'question-showcase.template.html',
+    directives: [NavigationComponent],
 })
 
 export class QuestionComponent implements OnInit {

@@ -17,11 +17,11 @@ export class AppComponent {
   appStarted:boolean = false;
   constructor(private router:Router){
     this.router.events.subscribe(path => {
-      if(path.url == "/"){
-        this.appStarted = false;
-      }else{
-        this.appStarted = true;
-      }
+          if(path.url == "/"){
+            this.appStarted = false;
+          }else{
+            this.appStarted = true;
+          }
         }
     );
   }

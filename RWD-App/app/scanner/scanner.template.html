@@ -29,6 +29,7 @@
             try{
                 JSON.parse(data);
                 localStorage.setItem("scanner", data);
+                localStorage.setItem("appStarted", true);
                 location.replace('../../course');
             }catch(e){
             }
