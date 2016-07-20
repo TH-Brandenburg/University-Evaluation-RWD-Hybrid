@@ -23,9 +23,9 @@ export interface Survey {
 
 @Injectable()
 export class QuestionDataService{
-	private voteToken:string = "specific";
+	private voteToken:string = null;
 	private deviceID:string = "123";
-	private address:string = 'http://localhost:8080/v1';
+	private address:string = null;
 	private studyPath:string = "Technologie- und Innovationsmanagement";
 	private textAnswers = [];
 	private multipleChoiceAnswers = [];
@@ -36,7 +36,7 @@ export class QuestionDataService{
 
 	getQuestion(){
 		let infos;
-		this.http.post(this.address + "/questions", {"voteToken":this.voteToken, "deviceID":this.deviceID},{})
+		this.http.post(this.address + "/v1/questions", {"voteToken":this.voteToken, "deviceID":this.deviceID},{})
 		.map(res => res.text())
 		.subscribe(
 		  data => infos = data,
@@ -53,10 +53,10 @@ export class QuestionDataService{
 	sendAnswers(){
 		let uploader = new MultipartUploader(this.address);
 		let multipartItem = new MultipartItem(uploader);
-		uploader = new MultipartUploader(this.address + "/answers");
-		uploader.url = this.address + "/answers";
+		uploader = new MultipartUploader(this.address + "/v1/answers");
+		uploader.url = this.address + "/v1/answers";
 		multipartItem = new MultipartItem(uploader);
-		multipartItem.url = this.address + "/answers";
+		multipartItem.url = this.address + "/v1/answers";
 		var body = JSON.stringify({"voteToken":this.voteToken, "studyPath":this.studyPath, "textAnswers":this.textAnswers, "mcAnswers":this.multipleChoiceAnswers, "deviceID":this.deviceID});
 		if (multipartItem == null){
 			multipartItem = new MultipartItem(uploader);
@@ -114,6 +114,7 @@ export class QuestionDataService{
 	}
 
 	setVoteToken(voteToken:string){
+		if(voteToken != undefined && voteToken != null && this.voteToken == null)
 		this.voteToken = voteToken;
 	}
 
@@ -126,7 +127,9 @@ export class QuestionDataService{
 	}
 
 	setAddress(address:string){
-		this.address = address;
+		if(address != undefined && address != null && this.address == null) {
+			this.address = address;
+		}
 	}
 
 	getMultipleChoiceAnswersSize(){

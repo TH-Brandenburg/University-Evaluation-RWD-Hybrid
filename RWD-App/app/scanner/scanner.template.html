@@ -26,7 +26,12 @@
 
         $scope.onSuccess = function(data) {
             $scope.data = data;
-            location.replace('../../course');
+            try{
+                JSON.parse(data);
+                localStorage.setItem("scanner", data);
+                location.replace('../../course');
+            }catch(e){
+            }
         };
         $scope.onError = function(error) {
             $scope.error = error;
