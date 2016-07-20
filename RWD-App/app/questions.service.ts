@@ -24,14 +24,15 @@ export interface Survey {
 @Injectable()
 export class QuestionDataService{
 	private voteToken:string = null;
-	private deviceID:string = "123";
+	private deviceID:string = null;
 	private address:string = null;
-	private studyPath:string = "Technologie- und Innovationsmanagement";
+	private studyPath:string = null;
 	private textAnswers = [];
 	private multipleChoiceAnswers = [];
 	private imageAnswers: File[] = [];
 
 	constructor(private http:Http){
+		this.generateDeviceIdIfNotExists();
 	}
 
 	getQuestion(){
@@ -118,8 +119,17 @@ export class QuestionDataService{
 		this.voteToken = voteToken;
 	}
 
-	setDeviceId(devideId:string){
-		this.deviceID = devideId;
+	generateDeviceIdIfNotExists(){
+		if(this.deviceID == null){
+			var d = new Date().getTime();
+			var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+				var r = (d + Math.random()*16)%16 | 0;
+				d = Math.floor(d/16);
+				return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+			});
+			this.deviceID = uuid;
+		}
+		return this.deviceID;
 	}
 
 	setStudyPath(studyPath: string){
