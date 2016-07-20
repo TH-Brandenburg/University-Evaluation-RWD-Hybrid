@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionDataService } from '../questions.service';
 import { Router } from '@angular/router';
+import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
   selector: 'choose-course',
   moduleId: module.id,
-  templateUrl: 'choose-course.template.html'
+  templateUrl: 'choose-course.template.html',
+  directives: [NavigationComponent],
 })
 
 export class ChooseCourseComponent implements OnInit {

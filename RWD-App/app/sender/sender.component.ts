@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { QuestionDataService } from '../questions.service';
 import { Router } from '@angular/router';
+import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
     selector: 'sender',
     moduleId: module.id,
     templateUrl: 'sender.template.html',
+    directives: [NavigationComponent],
 })
 
 export class SenderComponent {

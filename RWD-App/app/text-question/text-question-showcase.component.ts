@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import {  FORM_DIRECTIVES,  REACTIVE_FORM_DIRECTIVES,  FormBuilder,  FormGroup  } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { QuestionDataService, Question, Answer, Survey } from '../questions.service';
+import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
     selector: 'test-question-show',
     moduleId: module.id,
     templateUrl: 'text-question.template.html',
-    directives: [FORM_DIRECTIVES, REACTIVE_FORM_DIRECTIVES],
+    directives: [FORM_DIRECTIVES, REACTIVE_FORM_DIRECTIVES, NavigationComponent],
 })
 
 export class TextQuestionComponent implements OnInit {

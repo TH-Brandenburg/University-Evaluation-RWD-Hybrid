@@ -162,6 +162,12 @@ export class QuestionDataService{
     return this.imageAnswers;
   }
 
+  checkUserLogin(){
+    if(this.voteToken) {
+      return true;
+    }
+  }
+
   logError(err) {
 	console.error('There was an error: ' + err);
   }
