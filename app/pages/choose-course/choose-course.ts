@@ -25,6 +25,15 @@ export class CoursesPage{
         this.counter = navParams.get('counter');
         this.QuestionDataService = QuestionDataService;
         this.allCourses = this.QuestionDataService.survey.studyPaths;
+
+
+    }
+
+    GetClass(c: String){
+        if(c == QuestionDataService.studyPath)
+           return "course enabled";
+
+        return "course disabled";
     }
 
 
