@@ -92,6 +92,21 @@ button {
     max-width:50em;
 }
 
+.red-badge{
+    background-color:red;
+}
+
+.badge-and-image{
+    position: relative;
+    display: inline-block;
+}
+
+.badge-div{
+    position:absolute;
+    top:-8px;
+    right: -8px;
+}
+
 @media
   (max-device-width: 800px)
   and (orientation: portrait) {

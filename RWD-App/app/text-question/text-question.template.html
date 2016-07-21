@@ -10,5 +10,8 @@
     <input type="file" accept="image/*;capture=camera, image/*" [formControl]="answerForm.controls['image']" id="fileInput">
     <button type="submit" class="ui button">Weiter</button>
    </form>
-   <img src="{{thumbUrl}}" *ngIf="thumbUrl"/>
+    <div class="badge-and-image" *ngIf="thumbUrl">
+        <img src="{{thumbUrl}}" *ngIf="thumbUrl"/>
+        <div class="badge-div"><span class ="badge red-badge" (click)="removeImage();"><span class = "glyphicon glyphicon-remove"></span></span></div>
+    </div>
 </div>

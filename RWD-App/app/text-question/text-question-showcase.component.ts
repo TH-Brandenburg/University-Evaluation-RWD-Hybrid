@@ -104,4 +104,8 @@ export class TextQuestionComponent implements OnInit {
             }
         }
     }
+
+    removeImage(){
+        this.thumbUrl = null;
+    }
 }
