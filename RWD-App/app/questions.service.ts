@@ -180,7 +180,26 @@ export class QuestionDataService{
 				this.imageAnswers.splice(i, 1);
 			}
 		}
-		return image;
+	}
+
+	getTextAnswer(questionId:any){
+		for (var givenAnswer of this.textAnswers) {
+			if (givenAnswer['questionID'] === questionId) {
+				return givenAnswer;
+			}
+		}
+		return "";
+	}
+
+	deleteTextAnswer(questionId:any){
+		let i = 0;
+		for (var givenAnswer of this.textAnswers) {
+			if (givenAnswer['questionID'] === questionId) {
+				this.textAnswers.splice(i, 1);
+			}
+			i++;
+		}
+		return "";
 	}
 
   checkUserLogin(){

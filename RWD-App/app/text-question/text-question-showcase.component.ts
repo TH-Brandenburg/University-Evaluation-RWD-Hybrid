@@ -96,6 +96,7 @@ export class TextQuestionComponent implements OnInit {
     }
 
     onSubmit(value: string) {
+        this.dataService.deleteTextAnswer(this.fetchedQuestions[this.id].questionID);
         if (value['text'] != ''){
         this.dataService.addTextAnswer(this.fetchedQuestions[this.id].questionID, this.fetchedQuestions[this.id].questionText, value['text']);
       }
@@ -131,7 +132,7 @@ export class TextQuestionComponent implements OnInit {
             this.thumbUrl = imageObject.thumbUrl;
         }
         this.fileName = undefined;
-        this.answerText = "";
+        this.answerText = this.dataService.getTextAnswer(this.fetchedQuestions[this.id].questionID).answerText;
         this.answerForm = this.fb.group({
             'text': [this.answerText],
             'image': undefined,

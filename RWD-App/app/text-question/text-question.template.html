@@ -2,13 +2,13 @@
 
 <h1 class="questionText">{{fetchedQuestions[id]?.questionText}}</h1>
 <div class="answer-group">
-  <form id = "textForm" [formGroup]="answerForm" (ngSubmit)="onSubmit(answerForm.value)" class="ui form" id="textForm">
+  <form id = "textForm" [formGroup]="answerForm" class="ui form" id="textForm">
     <input type="text"
                id="textInput"
                placeholder="Geben sie eine Antwort ein."
                [formControl]="answerForm.controls['text']">
     <input type="file" accept="image/*;capture=camera, image/*" [formControl]="answerForm.controls['image']" id="fileInput">
-    <button type="submit" class="ui button">Weiter</button>
+    <button type="submit" class="ui button" (click)="onSubmit(answerForm.value)">Weiter</button>
    </form>
     <button (click)=deleteImage()>Bild löschen</button>
     <div class="badge-and-image" *ngIf="thumbUrl">
