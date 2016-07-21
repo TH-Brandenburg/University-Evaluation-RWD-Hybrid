@@ -29,7 +29,7 @@ export class QuestionDataService{
 	private studyPath:string = null;
 	private textAnswers = [];
 	private multipleChoiceAnswers = [];
-	private imageAnswers: File[] = [];
+	private imageAnswers:any = [];
 
 	constructor(private http:Http){
 		this.generateDeviceIdIfNotExists();
@@ -86,8 +86,8 @@ export class QuestionDataService{
 		}
 	}
 
-	addImageAnswer(file:File){
-		this.imageAnswers.push(file);
+	addImageAnswer(id:any, thumbUrl:string, file:File){
+		this.imageAnswers.push({"id":id, "thumbUrl":thumbUrl, "file":file});
 	}
 
 	addTextAnswer(questionID: number, questionText:string, answerText:string){
@@ -161,6 +161,27 @@ export class QuestionDataService{
   getImages(){
     return this.imageAnswers;
   }
+
+	getImageObject(id:any){
+		let image:any = undefined;
+		for(let i = 0; i < this.imageAnswers.length; i++){
+			let currentImageAnswer:any = this.imageAnswers[i];
+			if(id == currentImageAnswer.id){
+				image = currentImageAnswer;
+			}
+		}
+		return image;
+	}
+
+	deleteImage(id:any){
+		let image:any = undefined;
+		for(let i = 0; i < this.imageAnswers.length; i++){
+			if(id == this.imageAnswers[i].id){
+				this.imageAnswers.splice(i, 1);
+			}
+		}
+		return image;
+	}
 
   checkUserLogin(){
     if(this.voteToken) {

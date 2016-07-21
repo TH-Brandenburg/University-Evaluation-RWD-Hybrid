@@ -101,11 +101,11 @@ export class TextQuestionComponent implements OnInit {
       }
         console.log('Image: ' + value['image']);
         console.log(this.dataService.getTextAnswersSize());
+        this.dataService.deleteImage(this.id);
         if (this.base64Image != undefined) {
-          this.dataService.addImageAnswer(this.base64Image);
+          this.dataService.addImageAnswer(this.id, this.thumbUrl, this.base64Image);
         };
         this.answerText = "";
-        this.thumbUrl = undefined;
         this.answerForm = this.fb.group({
             'text': [this.answerText],
             'image': undefined,
@@ -123,9 +123,14 @@ export class TextQuestionComponent implements OnInit {
     }
 
     loadView(){
+        let imageObject:any = this.dataService.getImageObject(this.id);
         this.base64Image = undefined;
-        this.fileName = undefined;
         this.thumbUrl = undefined;
+        if(imageObject != undefined){
+            this.base64Image = imageObject.file;
+            this.thumbUrl = imageObject.thumbUrl;
+        }
+        this.fileName = undefined;
         this.answerText = "";
         this.answerForm = this.fb.group({
             'text': [this.answerText],
