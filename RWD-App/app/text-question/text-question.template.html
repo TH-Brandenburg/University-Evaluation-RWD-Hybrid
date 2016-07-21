@@ -14,4 +14,6 @@
         <img src="{{thumbUrl}}" *ngIf="thumbUrl"/>
         <div class="badge-div"><span class ="badge red-badge" (click)="removeImage();"><span class = "glyphicon glyphicon-remove"></span></span></div>
     </div>
+    <button (click)=deleteImage()>Bild löschen</button>
+    <img src="{{thumbUrl}}" *ngIf="thumbUrl"/>
 </div>

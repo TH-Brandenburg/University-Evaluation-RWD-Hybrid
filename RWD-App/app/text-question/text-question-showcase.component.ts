@@ -83,6 +83,14 @@ export class TextQuestionComponent implements OnInit {
           });
     }
 
+    deleteImage() {
+      this.base64Image = undefined;
+      this.fileName = undefined;
+      this.thumbUrl = undefined;
+      var text = document.getElementById('textInput').value;
+      document.getElementById('textForm').reset();
+      document.getElementById('textInput').value = text;
+    }
 
     onSubmit(value: string) {
         if (value['text'] != ''){
@@ -93,6 +101,7 @@ export class TextQuestionComponent implements OnInit {
         if (this.base64Image != undefined) {
           this.dataService.addImageAnswer(this.base64Image);
         };
+        document.getElementById('textForm').reset();
         if ((this.id + 1) < this.fetchedQuestions.length) {
             this.router.navigate(['/text-question', this.id + 1]);
         } else {
