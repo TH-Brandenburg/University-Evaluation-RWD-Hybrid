@@ -17,8 +17,10 @@ export class ChooseCourseComponent implements OnInit {
   this.availableCourses = JSON.parse(this.dataService.getQuestionTest());
     let scannerData = JSON.parse(localStorage.getItem('scanner'));
     localStorage.removeItem('scanner');
-    this.dataService.setAddress(scannerData.host);
-    this.dataService.setVoteToken(scannerData.voteToken);
+    if(scannerData != null && scannerData != undefined){
+      this.dataService.setAddress(scannerData.host);
+      this.dataService.setVoteToken(scannerData.voteToken);
+    }
   }
   constructor(private dataService: QuestionDataService,
   private router: Router){
