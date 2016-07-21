@@ -39,6 +39,7 @@ export class TextQuestionComponent implements OnInit {
         }
         this.sub = this.route.params.subscribe(params => {let id = +params['id'];
             this.id = id;
+            this.loadView();
         });
         this.givenImages = this.dataService.getImages();
         document.getElementById("fileInput").addEventListener("change",  e => {this.readImageFile(e);}, false);
@@ -119,5 +120,16 @@ export class TextQuestionComponent implements OnInit {
                 this.router.navigate(['/send'])
             }
         }
+    }
+
+    loadView(){
+        this.base64Image = undefined;
+        this.fileName = undefined;
+        this.thumbUrl = undefined;
+        this.answerText = "";
+        this.answerForm = this.fb.group({
+            'text': [this.answerText],
+            'image': undefined,
+        });
     }
 }
