@@ -2,7 +2,7 @@
 
 <h1 class="questionText">{{fetchedQuestions[id]?.questionText}}</h1>
 <div class="answer-group">
-  <form [formGroup]="answerForm" (ngSubmit)="onSubmit(answerForm.value)" class="ui form">
+  <form id = "textForm" [formGroup]="answerForm" (ngSubmit)="onSubmit(answerForm.value)" class="ui form" id="textForm">
     <input type="text"
                id="textInput"
                placeholder="Geben sie eine Antwort ein."
@@ -10,10 +10,9 @@
     <input type="file" accept="image/*;capture=camera, image/*" [formControl]="answerForm.controls['image']" id="fileInput">
     <button type="submit" class="ui button">Weiter</button>
    </form>
+    <button (click)=deleteImage()>Bild löschen</button>
     <div class="badge-and-image" *ngIf="thumbUrl">
         <img src="{{thumbUrl}}" *ngIf="thumbUrl"/>
-        <div class="badge-div"><span class ="badge red-badge" (click)="removeImage();"><span class = "glyphicon glyphicon-remove"></span></span></div>
+        <div class="badge-div"><span class ="badge red-badge" (click)=deleteImage()><span class = "glyphicon glyphicon-remove"></span></span></div>
     </div>
-    <button (click)=deleteImage()>Bild löschen</button>
-    <img src="{{thumbUrl}}" *ngIf="thumbUrl"/>
 </div>

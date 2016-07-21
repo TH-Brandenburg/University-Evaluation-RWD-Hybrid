@@ -76,8 +76,8 @@ export class TextQuestionComponent implements OnInit {
 
     constructor(private dataService: QuestionDataService,
         private route: ActivatedRoute,
-        private router: Router, fb: FormBuilder) {
-          this.answerForm = fb.group({
+        private router: Router, private fb: FormBuilder) {
+          this.answerForm = this.fb.group({
             'text': [this.answerText],
             'image': undefined,
           });
@@ -87,9 +87,11 @@ export class TextQuestionComponent implements OnInit {
       this.base64Image = undefined;
       this.fileName = undefined;
       this.thumbUrl = undefined;
-      var text = document.getElementById('textInput').value;
-      document.getElementById('textForm').reset();
-      document.getElementById('textInput').value = text;
+      this.answerText = document.getElementById('textInput')["value"];
+      this.answerForm = this.fb.group({
+        'text': [this.answerText],
+        'image': undefined,
+      });
     }
 
     onSubmit(value: string) {
@@ -101,7 +103,12 @@ export class TextQuestionComponent implements OnInit {
         if (this.base64Image != undefined) {
           this.dataService.addImageAnswer(this.base64Image);
         };
-        document.getElementById('textForm').reset();
+        this.answerText = "";
+        this.thumbUrl = undefined;
+        this.answerForm = this.fb.group({
+            'text': [this.answerText],
+            'image': undefined,
+        });
         if ((this.id + 1) < this.fetchedQuestions.length) {
             this.router.navigate(['/text-question', this.id + 1]);
         } else {
@@ -112,9 +119,5 @@ export class TextQuestionComponent implements OnInit {
                 this.router.navigate(['/send'])
             }
         }
-    }
-
-    removeImage(){
-        this.thumbUrl = null;
     }
 }
