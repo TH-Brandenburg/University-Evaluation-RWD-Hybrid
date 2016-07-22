@@ -3,13 +3,13 @@
 
 <div class="main-content" ng-app="App" >
 
-    <h2>QR-Scanner</h2>
-    <p>Bitte scannen Sie den QR Code, um mit der Evaluation zu beginnen.</p>
+    <h2 style="text-align: center ; color: #369;font-family: Arial;">QR-Scanner</h2>
+    <p style="text-align: center ; color: #369;font-family: Arial;">Bitte scannen Sie den QR Code, um mit der Evaluation zu beginnen.</p>
 
-    <div  ng-controller="qrCrtl">
-        <p><label>Data:</label> {{data}}</p>
-        <p><label>Error:</label> {{error}}</p>
+    <div  ng-controller="qrCrtl"  align="center">
+        <!--<p><label>Error:</label> {{error}}</p>-->
         <qr-scanner width="400" height="300" ng-success="onSuccess(data)" ng-error="onError(error)" />
+        <p style="text-align: center ; color: #369;font-family: Arial;"><label>Result:</label> {{data}}</p>
     </div>
 
 
