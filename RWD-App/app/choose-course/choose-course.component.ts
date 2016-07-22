@@ -19,7 +19,7 @@ export class ChooseCourseComponent implements OnInit {
     if(scannerData != null && scannerData != undefined){
       this.dataService.setAddress(scannerData.host);
       this.dataService.setVoteToken(scannerData.voteToken);
-      //let questions = this.dataService.getQuestions();
+      // let questions = this.dataService.getQuestions();
       let questions = this.dataService.getQuestionTest();
       this.dataService.setQuestions(questions);
       if(questions == undefined) {

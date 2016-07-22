@@ -26,7 +26,7 @@ export interface Survey {
 export class QuestionDataService{
 	private voteToken:string = null;
 	private deviceID:string = null;
-	private address:string = null;
+	private address:string = "";
 	private studyPath:string = null;
 	private textAnswers = [];
 	private multipleChoiceAnswers = [];
@@ -65,8 +65,6 @@ export class QuestionDataService{
 		if (multipartItem.formData == null){
 			multipartItem.formData = new FormData();
 		}
-		multipartItem.callback = (data) => {if (data){console.debug("Upload success");}else{
-			console.error("Upload error");};};
 		multipartItem.formData.append("answers-dto",  body);
 		return multipartItem;
 	}
@@ -91,6 +89,7 @@ export class QuestionDataService{
 
 			});
 		}
+		return multipartItem;
 	}
 
 	addImageAnswer(id:any, thumbUrl:string, file:File){
@@ -145,7 +144,7 @@ export class QuestionDataService{
 	}
 
 	setAddress(address:string){
-		if(address != undefined && address != null && this.address == null) {
+		if(address != undefined && address != null && this.address == "") {
 			this.address = address;
 		}
 	}
