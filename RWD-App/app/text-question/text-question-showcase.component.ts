@@ -24,7 +24,7 @@ export class TextQuestionComponent implements OnInit {
     private alreadyAnswered: boolean = false;
     public base64Image: File;
     private fileUploaded: boolean = false;
-    private fileName: File;
+    private file: File;
     private thumbUrl: string;
 
     ngOnInit() {
@@ -46,13 +46,13 @@ export class TextQuestionComponent implements OnInit {
 
         //empty answer and Image
         this.base64Image = undefined;
-        this.fileName = undefined;
+        this.file = undefined;
     }
 
     readImageFile(e) {
       console.log("Image wird gelesen");
-      this.fileName = e.target.files[0];
-      if (!this.fileName) {
+      this.file = e.target.files[0];
+      if (!this.file) {
         return;
       }
       var reader = new FileReader();
@@ -60,14 +60,14 @@ export class TextQuestionComponent implements OnInit {
         var contents: any = file.target;
         this.base64Image = contents.result;
       }
-      reader.readAsBinaryString(this.fileName);
+      reader.readAsBinaryString(this.file);
 
       var readerThumbnail = new FileReader();
       readerThumbnail.onloadend = file => {
         this.thumbUrl = readerThumbnail.result;
         console.log(this.thumbUrl);
       }
-     readerThumbnail.readAsDataURL(this.fileName);
+     readerThumbnail.readAsDataURL(this.file);
      //this.fileUploaded = true;
    }
 
@@ -86,7 +86,7 @@ export class TextQuestionComponent implements OnInit {
 
     deleteImage() {
       this.base64Image = undefined;
-      this.fileName = undefined;
+      this.file = undefined;
       this.thumbUrl = undefined;
       this.answerText = document.getElementById('textInput')["value"];
       this.answerForm = this.fb.group({
@@ -97,14 +97,14 @@ export class TextQuestionComponent implements OnInit {
 
     onSubmit(value: string) {
         this.dataService.deleteTextAnswer(this.fetchedQuestions[this.id].questionID);
-        if (value['text'] != ''){
+        if (value['text'] != '' || value['text'] != null || value['text'] != undefined){
         this.dataService.addTextAnswer(this.fetchedQuestions[this.id].questionID, this.fetchedQuestions[this.id].questionText, value['text']);
       }
         console.log('Image: ' + value['image']);
         console.log(this.dataService.getTextAnswersSize());
         this.dataService.deleteImage(this.id);
-        if (this.base64Image != undefined) {
-          this.dataService.addImageAnswer(this.id, this.thumbUrl, this.base64Image);
+        if (this.file != undefined) {
+          this.dataService.addImageAnswer(this.id, this.thumbUrl, this.file);
         };
         this.answerText = "";
         this.answerForm = this.fb.group({
@@ -131,7 +131,7 @@ export class TextQuestionComponent implements OnInit {
             this.base64Image = imageObject.file;
             this.thumbUrl = imageObject.thumbUrl;
         }
-        this.fileName = undefined;
+        this.file = undefined;
         this.answerText = this.dataService.getTextAnswer(this.fetchedQuestions[this.id].questionID).answerText;
         this.answerForm = this.fb.group({
             'text': [this.answerText],

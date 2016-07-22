@@ -11,15 +11,31 @@ import { NavigationComponent } from '../navigation/navigation.component';
 })
 
 export class ChooseCourseComponent implements OnInit {
-  availableCourses: any;
+  availableCourses: any = {"studyPath":{}};
   ngOnInit() {
   //get survey data on initialization
-  this.availableCourses = JSON.parse(this.dataService.getQuestionTest());
     let scannerData = JSON.parse(localStorage.getItem('scanner'));
     localStorage.removeItem('scanner');
     if(scannerData != null && scannerData != undefined){
       this.dataService.setAddress(scannerData.host);
       this.dataService.setVoteToken(scannerData.voteToken);
+      //let questions = this.dataService.getQuestions();
+      let questions = this.dataService.getQuestionTest();
+      this.dataService.setQuestions(questions);
+      if(questions == undefined) {
+        this.dataService.startQuestionRequest().subscribe(
+            data => {
+              this.dataService.setQuestions(data);
+              this.availableCourses = JSON.parse(this.dataService.getQuestions());
+            },
+            err => {this.dataService.logError(err); window.location.href = '/app/scanner/scanner.template.html';},
+            () => console.log('Request questions completed')
+        );
+      }
+    }
+    let questions = this.dataService.getQuestions();
+    if(questions != undefined){
+      this.availableCourses = JSON.parse(questions);
     }
   }
   constructor(private dataService: QuestionDataService,

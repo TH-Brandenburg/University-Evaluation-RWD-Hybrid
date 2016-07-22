@@ -30,21 +30,20 @@ export class QuestionDataService{
 	private textAnswers = [];
 	private multipleChoiceAnswers = [];
 	private imageAnswers:any = [];
+	private files:File[] = [];
+	private questions:string = undefined;
 
 	constructor(private http:Http){
 		this.generateDeviceIdIfNotExists();
 	}
 
-	getQuestion(){
-		let infos;
-		this.http.post(this.address + "/v1/questions", {"voteToken":this.voteToken, "deviceID":this.deviceID},{})
-		.map(res => res.text())
-		.subscribe(
-		  data => infos = data,
-		  err => this.logError(err),
-		  () => console.log('Request questions completed')
-		);
-		return infos;
+	startQuestionRequest(){
+		return this.http.post(this.address + "/v1/questions", {"voteToken":this.voteToken, "deviceID":this.deviceID},{})
+		.map(res => res.text());
+	}
+
+	getQuestions(){
+		return this.questions;
 	}
 
 	getQuestionTest(){
@@ -66,12 +65,12 @@ export class QuestionDataService{
 			multipartItem.formData = new FormData();
 		}
 		multipartItem.formData.append("answers-dto",  body);
-		if(this.imageAnswers == null || this.imageAnswers == undefined || this.imageAnswers.length == 0){
+		if(this.files == null || this.files == undefined || this.files.length == 0){
 			var blob = new Blob();
 			multipartItem.formData.append("images",  blob);
 		}else{
-			for(let i = 0; i < this.imageAnswers.length; i++){
-				multipartItem.formData.append("images",  this.imageAnswers[i]);
+			for(let i = 0; i < this.files.length; i++){
+				multipartItem.formData.append("images", this.files[i]);
 			}
 		}
 		multipartItem.callback = this.uploadCallback;
@@ -88,6 +87,7 @@ export class QuestionDataService{
 
 	addImageAnswer(id:any, thumbUrl:string, file:File){
 		this.imageAnswers.push({"id":id, "thumbUrl":thumbUrl, "file":file});
+		this.files.push(file);
 	}
 
 	addTextAnswer(questionID: number, questionText:string, answerText:string){
@@ -142,6 +142,10 @@ export class QuestionDataService{
 		}
 	}
 
+	setQuestions(questions:string){
+		this.questions = questions;
+	}
+
 	getMultipleChoiceAnswersSize(){
 		return this.multipleChoiceAnswers.length;
 	}
@@ -178,6 +182,7 @@ export class QuestionDataService{
 		for(let i = 0; i < this.imageAnswers.length; i++){
 			if(id == this.imageAnswers[i].id){
 				this.imageAnswers.splice(i, 1);
+				this.files.splice(i, 1);
 			}
 		}
 	}
