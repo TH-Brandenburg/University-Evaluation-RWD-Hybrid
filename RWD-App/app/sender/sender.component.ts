@@ -26,6 +26,9 @@ export class SenderComponent {
             console.log("send finished answers");
             console.log(this.dataService.getMultipleChoiceAnswers());
             console.log(this.dataService.getTextAnswers());
+              var requestItem = this.dataService.sendAnswers();
+              requestItem.onSuccess = this.onSuccess;
+              requestItem.onError = this.onError;
           }
           else {
             console.log('Zu wenige Antworten gegeben');
@@ -36,8 +39,17 @@ export class SenderComponent {
             console.log(this.dataService.getMultipleChoiceAnswers());
             console.log(this.dataService.getTextAnswers());
 
-            //this.dataService.sendAnswers();
-            //this.router.navigate(['/']);
+            var requestItem = this.dataService.sendAnswers();
+            requestItem.callback = (data) => {};
+            requestItem.onSuccess = this.onSuccess;
+            requestItem.onError = this.onError;
         }
+    }
+    onSuccess = function(response, status, headers){
+        alert("Upload erfolgreich");
+    }
+
+    onError = function(response, status, headers){
+        alert("Upload fehlgeschlagen");
     }
 }
