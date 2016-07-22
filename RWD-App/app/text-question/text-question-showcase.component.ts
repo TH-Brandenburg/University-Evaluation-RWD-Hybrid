@@ -97,7 +97,7 @@ export class TextQuestionComponent implements OnInit {
 
     onSubmit(value: string) {
         this.dataService.deleteTextAnswer(this.fetchedQuestions[this.id].questionID);
-        if (value['text'] != '' || value['text'] != null || value['text'] != undefined){
+        if (value['text'] != '' && value['text'] != null && value['text'] != undefined){
         this.dataService.addTextAnswer(this.fetchedQuestions[this.id].questionID, this.fetchedQuestions[this.id].questionText, value['text']);
       }
         console.log('Image: ' + value['image']);

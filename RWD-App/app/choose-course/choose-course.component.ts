@@ -19,8 +19,8 @@ export class ChooseCourseComponent implements OnInit {
     if(scannerData != null && scannerData != undefined){
       this.dataService.setAddress(scannerData.host);
       this.dataService.setVoteToken(scannerData.voteToken);
-      let questions = this.dataService.getQuestions();
-      // let questions = this.dataService.getQuestionTest();
+      // let questions = this.dataService.getQuestions();
+      let questions = this.dataService.getQuestionTest();
       this.dataService.setQuestions(questions);
       if(questions == undefined) {
         this.dataService.startQuestionRequest().subscribe(
@@ -40,7 +40,6 @@ export class ChooseCourseComponent implements OnInit {
   }
   constructor(private dataService: QuestionDataService,
   private router: Router){
-    this.ngOnInit();
   }
   onClick(value: any) {
     this.dataService.setStudyPath(value);
