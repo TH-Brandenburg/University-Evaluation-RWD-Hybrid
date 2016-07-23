@@ -254,4 +254,22 @@ export class QuestionDataService{
   b.name = fileName;
   return <File>blob;
   }
+  
+  static calulateNavigationPos(name,counter)
+  {
+    var pos = 0
+    if (name == "course"){
+      pos = 0
+    }
+    if (name == "textQuestions"){
+      pos += counter + 1 ;
+    }
+    if (name == "multipleChoiceQuestionDTOs"){
+      pos += QuestionDataService.textQuestions.length + counter;
+    }
+    if (name == "send-view"){
+      pos += QuestionDataService.textQuestions.length + QuestionDataService.multipleChoiceQuestionDTOs.length + 1;
+    }
+    return pos
+  }
 }

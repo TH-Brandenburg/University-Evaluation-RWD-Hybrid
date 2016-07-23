@@ -23,6 +23,7 @@ export class CommentViewPage {
     sendViewPage = SendViewPage;
     commentViewPage = CommentViewPage;
     counter : number;
+	pos: number;
 
     QuestionDataService: any;
 
@@ -36,6 +37,7 @@ export class CommentViewPage {
         this.nav = nav;
         this.deleteButtonState = true;
         this.QuestionDataService = QuestionDataService;
+		this.pos = QuestionDataService.calulateNavigationPos("textQuestions",this.counter);
     }
 
    //  ionViewLoaded() {

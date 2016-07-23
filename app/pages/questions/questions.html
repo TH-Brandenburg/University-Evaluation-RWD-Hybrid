@@ -1,5 +1,5 @@
 <ion-navbar *navbar>
-  <ion-slides [options]="{initialSlide: 1}">
+  <ion-slides [options]="{initialSlide: pos}">
     <ion-slide>
       <button (click)="goTo('choosePage',-1)" type="submit" form="textInput"><ion-icon name="arrow-back"></ion-icon>Kurswahl<ion-icon name="arrow-forward"></ion-icon></button>
     </ion-slide>

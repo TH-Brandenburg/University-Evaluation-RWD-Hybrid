@@ -19,12 +19,14 @@ export class CoursesPage{
     type : String;
     counter : Number;
     QuestionDataService: any;
+	pos: number;
 
     constructor(private GlobalText: globalText,private navParams: NavParams,private nav : NavController) {
         this.type = navParams.get('type');
         this.counter = navParams.get('counter');
         this.QuestionDataService = QuestionDataService;
         this.allCourses = this.QuestionDataService.survey.studyPaths;
+		this.pos = QuestionDataService.calulateNavigationPos("course",-1);
 
 
     }

@@ -9,8 +9,6 @@ import {CoursesPage} from '../choose-course/choose-course';
     providers : [globalText]
 })
 
-
-
 export class QuestionsPage{
 
     allQuestions: Question[];
@@ -24,6 +22,7 @@ export class QuestionsPage{
 
     type : String;
     counter : number;
+	pos: number;
 
     constructor(private GlobalText: globalText,private navParams: NavParams,private nav : NavController) {
         this.counter = navParams.get('pagecounter');
@@ -31,10 +30,11 @@ export class QuestionsPage{
         this.currentQuestion = QuestionDataService.multipleChoiceQuestionDTOs[this.counter];
         console.log("Question",this.currentQuestion)
         this.currentQuestionID = this.counter;
+		this.pos = QuestionDataService.calulateNavigationPos("multipleChoiceQuestionDTOs",this.counter);
     }
 
     GetClass(grade: number){
-      
+
       var classes = "";
       if(grade == QuestionDataService.multipleChoiceAnswers[this.counter])
         classes = "answer enabled";

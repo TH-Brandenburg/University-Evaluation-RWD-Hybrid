@@ -1,7 +1,7 @@
 <ion-navbar *navbar>
-  <ion-slides [options]="{initialSlide: 1}">
+  <ion-slides [options]="{initialSlide: pos}">
     <ion-slide>
-      <button (click)="goTo('choosePage',-1)" type="submit" form="textInput"><ion-icon name="arrow-back"></ion-icon>Kurswahl<ion-icon name="arrow-forward"></ion-icon></button>
+      <button (click)="goTo('choosePage',-1)"><ion-icon name="arrow-back"></ion-icon>Kurswahl<ion-icon name="arrow-forward"></ion-icon></button>
     </ion-slide>
       <ion-slide *ngFor="let navitem of QuestionDataService.textQuestions; let i = index">
           <button (click)="goTo('textQuestions',(i+1))"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Auswahlfrage <ion-icon name="arrow-forward"></ion-icon></button>
