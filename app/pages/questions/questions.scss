@@ -1,17 +1,24 @@
 .questions {
   overflow-y: auto;
 
+
 }
 
 .answer {
+  display: table;
   font-size: 20px;
   border-width: 2px;
 
   border-style:solid;
   text-align:center;
-  vertical-align:middle;
+
   margin-bottom:10px;
 
+}
+
+.answerText {
+  display: table-cell;
+  vertical-align:middle;
 }
 
 .disabled {
