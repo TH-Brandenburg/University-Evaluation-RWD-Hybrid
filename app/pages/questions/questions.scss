@@ -1,12 +1,12 @@
 .questions {
+  overflow-y: auto;
 
 }
 
 .answer {
   font-size: 20px;
   border-width: 2px;
-  height: 50px;
-  width: 300px;
+
   border-style:solid;
   text-align:center;
   vertical-align:middle;
@@ -20,5 +20,15 @@
 
 .enabled {
   background-color:rgb(100,100,255);
+}
+
+.normalAnswer {
+  height: 50px;
+  width: 70%;
+}
+
+.right {
+  float: right;
+  width: 27%;
 }
 

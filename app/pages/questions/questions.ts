@@ -34,10 +34,20 @@ export class QuestionsPage{
     }
 
     GetClass(grade: number){
+      
+      var classes = "";
       if(grade == QuestionDataService.multipleChoiceAnswers[this.counter])
-        return "answer enabled";
+        classes = "answer enabled";
+      else
+        classes = "answer disabled";
 
-      return "answer disabled";
+      if(grade == 0){
+          if(document.getElementById("button_answer0") != null)
+            document.getElementById("button_answer0").style.height = ((this.currentQuestion.choices.length - 1) * 50 + (this.currentQuestion.choices.length - 2) * 10) + "px";
+          return classes += " right";
+      }
+      else
+        return classes += " normalAnswer";
     }
 
     DisableOtherAnswers(number){
@@ -47,15 +57,19 @@ export class QuestionsPage{
            nextButtonNumber++;
            if(nextButtonNumber > this.currentQuestion.choices.length - 1)
                nextButtonNumber = nextButtonNumber - this.currentQuestion.choices.length;
-
-           document.getElementById("button_answer"+nextButtonNumber).className = "answer disabled";
+           if(nextButtonNumber == 0)
+               document.getElementById("button_answer"+nextButtonNumber).className = "answer disabled right";
+           else
+               document.getElementById("button_answer"+nextButtonNumber).className = "answer disabled normalAnswer";
 
        }
    }
 
    onClickAnswer(number){
-
-       document.getElementById("button_answer"+number).className = "answer enabled";
+       if(number == 0)
+           document.getElementById("button_answer"+number).className = "answer enabled right";
+       else
+           document.getElementById("button_answer"+number).className = "answer enabled normalAnswer";
        this.DisableOtherAnswers(number);
        QuestionDataService.multipleChoiceAnswers[this.currentQuestionID] = number;
 }
