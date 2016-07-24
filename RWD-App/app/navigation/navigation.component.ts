@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { ROUTER_DIRECTIVES, ActivatedRoute, Router } from '@angular/router';
 import { QuestionDataService, Question, Answer, Survey } from '../questions.service';
 
@@ -9,7 +9,7 @@ import { QuestionDataService, Question, Answer, Survey } from '../questions.serv
   templateUrl: 'navigation.template.html',
   directives: [ROUTER_DIRECTIVES]
 })
-export class NavigationComponent implements OnInit, AfterViewInit {
+export class NavigationComponent implements OnInit, DoCheck {
   //Variable for storing survey data
   private questions: any;
   private subID: any;
@@ -26,21 +26,29 @@ export class NavigationComponent implements OnInit, AfterViewInit {
   console.log(this.component);
   }
 
-  ngAfterViewInit() {
+  ngDoCheck() {
     switch(this.component)
     {
       case 'course':
+      if (document.getElementById("course")) {
         document.getElementById("course").focus();
         break;
+      };
       case 'question':
+      if (document.getElementById("mc-" + this.id)) {
         document.getElementById("mc-" + this.id).focus();
         break;
+      };
       case 'text-question':
+      if (document.getElementById("text-" + this.id)) {
         document.getElementById("text-" + this.id).focus();
         break;
+      };
       case 'send':
+      if (document.getElementById("send")) {
         document.getElementById("send").focus();
         break;
+      };
       default:
         break;
     }
