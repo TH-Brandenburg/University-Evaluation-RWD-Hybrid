@@ -1,9 +1,13 @@
-/*CSS-Regeln für alle Ausgabegeräte */
+/*
+ * Author (Media Query Settings): http://stuffandnonsense.co.uk/blog/about/hardboiled_css3_media_queries/
+ */
 
+/*CSS-Regeln für alle Ausgabegeräte */
 h1 {
   color: #369;
   font-family: "Gotham", Arial, Helvetica, sans-serif;
-  font-size: 200%;
+  font-size: 300%;
+  text-align: center;
 }
 body {
   margin: 2em;
@@ -59,33 +63,6 @@ button {
   opacity: 0.6;
   cursor: not-allowed;
 }
-
-.answer-0 {
-  background-color: grey;
-  align-self: stretch;
-  float: right;
-}
-
-.answer-1 {
-  background-color: darkgreen;
-}
-
-.answer-2 {
-  background-color: forestgreen;
-}
-
-.answer-3 {
-  background-color: indianred;
-}
-
-.answer-4 {
-  background-color: crimson;
-}
-
-.answer-5 {
-  background-color: darkred;
-}
-
 .startImage{
     width:100%;
     height:auto;
@@ -99,6 +76,11 @@ button {
 .badge-and-image{
     position: relative;
     display: inline-block;
+    width: 100%;
+}
+
+.answer-image {
+  width: inherit;
 }
 
 .badge-div{
@@ -107,6 +89,102 @@ button {
     right: -8px;
 }
 
+.answer-group {
+  vertical-align: middle;
+  align-content: stretch;
+  align-items: stretch;
+  align-self: stretch;
+}
+
+.send-btn {
+  width: 100%;
+  height: inherit;
+}
+
+.answer-0 {
+  background-color: grey;
+  float: right;
+  overflow: hidden;
+}
+.answer-0-active {
+  background-color: white;
+  color: grey;
+  border: 2px grey;
+  float: right;
+  overflow: hidden;
+}
+
+.answer-1 {
+  background-color: darkgreen;
+}
+.answer-1-active {
+  background-color: white;
+  color: darkgreen;
+  border: 2px darkgreen;
+}
+
+.answer-2 {
+  background-color: forestgreen;
+}
+
+.answer-2-active {
+  background-color: white;
+  color: forestgreen;
+  border: 2px forestgreen;
+}
+
+.answer-3 {
+  background-color: indianred;
+}
+.answer-3-active {
+  background-color: white;
+  color: indianred;
+  border: 2px indianred;
+}
+
+.answer-4 {
+  background-color: crimson;
+}
+.answer-4-active {
+  background-color: white;
+  color: crimson;
+  border: 2px crimson;
+}
+
+.answer-5 {
+  background-color: darkred;
+}
+.answer-5-active {
+  background-color: white;
+  color: darkred;
+  border: 2px darkred;
+}
+
+
+
+/*Tablet (General) ---------- */
+@media
+  (max-device-width: 1280px) {
+    .btn {
+      font-size: 150%;
+      width: 100%;
+      text-align: center;
+    }
+    .answer {
+      font-size: 150%;
+      vertical-align: middle;
+      padding: 0 auto;
+    }
+
+    .btn-group-vertical {
+      width: 100%;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+  }
+
+/*Tablet (Portrait) -------- */
 @media
   (max-device-width: 800px)
   and (orientation: portrait) {
@@ -118,12 +196,10 @@ button {
       float: left;
     }
     .startButton {
-      float: right;
       size: 200%;
-      font-size: 36px;
-      margin-right: 45%;
-      margin-top: 45%;
-      padding: auto;
+      font-size: 250%;
+      margin: 0 auto;
+      padding: 0 auto;
     }
 
     ul {
@@ -166,10 +242,8 @@ button {
         background-color: #CC0A2F;
         border: none;
         color: white;
-        padding: 15px 32px;
         text-align: center;
         text-decoration: none;
-        font-size: 24px;
     }
 
     .questionText {
@@ -186,12 +260,9 @@ button {
       vertical-align: middle;
     }
 
-    .answer-button {
-      font-size: 36px;
-      padding: 400px 100px;
-    }
 }
 
+/* Tablet (Landscape) -------*/
 @media
   (max-device-width: 1280px)
   and (orientation: landscape) {
@@ -200,16 +271,14 @@ button {
       height: auto;
       margin: auto;
       padding: auto;
-      float: left;
+      float: inherit;
     }
     .startButton {
-      float: right;
+      font-size: 250%;
+      margin: 0 auto;
+      float: inherit;
       size: 200%;
-      font-size: 36px;
-      margin-top: 15%;
-      margin-right: 5%;
-      margin-bottom: auto;
-      padding: auto;
+      padding: 0 auto;
     }
 
     ul {
@@ -250,12 +319,12 @@ button {
 
     button {
         background-color: #CC0A2F;
-        border: none;
+        /*border: none;*/
         color: white;
-        padding: 15px 32px;
+        /*padding: 15px 32px;
         text-align: center;
         text-decoration: none;
-        font-size: 24px;
+        font-size: 24px;*/
     }
 
     .disabled {
@@ -271,23 +340,47 @@ button {
       align-self: center;
     }
 
-    .answer-group {
-      margin-top: auto;
-      margin-left: 50%;
-      display: -webkit-block; /* Safari */
-      -webkit-align-items: center; /* Safari 7.0+ */
-      display: block;
-      align-items: center;
-      vertical-align: middle;
-    }
-
     .answer-button {
       font-size: 36px;
       display: inline-block;
       padding: 400px 100px;
     }
+
+    .btn {
+      align-self: stretch;
+      align-items: stretch;
+      align-content: stretch;
+    }
 }
 
+/* Smartphones (General) ------------ */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  button {
+    font-size: 100%;
+  }
+  .btn {
+    font-size: 100%;
+  }
+  h1 {
+    font-size: 200%;
+  }
+  .startButton {
+    font-size: 200%;
+  }
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen
+and (min-width : 321px) {
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen
+and (max-width : 320px) {
+/* Styles */
+}
 
 
  /*
