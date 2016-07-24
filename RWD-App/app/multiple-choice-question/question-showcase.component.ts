@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { QuestionDataService, Question, Answer, Survey } from '../questions.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NavigationComponent } from '../navigation/navigation.component';
@@ -10,7 +10,7 @@ import { NavigationComponent } from '../navigation/navigation.component';
     directives: [NavigationComponent],
 })
 
-export class QuestionComponent implements OnInit {
+export class QuestionComponent implements OnInit, DoCheck {
     private currentQuestion: any;
     private sub: any;
     private id: any;
@@ -25,11 +25,6 @@ export class QuestionComponent implements OnInit {
             this.id = id;
         });
         this.givenMCAnswers = this.dataService.getMultipleChoiceAnswers();
-        for (var givenAnswer of this.givenMCAnswers) {
-            if (givenAnswer.questionText == this.currentQuestion[this.id].questionText) {
-                this.chosenChoice = givenAnswer.choice;
-            }
-        }
 
     }
     //needed to erase observer after leaving question area
@@ -37,11 +32,25 @@ export class QuestionComponent implements OnInit {
         this.sub.unsubscribe();
     }
 
+    ngDoCheck() {
+      console.log('begin Element Focus');
+      this.givenMCAnswers = this.dataService.getMultipleChoiceAnswers();
+      for (var givenAnswer of this.givenMCAnswers) {
+        if (givenAnswer.questionText === this.currentQuestion[this.id].question) {
+          if (document.getElementById("answer-"+givenAnswer.choice['grade'])) {
+          document.getElementById("answer-"+givenAnswer.choice['grade']).setAttribute("class", "answer-"+givenAnswer.choice['grade'] + "-active");
+          console.log(document.getElementById("answer-"+givenAnswer.choice['grade']));
+          }
+        }
+      }
+    }
+
     constructor(private dataService: QuestionDataService,
         private route: ActivatedRoute,
         private router: Router) {
     }
     onClickAnswer(answer: any) {
+      document.getElementById("answer-"+answer.grade).setAttribute("class", "answer-"+answer.grade + "-active");
         this.dataService.addMultipleChoiceAnswer(this.currentQuestion[this.id].question, answer.choiceText, answer.grade);
         console.log(this.currentQuestion.length);
         if (this.id + 1 >= this.currentQuestion.length) {
