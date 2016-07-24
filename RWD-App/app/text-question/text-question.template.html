@@ -1,22 +1,24 @@
 <navigation></navigation>
 
 <h1 class="col-sm-12 col-md-6 col-lg-6">{{fetchedQuestions[id]?.questionText}}</h1>
-<div class="col-sm-12 col-md-6 col-lg-6">
-  <form id = "textForm" [formGroup]="answerForm" class="ui form answer-group answer" id="textForm">
+<div class="">
+  <form id = "textForm" [formGroup]="answerForm" class="ui form" id="textForm">
     <textarea type="text"
                id="textInput"
-               class="col-sm-12"
+               class="col-sm-12 col-md-6 col-lg-6"
                rows="10"
                cols="25"
                placeholder="Geben sie eine Antwort ein."
                [formControl]="answerForm.controls['text']"
                maxLength="{{fetchedQuestions[id]?.maxLength}}"></textarea>
-    <button class="btn"><input type="file" accept="image/*;capture=camera, image/*" [formControl]="answerForm.controls['image']" id="fileInput"></button>
-    <button type="submit" class="ui button btn" (click)="onSubmit(answerForm.value)">Weiter</button>
+    <div class="row">
+    <button class="btn col-md-6 col-lg-6 text-btn"><input type="file" accept="image/*;capture=camera, image/*" [formControl]="answerForm.controls['image']" id="fileInput"></button>
+    <button type="submit" class="ui button btn col-md-6 col-lg-6 text-btn" (click)="onSubmit(answerForm.value)">Weiter</button>
+  </div>
    </form>
     <!--<button (click)=deleteImage()>Bild löschen</button>-->
-    <div class="badge-and-image" *ngIf="thumbUrl">
-        <img src="{{thumbUrl}}" *ngIf="thumbUrl" class="answer-image"/>
+    <div class="badge-and-image row" *ngIf="thumbUrl">
+        <img src="{{thumbUrl}}" *ngIf="thumbUrl" class="answer-image "/>
         <div class="badge-div"><span class ="badge red-badge" (click)=deleteImage()><span class = "glyphicon glyphicon-remove"></span></span></div>
     </div>
 </div>

@@ -81,12 +81,14 @@ button {
 
 .answer-image {
   width: inherit;
+  margin-top: 20px;
+  padding-top: 20px;
 }
 
 .badge-div{
     position:absolute;
-    top:-8px;
-    right: -8px;
+    top:8px;
+    right: 8px;
 }
 
 .answer-group {
@@ -158,6 +160,11 @@ button {
   background-color: white;
   color: darkred;
   border: 2px darkred;
+}
+
+.text-btn {
+  margin-top: 10px;
+  padding-top: 10px;
 }
 
 
