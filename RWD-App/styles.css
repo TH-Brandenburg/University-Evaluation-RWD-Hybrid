@@ -105,61 +105,101 @@ button {
 
 .answer-0 {
   background-color: grey;
-  float: right;
-  overflow: hidden;
+  float: right !important;
+  vertical-align: middle;
+  height: 50%;
+  width: 20%;
+  font-size: 150%;
 }
 .answer-0-active {
   background-color: white;
   color: grey;
   border: 2px grey;
-  float: right;
+  float: right !important;
   overflow: hidden;
+  clear: both;
+  font-weight: bold;
 }
 
 .answer-1 {
   background-color: darkgreen;
+  width: 80%;
+  height: 10%;
+  font-size: 150%;
 }
 .answer-1-active {
   background-color: white;
   color: darkgreen;
   border: 2px darkgreen;
+  width: 80%;
+  height: 10%;
+  font-weight: bold;
+  font-size: 150%;
 }
 
 .answer-2 {
   background-color: forestgreen;
+  width: 80%;
+  height: 10%;
+  font-size: 150%;
 }
 
 .answer-2-active {
   background-color: white;
   color: forestgreen;
   border: 2px forestgreen;
+  width: 80%;
+  height: 10%;
+  font-weight: bold;
+  font-size: 150%;
 }
 
 .answer-3 {
   background-color: indianred;
+  width: 80%;
+  height: 10%;
+  font-size: 150%;
 }
 .answer-3-active {
   background-color: white;
   color: indianred;
   border: 2px indianred;
+  width: 80%;
+  height: 10%;
+  font-weight: bold;
+  font-size: 150%;
 }
 
 .answer-4 {
   background-color: crimson;
+  width: 80%;
+  height: 10%;
+  font-size: 150%;
 }
 .answer-4-active {
   background-color: white;
   color: crimson;
   border: 2px crimson;
+  width: 80%;
+  height: 10%;
+  font-weight: bold;
+  font-size: 150%;
 }
 
 .answer-5 {
   background-color: darkred;
+  width: 80%;
+  height: 10%;
+  font-size: 150%;
 }
 .answer-5-active {
   background-color: white;
   color: darkred;
   border: 2px darkred;
+  width: 80%;
+  height: 10%;
+  font-weight: bold;
+  font-size: 150%;
 }
 
 .text-btn {
@@ -322,16 +362,6 @@ button {
       background-color: #CC0A2F;
       color: white;
       font-weight: bold;
-    }
-
-    button {
-        background-color: #CC0A2F;
-        /*border: none;*/
-        color: white;
-        /*padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        font-size: 24px;*/
     }
 
     .disabled {
