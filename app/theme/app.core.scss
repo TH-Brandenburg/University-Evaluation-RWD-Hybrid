@@ -18,9 +18,13 @@
   color: #FFFFFF;
 }
 
-.button:hover {
-  background: #FE2E2E;
+.button:hover:not(.disable-hover) {
+  background: #ee5555;
   color: #FFFFFF;
+}
+
+.navPassiv {
+  background: #ee5555;
 }
 
 .ion-md-arrow-back{

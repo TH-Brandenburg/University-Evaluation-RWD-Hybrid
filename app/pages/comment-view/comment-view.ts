@@ -40,14 +40,6 @@ export class CommentViewPage {
 		this.pos = QuestionDataService.calulateNavigationPos("textQuestions",this.counter);
     }
 
-   //  ionViewLoaded() {
-   //   if (typeof QuestionDataService.textAnswers[this.counter] != 'undefined' ){
-   //      document.getElementsByClassName('text-input').item(0).setAttribute("placeholder",QuestionDataService.textAnswers[this.counter]);
-   //    }
-   //
-   // }
-
-
     takepic() {
         Camera.getPicture({
             destinationType: Camera.DestinationType.DATA_URL,
@@ -61,6 +53,7 @@ export class CommentViewPage {
         });
     }
     deletepic() {
+      QuestionDataService.answerFiles[this.counter] = null;
         this.deleteButtonState = true;
     }
     goTo(type: String,counter:Number){
@@ -93,5 +86,12 @@ export class CommentViewPage {
 
     fillTextarea() {
         return QuestionDataService.textAnswers[this.counter];
+    }
+    getClass(pos){
+      var className = "navPassiv"
+      if (pos ==this.counter){
+        className = "navActiv"
+        }
+        return className
     }
   }

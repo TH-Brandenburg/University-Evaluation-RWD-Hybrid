@@ -22,7 +22,7 @@ export class QuestionsPage{
 
     type : String;
     counter : number;
-	pos: number;
+	   pos: number;
 
     constructor(private GlobalText: globalText,private navParams: NavParams,private nav : NavController) {
         this.counter = navParams.get('pagecounter');
@@ -97,5 +97,12 @@ export class QuestionsPage{
               params: {pagecounter: counter}
             }]);
       ;}
+    }
+    getClass(pos){
+      var className = "navPassiv"
+      if (pos ==this.counter-1){
+        className = "navActiv"
+        }
+        return className
     }
 }

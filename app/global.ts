@@ -9,8 +9,6 @@ import {MultipartUploader} from "./plugins/multipart-upload/multipart-uploader";
 import 'rxjs/add/operator/map';
 import {isUndefined} from "ionic-angular/util";
 
-
-
 export class Course {
     course: String;
     id: Number;
@@ -254,7 +252,7 @@ export class QuestionDataService{
   b.name = fileName;
   return <File>blob;
   }
-  
+
   static calulateNavigationPos(name,counter)
   {
     var pos = 0
