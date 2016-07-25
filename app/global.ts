@@ -3,6 +3,7 @@ import {NavController} from 'ionic-angular';
 import {CommentViewPage} from './pages/comment-view/comment-view';
 import {QuestionsPage} from './pages/questions/questions';
 import {SendViewPage} from './pages/send-view/send-view';
+import {CoursesPage} from './pages/choose-course/choose-course';
 import {Http, Headers, Response} from '@angular/http';
 import {MultipartItem} from "./plugins/multipart-upload/multipart-item";
 import {MultipartUploader} from "./plugins/multipart-upload/multipart-uploader";
@@ -36,36 +37,9 @@ export class Answer {
   grade: Number;
 };
 
-
-@Injectable()
-export class globalText {
-  commmentView_editText: String = "Haben sie weitere Anmerkungen?";
-  commmentView_sendText: String = "Absenden";
-  commmentView_camera_addText: String = "aufnehmen";
-  commmentView_camera_delText: String = "löschen";
-  sendView_LabelText: String = "Abschicken";
-
-  getcommmentView_editText(){
-    return this.commmentView_editText;
-  }
-  getcommmentView_sendText(){
-    return this.commmentView_sendText;
-  }
-  getcommmentView_camera_addText(){
-    return this.commmentView_camera_addText;
-  }
-  getcommmentView_camera_delText(){
-    return this.commmentView_camera_delText;
-  }
-  getsendView_LabelText(){
-    return this.sendView_LabelText;
-  }
-}
-
-
 export class QuestionDataService{
 	static voteToken = "0e17372a-3566-4b6f-b32e-43ebbe98a720";
-	static deviceID = "123";
+	static deviceID = Math.floor(Math.random() * 10).toString();
 	static address = 'http://localhost:8080';
 	static api = "v1";
 	static studyPath = "Technologie- und Innovationsmanagement";
@@ -83,25 +57,6 @@ export class QuestionDataService{
 	constructor(){
 	}
 
-	static getSurveyData() {
-	}
-
-	static setVoteToken(token) {
-		QuestionDataService.voteToken = token;
-	}
-
-	static getVoteToken() {
-		return QuestionDataService.voteToken;
-	}
-
-	static setHostAddress(hostaddress) {
-		QuestionDataService.address = hostaddress;
-	}
-
-	static getHostAddress() {
-		return QuestionDataService.address;
-	}
-
 	/*
 		Example Barcode Data
 	 {"voteToken":"30a8e652-8068-4dad-b9b8-42006a65d1e5","host":"http://172.17.0.18:8080"}
@@ -111,18 +66,6 @@ export class QuestionDataService{
 		QuestionDataService.voteToken = barcodeDTO.voteToken;
 		QuestionDataService.address = barcodeDTO.host;
 	}
-
-	static setDeviceID(id) {
-		QuestionDataService.deviceID = id;
-	}
-
-	static getDeviceID() {
-		return QuestionDataService.deviceID;
-	}
-
-	//static addAnswerImage(file:File){
-	//	QuestionDataService.answerFiles.push(file);
-	//}
 
 	static getQuestion(){
 		var headers = new Headers();

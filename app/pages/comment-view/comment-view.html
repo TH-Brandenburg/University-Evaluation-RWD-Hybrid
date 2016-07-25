@@ -19,7 +19,7 @@
 
     <ion-grid>
             <ion-row>
-                <ion-label><h1>{{commmentView_editText}}</h1></ion-label>
+                <ion-label><h1>Haben sie weitere Anmerkungen?</h1></ion-label>
             </ion-row>
              <form #formData='ngForm' id="textInput">
                  <ion-row><ion-col id="textEdit">
@@ -28,8 +28,8 @@
                  </ion-row>
             </form>
             <ion-row>
-                <ion-col item-left width-50><button class="camara" (click)="takepic()"><ion-icon name="camera"></ion-icon> {{commmentView_camera_addText}}</button></ion-col>
-                <ion-col item-right width-50><button [disabled]="deleteButtonState" class="camara"(click)="deletepic()"><ion-icon name="close-circle"></ion-icon>{{commmentView_camera_delText}}</button></ion-col>
+                <ion-col item-left width-50><button class="camara" (click)="takepic()"><ion-icon name="camera"></ion-icon> aufnehmen</button></ion-col>
+                <ion-col item-right width-50><button [disabled]="deleteButtonState" class="camara"(click)="deletepic()"><ion-icon name="close-circle"></ion-icon>löschen</button></ion-col>
             </ion-row>
     </ion-grid>
 

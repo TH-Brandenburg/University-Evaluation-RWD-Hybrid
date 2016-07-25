@@ -1,7 +1,6 @@
 import {Page, Platform, Alert, NavController} from 'ionic-angular';
 import {CommentViewPage} from '../comment-view/comment-view';
 import {SendViewPage} from '../send-view/send-view';
-//import {QuestionDataService} from '../../QuestionDataService';
 import {BarcodeScanner} from 'ionic-native';
 import {QuestionsPage} from '../questions/questions';
 import {Survey, GetQuestionError,QuestionDataService} from '../../global';
@@ -22,7 +21,6 @@ export class HomePage {
     }
 
     onPageLoaded(){
-//      QuestionDataService.getQuestion();
       if(this.plt.is('core')||this.debugMode)
       {
         QuestionDataService.setTestData()

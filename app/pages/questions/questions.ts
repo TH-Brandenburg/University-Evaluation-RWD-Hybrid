@@ -1,12 +1,11 @@
 import {Page, Platform, Alert, NavController,NavParams} from 'ionic-angular';
-import {globalText, Question,QuestionDataService} from '../../global'
+import {Question,QuestionDataService} from '../../global'
 import {CommentViewPage} from '../comment-view/comment-view';
 import {SendViewPage} from '../send-view/send-view';
 import {CoursesPage} from '../choose-course/choose-course';
 
 @Page({
     templateUrl: 'build/pages/questions/questions.html',
-    providers : [globalText]
 })
 
 export class QuestionsPage{
@@ -24,7 +23,7 @@ export class QuestionsPage{
     counter : number;
 	   pos: number;
 
-    constructor(private GlobalText: globalText,private navParams: NavParams,private nav : NavController) {
+    constructor(private navParams: NavParams,private nav : NavController) {
         this.counter = navParams.get('pagecounter');
         this.QuestionDataService = QuestionDataService;
         this.currentQuestion = QuestionDataService.multipleChoiceQuestionDTOs[this.counter];

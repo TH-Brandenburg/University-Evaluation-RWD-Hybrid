@@ -1,5 +1,5 @@
 import { Page,NavController } from 'ionic-angular';
-import {globalText,QuestionDataService} from "../../global";
+import {QuestionDataService} from "../../global";
 import {CommentViewPage} from '../comment-view/comment-view';
 import {QuestionsPage} from '../questions/questions';
 import {CoursesPage} from '../choose-course/choose-course';
@@ -12,16 +12,14 @@ import {CoursesPage} from '../choose-course/choose-course';
 */
 @Page({
   templateUrl: 'build/pages/send-view/send-view.html',
-  providers : [globalText]
 })
 export class SendViewPage {
     private sendView_LabelText: String;
     commentViewPage = CommentViewPage;
     QuestionDataService: any;
 	pos: number;
-  constructor(private nav: NavController, private GlobalText: globalText) {
-    this.sendView_LabelText = this.GlobalText.getsendView_LabelText();
-      this.QuestionDataService = QuestionDataService;
+  constructor(private nav: NavController) {
+    this.QuestionDataService = QuestionDataService;
 	  this.pos = QuestionDataService.calulateNavigationPos("send-view",-1);
     }
     sendResult(){

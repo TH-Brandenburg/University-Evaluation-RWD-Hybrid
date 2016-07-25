@@ -1,6 +1,6 @@
 import {Page,NavController,ViewController,NavParams,Alert} from 'ionic-angular';
 import { Camera } from 'ionic-native';
-import {globalText,QuestionDataService} from "../../global";
+import {QuestionDataService} from "../../global";
 import {QuestionsPage} from '../questions/questions';
 import {SendViewPage} from '../send-view/send-view';
 import {CoursesPage} from '../choose-course/choose-course';
@@ -8,7 +8,6 @@ import {isUndefined} from "ionic-angular/util";
 
 @Page({
     templateUrl: 'build/pages/comment-view/comment-view.html',
-    providers : [globalText]
 })
 
 export class CommentViewPage {
@@ -27,12 +26,9 @@ export class CommentViewPage {
 
     QuestionDataService: any;
 
-    constructor(private nav: NavController, private GlobalText: globalText,private navParams: NavParams,private viewCtrl: ViewController) {
+    constructor(private nav: NavController,private navParams: NavParams,private viewCtrl: ViewController) {
         this.counter = navParams.get('pagecounter') -1;
         this.commmentView_editText = QuestionDataService.textQuestions[this.counter].questionText;
-        this.commmentView_sendText = this.GlobalText.getsendView_LabelText();
-        this.commmentView_camera_addText = this.GlobalText.getcommmentView_camera_addText();
-        this.commmentView_camera_delText = this.GlobalText.getcommmentView_camera_delText();
         this.base64Image = QuestionDataService.answerFiles[this.counter];
         this.nav = nav;
         this.deleteButtonState = true;
