@@ -4,7 +4,7 @@
   <h1 class="col-md-6 col-sm-12 col-xs-12 pagination-centered">Wählen sie einen Studiengang aus!</h1>
   <div class="col-md-6 col-sm-12 col-xs-12">
   <div class="btn-group-vertical answer-group" role="group" aria-label="..." >
-    <button type="button" *ngFor="let class of availableCourses.studyPaths"(click)="onClick(class)" class="answer-btn">{{ class }}</button>
+    <button type="button" *ngFor="let class of availableCourses.studyPaths"(click)="onClick(class)" class="answer-btn course-{{checkIfChosen(class)}}">{{ class }}</button>
   </div>
   </div>
 </div>

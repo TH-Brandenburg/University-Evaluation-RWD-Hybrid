@@ -196,6 +196,12 @@ button {
   padding-top: 10px;
 }
 
+.course-true {
+  background-color: white;
+  color: #CC0A2F;
+  border: 2px solid #CC0A2F;
+}
+
 /* Smartphones (General) ------------ */
 @media only screen
 and (min-device-width : 320px)

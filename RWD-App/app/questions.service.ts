@@ -177,6 +177,10 @@ export class QuestionDataService{
     return this.imageAnswers;
   }
 
+  getStudyPath() {
+    return this.studyPath;
+  }
+
 	getImageObject(id:any){
 		let image:any = undefined;
 		for(let i = 0; i < this.imageAnswers.length; i++){

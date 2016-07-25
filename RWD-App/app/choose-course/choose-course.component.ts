@@ -51,9 +51,19 @@ export class ChooseCourseComponent implements OnInit {
       this.showView = true;
     }
   }
+
   constructor(private dataService: QuestionDataService,
   private router: Router){
   }
+
+  checkIfChosen(classInput: string) {
+    let chosenClass = this.dataService.getStudyPath();
+    if (chosenClass == classInput) {
+      return true;
+    }
+    else return false;
+  }
+
   onClick(value: any) {
     this.dataService.setStudyPath(value);
     if (this.availableCourses.textQuestionsFirst == true) {
