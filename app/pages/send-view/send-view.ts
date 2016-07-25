@@ -14,7 +14,6 @@ import {CoursesPage} from '../choose-course/choose-course';
   templateUrl: 'build/pages/send-view/send-view.html',
 })
 export class SendViewPage {
-    private sendView_LabelText: String;
     commentViewPage = CommentViewPage;
     QuestionDataService: any;
 	pos: number;

@@ -29,10 +29,16 @@ export class CoursesPage{
     }
 
     GetClass(c: String){
+      var classString = "course ";
         if(c == QuestionDataService.getStudyPath())
-           return "course enabled";
-
-        return "course disabled";
+           classString+= "enabled ";
+        else{
+          classString+= "disabled ";
+        }
+        if (c.length >= 30){
+          classString+= "long"
+        }
+        return classString;
     }
 
 
