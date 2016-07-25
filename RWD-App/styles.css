@@ -116,9 +116,11 @@ button {
   color: grey;
   border: 2px grey;
   float: right !important;
+  vertical-align: middle;
   overflow: hidden;
   clear: both;
   font-weight: bold;
+  font-size: 150%;
 }
 
 .answer-1 {
@@ -205,6 +207,82 @@ button {
 .text-btn {
   margin-top: 10px;
   padding-top: 10px;
+}
+
+/* Smartphones (General) ------------ */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  button {
+    font-size: 100%;
+  }
+  .btn {
+    font-size: 100%;
+  }
+  h1 {
+    font-size: 200%;
+  }
+  .startButton {
+    font-size: 200%;
+  }
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen
+and (min-width : 321px) {
+  .answer-0 {
+    font-size: 100%;
+  }
+  .answer-0-active {
+    font-size: 100%;
+  }
+
+  .answer-1 {
+    font-size: 100%;
+  }
+  .answer-1-active {
+    font-size: 100%;
+  }
+
+  .answer-2 {
+    font-size: 100%;
+  }
+
+  .answer-2-active {
+    font-size: 100%;
+  }
+
+  .answer-3 {
+    font-size: 100%;
+  }
+  .answer-3-active {
+    font-size: 100%;
+  }
+
+  .answer-4 {
+    font-size: 100%;
+  }
+  .answer-4-active {
+    font-size: 100%;
+  }
+
+  .answer-5 {
+    font-size: 100%;
+  }
+  .answer-5-active {
+    font-size: 100%;
+  }
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen
+and (max-width : 320px) {
+  .answer-0 {
+    font-size: 100%;
+  }
+  .answer-0-active {
+    font-size: 100%;
+  }
 }
 
 
@@ -388,35 +466,6 @@ button {
       align-items: stretch;
       align-content: stretch;
     }
-}
-
-/* Smartphones (General) ------------ */
-@media only screen
-and (min-device-width : 320px)
-and (max-device-width : 480px) {
-  button {
-    font-size: 100%;
-  }
-  .btn {
-    font-size: 100%;
-  }
-  h1 {
-    font-size: 200%;
-  }
-  .startButton {
-    font-size: 200%;
-  }
-}
-
-/* Smartphones (landscape) ----------- */
-@media only screen
-and (min-width : 321px) {
-}
-
-/* Smartphones (portrait) ----------- */
-@media only screen
-and (max-width : 320px) {
-/* Styles */
 }
 
 
