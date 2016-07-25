@@ -24,12 +24,13 @@ allQuestions: MultipleChoiceQuestionDTO[];
 	   pos: number;
 
     constructor(private navParams: NavParams,private nav : NavController) {
-        this.counter = navParams.get('pagecounter') -1;
+        this.counter = navParams.get('pagecounter')-1;
         this.QuestionDataService = QuestionDataService;
         this.currentQuestion = QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter];
         console.log("Question",this.currentQuestion)
         this.currentQuestionID = this.counter;
-		this.pos = QuestionDataService.calulateNavigationPos("multipleChoiceQuestionDTOs",this.counter) +1;
+		this.pos = QuestionDataService.calulateNavigationPos("multipleChoiceQuestionDTOs",this.counter)+1;
+    console.log(this.counter)
     }
 
     GetClass(grade: number){

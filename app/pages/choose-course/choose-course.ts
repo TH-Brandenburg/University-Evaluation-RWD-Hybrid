@@ -26,8 +26,6 @@ export class CoursesPage{
         this.QuestionDataService = QuestionDataService;
         this.allCourses = this.QuestionDataService.survey.studyPaths;
 		this.pos = QuestionDataService.calulateNavigationPos("course",-1);
-
-
     }
 
     GetClass(c: String){

@@ -24,8 +24,8 @@ export class HomePage {
       if(this.plt.is('core')||this.debugMode)
       {
         QuestionDataService.setTestData();
-        //QuestionDataService.sendAnswers();
-          
+        console.log(QuestionDataService.survey.multipleChoiceQuestionDTOs);
+        console.log(QuestionDataService.survey.multipleChoiceQuestionDTOs.length)
         this.nav.setPages([{
                 page: CoursesPage,
                 params: {pagecounter: -1}
