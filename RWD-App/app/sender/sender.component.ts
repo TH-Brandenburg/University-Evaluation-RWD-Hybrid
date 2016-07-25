@@ -40,16 +40,17 @@ export class SenderComponent {
             console.log(this.dataService.getTextAnswers());
 
             var requestItem = this.dataService.sendAnswers();
-            requestItem.callback = (data) => {};
             requestItem.onSuccess = this.onSuccess;
             requestItem.onError = this.onError;
         }
     }
     onSuccess = function(response, status, headers){
+        console.log("Upload erfolgreich");
         alert("Upload erfolgreich");
     }
 
     onError = function(response, status, headers){
         alert("Upload fehlgeschlagen");
+        console.log("Upload fehlgeschlagen");
     }
 }
