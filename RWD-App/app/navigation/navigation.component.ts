@@ -16,7 +16,7 @@ export class NavigationComponent implements OnInit, DoCheck {
   private id: number;
   private component: any;
   ngOnInit() {
-  this.questions = JSON.parse(this.dataService.getQuestionTest());
+  this.questions = JSON.parse(this.dataService.getQuestions());
   this.subID = this.activeRoute.params.subscribe(params => {let id = +params['id'];
       this.id = id;
       //this.component = component;

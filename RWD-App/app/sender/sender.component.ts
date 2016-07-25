@@ -14,7 +14,7 @@ export class SenderComponent {
     private currentSurvey: any;
     private givenAnswers: any;
     ngOnInit() {
-        this.currentSurvey = JSON.parse(this.dataService.getQuestionTest());
+        this.currentSurvey = JSON.parse(this.dataService.getQuestions());
         this.currentSurvey = this.currentSurvey.multipleChoiceQuestionDTOs.length + this.currentSurvey.textQuestions.length;
         this.givenAnswers = this.dataService.getMultipleChoiceAnswersSize() + this.dataService.getTextAnswersSize();
     }

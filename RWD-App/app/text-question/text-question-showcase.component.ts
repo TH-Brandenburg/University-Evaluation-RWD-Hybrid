@@ -28,7 +28,7 @@ export class TextQuestionComponent implements OnInit {
     private thumbUrl: string;
 
     ngOnInit() {
-        this.fetchedQuestions = JSON.parse(this.dataService.getQuestionTest());
+        this.fetchedQuestions = JSON.parse(this.dataService.getQuestions());
         this.textFirst = this.fetchedQuestions.textQuestionsFirst;
         this.fetchedQuestions = this.fetchedQuestions.textQuestions;
         this.givenTextAnswers = this.dataService.getTextAnswers();

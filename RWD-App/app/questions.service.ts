@@ -44,7 +44,11 @@ export class QuestionDataService{
 	}
 
 	getQuestions(){
-		return this.questions;
+		if(this.questions){
+			return this.questions;
+		}else{
+			return "{}";
+		}
 	}
 
 	getQuestionTest(){
