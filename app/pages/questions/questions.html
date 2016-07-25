@@ -6,8 +6,8 @@
       <ion-slide *ngFor="let navitem of QuestionDataService.survey.textQuestions; let i = index">
           <button  class="navPassiv" (click)="goTo('textQuestions',(i+1))"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Auswahlfrage <ion-icon name="arrow-forward"></ion-icon></button>
       </ion-slide>
-      <ion-slide *ngFor="let navitem of QuestionDataService.survey.multipleChoiceQuestions; let i = index">
-          <button  class="{{getClass(i)}}" (click)="goTo('multipleChoiceQuestions',(i+1))"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Frage  <ion-icon name="arrow-forward"></ion-icon></button>
+      <ion-slide *ngFor="let navitem of QuestionDataService.survey.multipleChoiceQuestionDTOs; let i = index">
+          <button  class="{{getClass(i)}}" (click)="goTo('multipleChoiceQuestionDTOs',(i+1))"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Frage  <ion-icon name="arrow-forward"></ion-icon></button>
       </ion-slide>
       <ion-slide>
         <button  class="navPassiv" (click)="goTo('sendPage',-1)"><ion-icon name="arrow-back"></ion-icon>Absenden <ion-icon name="arrow-forward"></ion-icon></button>

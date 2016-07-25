@@ -3,11 +3,11 @@
     <ion-slide>
       <button  class="navPassiv" (click)="goTo('choosePage',-1)"><ion-icon name="arrow-back"></ion-icon>Kurswahl<ion-icon name="arrow-forward"></ion-icon></button>
     </ion-slide>
-      <ion-slide *ngFor="let navitem of QuestionDataService.survey.textQuestions; let i = index">
+      <ion-slide *ngFor="let navitem of QuestionDataService.textQuestions; let i = index">
           <button  class="navPassiv" (click)="goTo('textQuestions',(i+1))"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Auswahlfrage <ion-icon name="arrow-forward"></ion-icon></button>
       </ion-slide>
-      <ion-slide *ngFor="let navitem of QuestionDataService.survey.multipleChoiceQuestions; let i = index">
-          <button  class="navPassiv" (click)="goTo('multipleChoiceQuestions',(i+1))"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Frage  <ion-icon name="arrow-forward"></ion-icon></button>
+      <ion-slide *ngFor="let navitem of QuestionDataService.survey.multipleChoiceQuestionDTOs; let i = index">
+          <button  class="navPassiv" (click)="goTo('multipleChoiceQuestionDTOs',(i+1))"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Frage  <ion-icon name="arrow-forward"></ion-icon></button>
       </ion-slide>
       <ion-slide>
         <button (click)="goTo('sendPage',-1)"><ion-icon name="arrow-back"></ion-icon>Absenden <ion-icon name="arrow-forward"></ion-icon></button>
@@ -17,6 +17,6 @@
 
 <ion-content padding class="send-view">
     <ion-label>{{commmentView_editText}}</ion-label>
-   <button id="sendBotton" (click)="sendResult()"><ion-icon name="mail"></ion-icon> {{sendView_LabelText}}</button>
+   <button id="sendBotton" (click)="sendResult()"><ion-icon name="mail"></ion-icon>Abschicken</button>
 
 </ion-content>

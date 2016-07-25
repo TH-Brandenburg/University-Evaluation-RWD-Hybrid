@@ -1,12 +1,11 @@
 import {Page, Platform, Alert, NavController,NavParams} from 'ionic-angular';
-import {globalText, MultipleChoiceQuestionDTO,QuestionDataService} from '../../global'
+import {MultipleChoiceQuestionDTO,QuestionDataService} from '../../global';
 import {CommentViewPage} from '../comment-view/comment-view';
 import {SendViewPage} from '../send-view/send-view';
 import {CoursesPage} from '../choose-course/choose-course';
 
 @Page({
     templateUrl: 'build/pages/questions/questions.html',
-    providers : [globalText]
 })
 
 export class QuestionsPage{
@@ -24,14 +23,13 @@ allQuestions: MultipleChoiceQuestionDTO[];
     counter : number;
 	   pos: number;
 
-    constructor(private GlobalText: globalText,private navParams: NavParams,private nav : NavController) {
-        this.counter = navParams.get('pagecounter');
+    constructor(private navParams: NavParams,private nav : NavController) {
+        this.counter = navParams.get('pagecounter') -1;
         this.QuestionDataService = QuestionDataService;
-        this.currentQuestion = QuestionDataService.survey.multipleChoiceQuestions[this.counter];
-        alert(this.currentQuestion);
+        this.currentQuestion = QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter];
         console.log("Question",this.currentQuestion)
         this.currentQuestionID = this.counter;
-		this.pos = QuestionDataService.calulateNavigationPos("multipleChoiceQuestionDTOs",this.counter);
+		this.pos = QuestionDataService.calulateNavigationPos("multipleChoiceQuestionDTOs",this.counter) +1;
     }
 
     GetClass(grade: number){
@@ -82,7 +80,7 @@ allQuestions: MultipleChoiceQuestionDTO[];
               params: {pagecounter: counter}
             }]);
       }
-      if (type == "multipleChoiceQuestions"){
+      if (type == "multipleChoiceQuestionDTOs"){
         this.nav.setPages([{
               page: QuestionsPage,
               params: {pagecounter: counter}
@@ -101,7 +99,7 @@ allQuestions: MultipleChoiceQuestionDTO[];
     }
     getClass(pos){
       var className = "navPassiv"
-      if (pos ==this.counter-1){
+      if (pos ==this.counter){
         className = "navActiv"
         }
         return className

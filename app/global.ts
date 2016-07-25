@@ -3,6 +3,7 @@ import {NavController} from 'ionic-angular';
 import {CommentViewPage} from './pages/comment-view/comment-view';
 import {QuestionsPage} from './pages/questions/questions';
 import {SendViewPage} from './pages/send-view/send-view';
+import {CoursesPage} from './pages/choose-course/choose-course';
 import {Http, Headers, Response} from '@angular/http';
 import {MultipartItem} from "./plugins/multipart-upload/multipart-item";
 import {MultipartUploader} from "./plugins/multipart-upload/multipart-uploader";
@@ -14,33 +15,6 @@ export class Course {
     id: Number;
 }
 
-@Injectable()
-export class globalText {
-  commmentView_editText: String = "Haben sie weitere Anmerkungen?";
-  commmentView_sendText: String = "Absenden";
-  commmentView_camera_addText: String = "aufnehmen";
-  commmentView_camera_delText: String = "löschen";
-  sendView_LabelText: String = "Abschicken";
-
-  getcommmentView_editText(){
-    return this.commmentView_editText;
-  }
-  getcommmentView_sendText(){
-    return this.commmentView_sendText;
-  }
-  getcommmentView_camera_addText(){
-    return this.commmentView_camera_addText;
-  }
-  getcommmentView_camera_delText(){
-    return this.commmentView_camera_delText;
-  }
-  getsendView_LabelText(){
-    return this.sendView_LabelText;
-  }
-}
-
-
-
 // HTTP Request Error Class
 export class RequestError {
 	message: string;
@@ -51,7 +25,7 @@ export class RequestError {
 export class QuestionsDTO {
 	studyPaths: string[];
 	textQuestions: TextQuestionDTO[];
-	multipleChoiceQuestions: MultipleChoiceQuestionDTO[];
+	multipleChoiceQuestionDTOs: MultipleChoiceQuestionDTO[];
 	textQuestionsFirst: boolean;
 }
 
@@ -79,8 +53,8 @@ export class ChoiceDTO {
 export class AnswersDTO {
 	voteToken: string;
 	studyPath: string;
-	textAnswers: TextAnswerDTO[];
-	multipleChoiceAnswers: MultipleChoiceAnswerDTO[];
+	textAnswers: TextAnswerDTO[] = [];
+	multipleChoiceAnswers: MultipleChoiceAnswerDTO[] = [];
 	deviceID: string;
 }
 
@@ -94,7 +68,7 @@ export class TextAnswerDTO {
 // Multiple Choice Answer
 export class MultipleChoiceAnswerDTO {
 	questionText: string;
-	choice: ChoiceDTO;
+	choice: ChoiceDTO = new ChoiceDTO();
 }
 
 class Guid {
@@ -114,7 +88,7 @@ export class QuestionDataService{
 	private static studyPath = "Technologie- und Innovationsmanagement"; // TODO: null setzen
 	private static api = "v1";
 	private static http:Http;
-	private static surveyAnswers: AnswersDTO;
+	private static surveyAnswers: AnswersDTO = new AnswersDTO();
 
 	// Public
 	static answerFiles: String[] = [];
@@ -127,9 +101,6 @@ export class QuestionDataService{
 	static sendAnswersSucceedCallback: (successMsg: String) => void;
 
 
-	constructor(){
-	}
-
 	static setStudyPath(studypath) {
 		QuestionDataService.studyPath = studypath;
 	}
@@ -137,22 +108,6 @@ export class QuestionDataService{
 	static getStudyPath() {
 		return QuestionDataService.studyPath;
 	}
-
-	// static setVoteToken(token) {
-	// 	QuestionDataService.voteToken = token;
-	// }
-    //
-	// static getVoteToken() {
-	// 	return QuestionDataService.voteToken;
-	// }
-    //
-	// static setHostAddress(hostaddress) {
-	// 	QuestionDataService.address = hostaddress;
-	// }
-    //
-	// static getHostAddress() {
-	// 	return QuestionDataService.address;
-	// }
 
 	static setBarcodeData(barcodeString) {
 		var barcodeDTO = JSON.parse(barcodeString);
@@ -260,10 +215,10 @@ export class QuestionDataService{
 
 	static addMultipleChoiceAnswer(questionID: number, grade:number) {
 		//get question text
-		let questionText = QuestionDataService.survey.multipleChoiceQuestions[questionID].question;
+		let questionText = QuestionDataService.survey.multipleChoiceQuestionDTOs[questionID].question;
 		//get choice text
 		let choiceText;
-		for (let choice of QuestionDataService.survey.multipleChoiceQuestions[questionID].choices) {
+		for (let choice of QuestionDataService.survey.multipleChoiceQuestionDTOs[questionID].choices) {
 			if (choice['grade'] === grade) {
 				choiceText = choice.choiceText;
 			}
@@ -279,7 +234,10 @@ export class QuestionDataService{
 	}
 
 	static getMultipleChoiceAnswer(questionID: number) {
-		return QuestionDataService.surveyAnswers.multipleChoiceAnswers[questionID].choice.grade;
+		let multipleChoiceAnswer = QuestionDataService.surveyAnswers.multipleChoiceAnswers[questionID];
+		if (multipleChoiceAnswer)
+			return multipleChoiceAnswer.choice.grade;
+		return null;
 	}
 
 	static  handleGetQuestionError(err) {
@@ -292,41 +250,43 @@ export class QuestionDataService{
 		QuestionDataService.getQuestionFailedCallback(errData);
 	}
 
-	static convertImage(base64str,fileName){
-		var binary = atob(base64str.replace(/\s/g, ''));
-		var len = binary.length;
-		var buffer = new ArrayBuffer(len);
-		var view = new Uint8Array(buffer);
-		for (var i = 0; i < len; i++) {
-		 view[i] = binary.charCodeAt(i);
-		}
-		var blob = new Blob( [view], { type: "application/pdf" });
-		var file = this.blobToFile(blob,fileName);
-		return file
-	}
+  static convertImage(base64str,fileName){
+    var binary = atob(base64str.replace(/\s/g, ''));
+    var len = binary.length;
+    var buffer = new ArrayBuffer(len);
+    var view = new Uint8Array(buffer);
+    for (var i = 0; i < len; i++) {
+     view[i] = binary.charCodeAt(i);
+    }
+    var blob = new Blob( [view], { type: "application/pdf" });
+    var file = this.blobToFile(blob,fileName);
+    return file
+    }
 
-	static blobToFile(blob: Blob, fileName:string): File {
-		var b: any = blob;
-		var f: File;
-		b.lastModifiedDate = new Date();
-		b.name = fileName;
-		return <File>blob;
-	}
+  static blobToFile(blob: Blob, fileName:string): File {
+  var b: any = blob;
+  var f: File;
+  b.lastModifiedDate = new Date();
+  b.name = fileName;
+  return <File>blob;
+  }
 
-	static calulateNavigationPos(name,counter) {
-		var pos = 0
-		if (name == "course"){
-		  pos = 0
-		}
-		if (name == "textQuestions"){
-		  pos += counter + 1 ;
-		}
-		if (name == "multipleChoiceQuestions"){
-		  pos += QuestionDataService.survey.textQuestions.length + counter;
-		}
-		if (name == "send-view"){
-		  pos += QuestionDataService.survey.textQuestions.length + QuestionDataService.survey.multipleChoiceQuestions.length + 1;
-		}
-		return pos
-	}
+  static calulateNavigationPos(name,counter)
+  {
+    var pos = 0
+    if (name == "course"){
+      pos = 0
+    }
+    if (name == "textQuestions"){
+      pos += counter + 1 ;
+    }
+    if (name == "multipleChoiceQuestionDTOs"){
+      pos += QuestionDataService.survey.textQuestions.length + counter;
+    }
+    if (name == "send-view"){
+      pos += QuestionDataService.survey.textQuestions.length + QuestionDataService.survey.multipleChoiceQuestionDTOs.length + 1;
+    }
+	//alert('counter: ' + counter + ' pos: ' + pos);
+    return pos
+  }
 }
