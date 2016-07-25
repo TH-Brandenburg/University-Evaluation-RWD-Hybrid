@@ -30,7 +30,7 @@ allQuestions: MultipleChoiceQuestionDTO[];
         console.log("Question",this.currentQuestion)
         this.currentQuestionID = this.counter;
 		this.pos = QuestionDataService.calulateNavigationPos("multipleChoiceQuestionDTOs",this.counter)+1;
-    console.log(this.counter)
+    console.log(this.currentQuestion.choices)
     }
 
     GetClass(grade: number){

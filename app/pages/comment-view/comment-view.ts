@@ -16,13 +16,10 @@ export class CommentViewPage {
     public deleteButtonState: boolean;
 
     private commmentView_editText: String;
-    private commmentView_sendText: String;
-    private commmentView_camera_addText: String;
-    private commmentView_camera_delText: String;
     sendViewPage = SendViewPage;
     commentViewPage = CommentViewPage;
     counter : number;
-	pos: number;
+	  pos: number;
 
     QuestionDataService: any;
 

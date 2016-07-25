@@ -229,7 +229,7 @@ export class QuestionDataService{
 				QuestionDataService.surveyAnswers.multipleChoiceAnswers.splice(index, 1);
 			}
 		}
-		QuestionDataService.surveyAnswers.multipleChoiceAnswers.push(<MultipleChoiceAnswerDTO>{"questionText":questionText, "choice":<ChoiceDTO>{"choiceText":choiceText,"grade":grade}});
+		QuestionDataService.surveyAnswers.multipleChoiceAnswers[questionID]= <MultipleChoiceAnswerDTO>{"questionText":questionText, "choice":<ChoiceDTO>{"choiceText":choiceText,"grade":grade}};
 	}
 
 	static getMultipleChoiceAnswer(questionID: number) {
