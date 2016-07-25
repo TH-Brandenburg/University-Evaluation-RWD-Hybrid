@@ -116,10 +116,14 @@ button {
 .answer-0-false {
   background-color: grey;
   float: right;
-  vertical-align: middle;
+  vertical-align:middle;
   height: 50%;
   width: 20%;
   font-size: 150%;
+}
+.answer-0-false span {
+  transform: rotate(90deg);
+  display:flex;
 }
 .answer-0-true {
   background-color: white;
@@ -128,9 +132,13 @@ button {
   height: 50%;
   width: 20%;
   float: right;
-  vertical-align: middle;
+  vertical-align:middle;
   font-weight: bold;
   font-size: 150%;
+}
+.answer-0-true span {
+  transform: rotate(90deg);
+  display:flex;
 }
 
 .answer-1-false {

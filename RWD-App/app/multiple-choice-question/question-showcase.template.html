@@ -3,7 +3,7 @@
 <h1 class="col-md-6 col-sm-12">{{currentQuestion[id]?.question}}</h1>
   <div class="col-md-6 col-sm-12">
     <div class="" role="group" aria-label="...">
-    <button *ngFor="let answer of currentQuestion[id]?.choices" (click)=onClickAnswer(answer) class="mc-answer answer-{{answer?.grade}}-{{checkIfAnswered(answer?.grade)}}" id="answer-{{answer?.grade}}">{{ answer?.choiceText }}
+    <button *ngFor="let answer of currentQuestion[id]?.choices" (click)=onClickAnswer(answer) class="mc-answer answer-{{answer?.grade}}-{{checkIfAnswered(answer?.grade)}}" id="answer-{{answer?.grade}}"><span>{{ answer?.choiceText }}</span>
     </button>
   </div>
   </div>
