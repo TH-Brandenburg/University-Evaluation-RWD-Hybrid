@@ -2,3 +2,4 @@
 
 <h1>In Sending Process</h1>
 <button class="btn answer answer-group send-btn" (click)="onSubmit()">Submit</button>
+<div class="alert alert-warning" *ngIf="inSending" role="alert">Die Evaluation wird gesendet</div>
