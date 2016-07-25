@@ -33,7 +33,7 @@ li a {
     text-align: center;
     padding: 14px 16px;
     font-family: "Gotham", Arial, Helvetica, sans-serif;
-    font-size: auto;
+    font-size: 14px;
     text-decoration: none;
 }
 
@@ -107,9 +107,15 @@ button {
   height: inherit;
 }
 
+.mc-answer {
+  width: 75%;
+  height: 10%;
+  font-size: 150%;
+}
+
 .answer-0-false {
   background-color: grey;
-  float: right !important;
+  float: right;
   vertical-align: middle;
   height: 50%;
   width: 20%;
@@ -121,7 +127,7 @@ button {
   border: 1px solid grey;
   height: 50%;
   width: 20%;
-  float: right !important;
+  float: right;
   vertical-align: middle;
   font-weight: bold;
   font-size: 150%;
@@ -129,85 +135,54 @@ button {
 
 .answer-1-false {
   background-color: darkgreen;
-  width: 80%;
-  height: 10%;
-  font-size: 150%;
 }
 .answer-1-true {
   background-color: white;
   color: darkgreen;
-  border: 1px solid darkgreen !important;
-  width: 80%;
-  height: 10%;
+  border: 1px solid darkgreen;
   font-weight: bold;
-  font-size: 150%;
 }
 
 .answer-2-false {
   background-color: forestgreen;
-  width: 80%;
-  height: 10%;
-  font-size: 150%;
 }
 
 .answer-2-true{
   background-color: white;
   color: forestgreen;
-  border: 1px solid forestgreen !important;
-  width: 80%;
-  height: 10%;
+  border: 1px solid forestgreen;
   font-weight: bold;
-  font-size: 150%;
 }
 
 .answer-3-false {
   background-color: indianred;
-  width: 80%;
-  height: 10%;
-  font-size: 150%;
 }
 .answer-3-true {
   background-color: white;
   color: indianred;
-  border: 1px solid indianred !important;
-  width: 80%;
-  height: 10%;
+  border: 1px solid indianred;
   font-weight: bold;
-  font-size: 150%;
 }
 
 .answer-4-false {
   background-color: crimson;
-  width: 80%;
-  height: 10%;
-  font-size: 150%;
 }
 .answer-4-true {
   background-color: white;
   color: crimson;
-  border: 1px solid crimson !important;
-  width: 80%;
-  height: 10%;
+  border: 1px solid crimson;
   font-weight: bold;
-  font-size: 150%;
 }
 
 .answer-5-false {
   background-color: darkred;
-  width: 80%;
-  height: 10%;
-  font-size: 150%;
 }
 .answer-5-true {
   background-color: white;
   color: darkred;
-  border: 1px solid darkred !important;
-  width: 80%;
-  height: 10%;
+  border: 1px solid darkred;
   font-weight: bold;
-  font-size: 150%;
 }
-
 .text-btn {
   margin-top: 10px;
   padding-top: 10px;
@@ -224,68 +199,50 @@ and (max-device-width : 480px) {
     font-size: 100%;
   }
   h1 {
-    font-size: 200%;
+    font-size: 150%;
   }
   .startButton {
     font-size: 200%;
+  }
+  li a{
+    font-size: 100% !important;
   }
 }
 
 /* Smartphones (landscape) ----------- */
 @media only screen
-and (min-width : 321px) {
-  .answer-0 {
-    font-size: 100%;
-  }
-  .answer-0-active {
-    font-size: 100%;
-  }
+and (min-width : 321px)
+and (max-device-width : 800px) {
 
-  .answer-1 {
+  .mc-answer {
     font-size: 100%;
+    height: 15%;
   }
-  .answer-1-active {
-    font-size: 100%;
+  .answer-0-false {
+    height: 76%;
   }
-
-  .answer-2 {
-    font-size: 100%;
-  }
-
-  .answer-2-active {
-    font-size: 100%;
-  }
-
-  .answer-3 {
-    font-size: 100%;
-  }
-  .answer-3-active {
-    font-size: 100%;
-  }
-
-  .answer-4 {
-    font-size: 100%;
-  }
-  .answer-4-active {
-    font-size: 100%;
-  }
-
-  .answer-5 {
-    font-size: 100%;
-  }
-  .answer-5-active {
-    font-size: 100%;
+  .answer-0-true {
+    height: 76%;
   }
 }
 
 /* Smartphones (portrait) ----------- */
 @media only screen
 and (max-width : 320px) {
-  .answer-0 {
+  .mc-answer {
     font-size: 100%;
+    width: 70%;
   }
-  .answer-0-active {
+  .answer-0-false {
     font-size: 100%;
+    width: 10%;
+  }
+  .answer-0-true {
+    font-size: 100%;
+    width: 10%;
+  }
+  h1 {
+    font-size: 150%;
   }
 }
 
@@ -315,6 +272,7 @@ and (max-width : 320px) {
 
 /*Tablet (Portrait) -------- */
 @media
+
   (max-device-width: 800px)
   and (orientation: portrait) {
     img {
