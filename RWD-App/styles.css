@@ -107,7 +107,7 @@ button {
   height: inherit;
 }
 
-.answer-0 {
+.answer-0-false {
   background-color: grey;
   float: right !important;
   vertical-align: middle;
@@ -115,93 +115,93 @@ button {
   width: 20%;
   font-size: 150%;
 }
-.answer-0-active {
+.answer-0-true {
   background-color: white;
   color: grey;
-  border: 2px grey;
+  border: 1px solid grey;
+  height: 50%;
+  width: 20%;
   float: right !important;
   vertical-align: middle;
-  overflow: hidden;
-  clear: both;
   font-weight: bold;
   font-size: 150%;
 }
 
-.answer-1 {
+.answer-1-false {
   background-color: darkgreen;
   width: 80%;
   height: 10%;
   font-size: 150%;
 }
-.answer-1-active {
+.answer-1-true {
   background-color: white;
   color: darkgreen;
-  border: 2px darkgreen;
+  border: 1px solid darkgreen !important;
   width: 80%;
   height: 10%;
   font-weight: bold;
   font-size: 150%;
 }
 
-.answer-2 {
+.answer-2-false {
   background-color: forestgreen;
   width: 80%;
   height: 10%;
   font-size: 150%;
 }
 
-.answer-2-active {
+.answer-2-true{
   background-color: white;
   color: forestgreen;
-  border: 2px forestgreen;
+  border: 1px solid forestgreen !important;
   width: 80%;
   height: 10%;
   font-weight: bold;
   font-size: 150%;
 }
 
-.answer-3 {
+.answer-3-false {
   background-color: indianred;
   width: 80%;
   height: 10%;
   font-size: 150%;
 }
-.answer-3-active {
+.answer-3-true {
   background-color: white;
   color: indianred;
-  border: 2px indianred;
+  border: 1px solid indianred !important;
   width: 80%;
   height: 10%;
   font-weight: bold;
   font-size: 150%;
 }
 
-.answer-4 {
+.answer-4-false {
   background-color: crimson;
   width: 80%;
   height: 10%;
   font-size: 150%;
 }
-.answer-4-active {
+.answer-4-true {
   background-color: white;
   color: crimson;
-  border: 2px crimson;
+  border: 1px solid crimson !important;
   width: 80%;
   height: 10%;
   font-weight: bold;
   font-size: 150%;
 }
 
-.answer-5 {
+.answer-5-false {
   background-color: darkred;
   width: 80%;
   height: 10%;
   font-size: 150%;
 }
-.answer-5-active {
+.answer-5-true {
   background-color: white;
   color: darkred;
-  border: 2px darkred;
+  border: 1px solid darkred !important;
   width: 80%;
   height: 10%;
   font-weight: bold;

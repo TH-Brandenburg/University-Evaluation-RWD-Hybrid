@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { QuestionDataService, Question, Answer, Survey } from '../questions.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NavigationComponent } from '../navigation/navigation.component';
@@ -10,7 +10,7 @@ import { NavigationComponent } from '../navigation/navigation.component';
     directives: [NavigationComponent],
 })
 
-export class QuestionComponent implements OnInit, DoCheck {
+export class QuestionComponent implements OnInit {
     private currentQuestion: any;
     private sub: any;
     private id: any;
@@ -32,25 +32,24 @@ export class QuestionComponent implements OnInit, DoCheck {
         this.sub.unsubscribe();
     }
 
-    ngDoCheck() {
+    checkIfAnswered(grade: number) {
       console.log('begin Element Focus');
       this.givenMCAnswers = this.dataService.getMultipleChoiceAnswers();
       for (var givenAnswer of this.givenMCAnswers) {
         if (givenAnswer.questionText === this.currentQuestion[this.id].question) {
-          if (document.getElementById("answer-"+givenAnswer.choice['grade'])) {
-          document.getElementById("answer-"+givenAnswer.choice['grade']).setAttribute("class", "answer-"+givenAnswer.choice['grade'] + "-active");
-          console.log(document.getElementById("answer-"+givenAnswer.choice['grade']));
+          if (givenAnswer.choice['grade'] == grade){
+            return true;
           }
         }
-      }
     }
+    return false;
+  }
 
     constructor(private dataService: QuestionDataService,
         private route: ActivatedRoute,
         private router: Router) {
     }
     onClickAnswer(answer: any) {
-      document.getElementById("answer-"+answer.grade).setAttribute("class", "answer-"+answer.grade + "-active");
         this.dataService.addMultipleChoiceAnswer(this.currentQuestion[this.id].question, answer.choiceText, answer.grade);
         console.log(this.currentQuestion.length);
         if (this.id + 1 >= this.currentQuestion.length) {
