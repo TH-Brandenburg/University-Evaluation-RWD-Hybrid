@@ -24,12 +24,13 @@ export class QuestionsPage{
 	   pos: number;
 
     constructor(private navParams: NavParams,private nav : NavController) {
-        this.counter = navParams.get('pagecounter');
+        this.counter = navParams.get('pagecounter')-1;
         this.QuestionDataService = QuestionDataService;
         this.currentQuestion = QuestionDataService.multipleChoiceQuestionDTOs[this.counter];
         console.log("Question",this.currentQuestion)
         this.currentQuestionID = this.counter;
-		this.pos = QuestionDataService.calulateNavigationPos("multipleChoiceQuestionDTOs",this.counter);
+		this.pos = QuestionDataService.calulateNavigationPos("multipleChoiceQuestionDTOs",this.counter)+1;
+    console.log(this.counter)
     }
 
     GetClass(grade: number){
@@ -99,7 +100,7 @@ export class QuestionsPage{
     }
     getClass(pos){
       var className = "navPassiv"
-      if (pos ==this.counter-1){
+      if (pos ==this.counter){
         className = "navActiv"
         }
         return className
