@@ -12,7 +12,7 @@
                [formControl]="answerForm.controls['text']"
                maxLength="{{fetchedQuestions[id]?.maxLength}}"></textarea>
     <div class="row">
-    <button class="btn col-md-6 col-lg-6 text-btn"><input type="file" accept="image/*;capture=camera, image/*" [formControl]="answerForm.controls['image']" id="fileInput"></button>
+    <div class="btn col-md-6 col-lg-6 text-btn"><input type="file" accept="image/*;capture=camera, image/*" [formControl]="answerForm.controls['image']" id="fileInput"></div>
     <button type="submit" class="ui button btn col-md-6 col-lg-6 text-btn" (click)="onSubmit(answerForm.value)">Weiter</button>
   </div>
    </form>

@@ -98,6 +98,10 @@ button {
   align-self: stretch;
 }
 
+.answer-btn {
+  width: 100%;
+}
+
 .send-btn {
   width: 100%;
   height: inherit;
