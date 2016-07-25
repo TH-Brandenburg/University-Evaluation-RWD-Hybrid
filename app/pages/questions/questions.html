@@ -1,23 +1,23 @@
 <ion-navbar *navbar>
-  <ion-slides [options]="{initialSlide: 1}">
+  <ion-slides [options]="{initialSlide: pos}">
     <ion-slide>
-      <button (click)="goTo('choosePage',-1)" type="submit" form="textInput"><ion-icon name="arrow-back"></ion-icon>Kurswahl<ion-icon name="arrow-forward"></ion-icon></button>
+      <button  class="navPassiv" (click)="goTo('choosePage',-1)"><ion-icon name="arrow-back"></ion-icon>Kurswahl<ion-icon name="arrow-forward"></ion-icon></button>
     </ion-slide>
-      <ion-slide *ngFor="let navitem of QuestionDataService.textQuestions; let i = index">
-          <button (click)="goTo('textQuestions',(i+1))"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Auswahlfrage <ion-icon name="arrow-forward"></ion-icon></button>
+      <ion-slide *ngFor="let navitem of QuestionDataService.survey.textQuestions; let i = index">
+          <button  class="navPassiv" (click)="goTo('textQuestions',(i+1))"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Auswahlfrage <ion-icon name="arrow-forward"></ion-icon></button>
       </ion-slide>
-      <ion-slide *ngFor="let navitem of QuestionDataService.multipleChoiceQuestionDTOs; let i = index">
-          <button (click)="goTo('multipleChoiceQuestionDTOs',(i+1))"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Frage  <ion-icon name="arrow-forward"></ion-icon></button>
+      <ion-slide *ngFor="let navitem of QuestionDataService.survey.multipleChoiceQuestions; let i = index">
+          <button  class="{{getClass(i)}}" (click)="goTo('multipleChoiceQuestions',(i+1))"><ion-icon name="arrow-back"></ion-icon>{{i+1}}. Frage  <ion-icon name="arrow-forward"></ion-icon></button>
       </ion-slide>
       <ion-slide>
-        <button (click)="goTo('sendPage',-1)"><ion-icon name="arrow-back"></ion-icon>Absenden <ion-icon name="arrow-forward"></ion-icon></button>
+        <button  class="navPassiv" (click)="goTo('sendPage',-1)"><ion-icon name="arrow-back"></ion-icon>Absenden <ion-icon name="arrow-forward"></ion-icon></button>
       </ion-slide>
   </ion-slides>
 </ion-navbar>
 
-
 <ion-content class="questions" padding>
     <h1>{{currentQuestion.question}}</h1>
-    <div class="{{GetClass(answer.grade)}}" *ngFor="let answer of currentQuestion.choices" id="button_answer{{answer.grade}}" (click)=onClickAnswer(answer.grade)>{{ answer.choiceText }}
+    <div class="{{GetClass(answer.grade)}}" *ngFor="let answer of currentQuestion.choices" id="button_answer{{answer.grade}}" (click)=onClickAnswer(answer.grade)>
+        <div class="answerText">{{ answer.choiceText }}</div>
 </div>
 </ion-content>

@@ -1,10 +1,9 @@
 import {Page, Platform, Alert, NavController} from 'ionic-angular';
 import {CommentViewPage} from '../comment-view/comment-view';
 import {SendViewPage} from '../send-view/send-view';
-//import {QuestionDataService} from '../../QuestionDataService';
 import {BarcodeScanner} from 'ionic-native';
 import {QuestionsPage} from '../questions/questions';
-import {Survey, GetQuestionError,QuestionDataService} from '../../global';
+import {QuestionsDTO, RequestError,QuestionDataService} from '../../global';
 import {CoursesPage} from '../choose-course/choose-course';
 
 @Page({
@@ -22,10 +21,11 @@ export class HomePage {
     }
 
     onPageLoaded(){
-//      QuestionDataService.getQuestion();
       if(this.plt.is('core')||this.debugMode)
       {
-        QuestionDataService.setTestData()
+        QuestionDataService.setTestData();
+        //QuestionDataService.sendAnswers();
+          
         this.nav.setPages([{
                 page: CoursesPage,
                 params: {pagecounter: -1}
@@ -41,7 +41,7 @@ export class HomePage {
          this.plt.ready().then(() => {
              BarcodeScanner.scan().then((barcodeData) => {
                  QuestionDataService.setBarcodeData(barcodeData.text);
-                 QuestionDataService.getQuestionFailedCallback = (errData: GetQuestionError) => {
+                 QuestionDataService.getQuestionFailedCallback = (errData: RequestError) => {
                      let alert = Alert.create({
                          title: "Error!", //String(errData.type),
                          subTitle: errData.message,
@@ -49,9 +49,8 @@ export class HomePage {
                      });
                      this.nav.present(alert);
                  }
-                 QuestionDataService.getQuestionSucceedCallback = (survey: Survey) => {
-                   QuestionDataService.multipleChoiceQuestionDTOs = survey.multipleChoiceQuestionDTOs;
-                   QuestionDataService.textQuestions = survey.textQuestions;
+                 QuestionDataService.getQuestionSucceedCallback = (survey: QuestionsDTO) => {
+                   QuestionDataService.survey = survey;
                    this.nav.setPages([{
                            page: CoursesPage,
                            params: {pagecounter: -1}

@@ -1,5 +1,5 @@
 import {Page, Platform, Alert, NavController,NavParams} from 'ionic-angular';
-import {globalText, Question,QuestionDataService} from '../../global'
+import {globalText, MultipleChoiceQuestionDTO,QuestionDataService} from '../../global'
 import {CommentViewPage} from '../comment-view/comment-view';
 import {SendViewPage} from '../send-view/send-view';
 import {CoursesPage} from '../choose-course/choose-course';
@@ -9,12 +9,10 @@ import {CoursesPage} from '../choose-course/choose-course';
     providers : [globalText]
 })
 
-
-
 export class QuestionsPage{
 
-    allQuestions: Question[];
-    currentQuestion: Question;
+allQuestions: MultipleChoiceQuestionDTO[];
+    currentQuestion: MultipleChoiceQuestionDTO;
     currentQuestionID: number;
 
     commentViewPage = CommentViewPage;
@@ -24,20 +22,33 @@ export class QuestionsPage{
 
     type : String;
     counter : number;
+	   pos: number;
 
     constructor(private GlobalText: globalText,private navParams: NavParams,private nav : NavController) {
         this.counter = navParams.get('pagecounter');
         this.QuestionDataService = QuestionDataService;
-        this.currentQuestion = QuestionDataService.multipleChoiceQuestionDTOs[this.counter];
+        this.currentQuestion = QuestionDataService.survey.multipleChoiceQuestions[this.counter];
+        alert(this.currentQuestion);
         console.log("Question",this.currentQuestion)
         this.currentQuestionID = this.counter;
+		this.pos = QuestionDataService.calulateNavigationPos("multipleChoiceQuestionDTOs",this.counter);
     }
 
     GetClass(grade: number){
-      if(grade == QuestionDataService.multipleChoiceAnswers[this.counter])
-        return "answer enabled";
 
-      return "answer disabled";
+      var classes = "";
+      if(grade == QuestionDataService.getMultipleChoiceAnswer(this.counter))
+        classes = "answer enabled";
+      else
+        classes = "answer disabled";
+
+      if(grade == 0){
+          if(document.getElementById("button_answer0") != null)
+            document.getElementById("button_answer0").style.height = ((this.currentQuestion.choices.length - 1) * 50 + (this.currentQuestion.choices.length - 2) * 10) + "px";
+          return classes += " right";
+      }
+      else
+        return classes += " normalAnswer";
     }
 
     DisableOtherAnswers(number){
@@ -47,18 +58,22 @@ export class QuestionsPage{
            nextButtonNumber++;
            if(nextButtonNumber > this.currentQuestion.choices.length - 1)
                nextButtonNumber = nextButtonNumber - this.currentQuestion.choices.length;
-
-           document.getElementById("button_answer"+nextButtonNumber).className = "answer disabled";
+           if(nextButtonNumber == 0)
+               document.getElementById("button_answer"+nextButtonNumber).className = "answer disabled right";
+           else
+               document.getElementById("button_answer"+nextButtonNumber).className = "answer disabled normalAnswer";
 
        }
    }
 
    onClickAnswer(number){
-
-       document.getElementById("button_answer"+number).className = "answer enabled";
+       if(number == 0)
+           document.getElementById("button_answer"+number).className = "answer enabled right";
+       else
+           document.getElementById("button_answer"+number).className = "answer enabled normalAnswer";
        this.DisableOtherAnswers(number);
-       QuestionDataService.multipleChoiceAnswers[this.currentQuestionID] = number;
-}
+       QuestionDataService.addMultipleChoiceAnswer(this.currentQuestionID, number);
+    }
 
     goTo(type: String,counter:Number){
       if (type == "textQuestions"){
@@ -67,7 +82,7 @@ export class QuestionsPage{
               params: {pagecounter: counter}
             }]);
       }
-      if (type == "multipleChoiceQuestionDTOs"){
+      if (type == "multipleChoiceQuestions"){
         this.nav.setPages([{
               page: QuestionsPage,
               params: {pagecounter: counter}
@@ -83,5 +98,12 @@ export class QuestionsPage{
               params: {pagecounter: counter}
             }]);
       ;}
+    }
+    getClass(pos){
+      var className = "navPassiv"
+      if (pos ==this.counter-1){
+        className = "navActiv"
+        }
+        return className
     }
 }

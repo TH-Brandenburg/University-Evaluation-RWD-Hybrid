@@ -1,5 +1,5 @@
 import {Page, Platform, Alert, NavController,NavParams} from 'ionic-angular';
-import {globalText, Question, Course,QuestionDataService} from '../../global'
+import {globalText, MultipleChoiceQuestionDTO, Course,QuestionDataService} from '../../global'
 import {CommentViewPage} from '../comment-view/comment-view';
 import {SendViewPage} from '../send-view/send-view';
 import {QuestionsPage} from '../questions/questions';
@@ -19,18 +19,20 @@ export class CoursesPage{
     type : String;
     counter : Number;
     QuestionDataService: any;
+	pos: number;
 
     constructor(private GlobalText: globalText,private navParams: NavParams,private nav : NavController) {
         this.type = navParams.get('type');
         this.counter = navParams.get('counter');
         this.QuestionDataService = QuestionDataService;
         this.allCourses = this.QuestionDataService.survey.studyPaths;
+		this.pos = QuestionDataService.calulateNavigationPos("course",-1);
 
 
     }
 
     GetClass(c: String){
-        if(c == QuestionDataService.studyPath)
+        if(c == QuestionDataService.getStudyPath())
            return "course enabled";
 
         return "course disabled";
@@ -53,7 +55,7 @@ export class CoursesPage{
     onClickCourse(number, course:string){
         document.getElementById("button_course"+number).className = "course enabled";
         this.DisableOtherCourses(number);
-        QuestionDataService.studyPath = course;
+        QuestionDataService.setStudyPath(course);
     }
     goTo(type: String,counter:Number){
       if (type == "textQuestions"){
@@ -62,7 +64,7 @@ export class CoursesPage{
               params: {pagecounter: counter}
             }]);
       }
-      if (type == "multipleChoiceQuestionDTOs"){
+      if (type == "multipleChoiceQuestions"){
         this.nav.setPages([{
               page: QuestionsPage,
               params: {pagecounter: counter}

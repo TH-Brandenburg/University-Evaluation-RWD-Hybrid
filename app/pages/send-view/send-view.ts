@@ -18,9 +18,11 @@ export class SendViewPage {
     private sendView_LabelText: String;
     commentViewPage = CommentViewPage;
     QuestionDataService: any;
+	pos: number;
   constructor(private nav: NavController, private GlobalText: globalText) {
     this.sendView_LabelText = this.GlobalText.getsendView_LabelText();
       this.QuestionDataService = QuestionDataService;
+	  this.pos = QuestionDataService.calulateNavigationPos("send-view",-1);
     }
     sendResult(){
       QuestionDataService.sendAnswers()
@@ -32,7 +34,7 @@ export class SendViewPage {
               params: {pagecounter: counter}
             }]);
       }
-      if (type == "multipleChoiceQuestionDTOs"){
+      if (type == "multipleChoiceQuestions"){
         this.nav.setPages([{
               page: QuestionsPage,
               params: {pagecounter: counter}

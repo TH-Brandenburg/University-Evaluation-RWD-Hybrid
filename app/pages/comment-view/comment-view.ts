@@ -23,12 +23,13 @@ export class CommentViewPage {
     sendViewPage = SendViewPage;
     commentViewPage = CommentViewPage;
     counter : number;
+	pos: number;
 
     QuestionDataService: any;
 
     constructor(private nav: NavController, private GlobalText: globalText,private navParams: NavParams,private viewCtrl: ViewController) {
         this.counter = navParams.get('pagecounter') -1;
-        this.commmentView_editText = QuestionDataService.textQuestions[this.counter].questionText;
+        this.commmentView_editText = QuestionDataService.survey.textQuestions[this.counter].questionText;
         this.commmentView_sendText = this.GlobalText.getsendView_LabelText();
         this.commmentView_camera_addText = this.GlobalText.getcommmentView_camera_addText();
         this.commmentView_camera_delText = this.GlobalText.getcommmentView_camera_delText();
@@ -36,15 +37,8 @@ export class CommentViewPage {
         this.nav = nav;
         this.deleteButtonState = true;
         this.QuestionDataService = QuestionDataService;
+		this.pos = QuestionDataService.calulateNavigationPos("textQuestions",this.counter);
     }
-
-   //  ionViewLoaded() {
-   //   if (typeof QuestionDataService.textAnswers[this.counter] != 'undefined' ){
-   //      document.getElementsByClassName('text-input').item(0).setAttribute("placeholder",QuestionDataService.textAnswers[this.counter]);
-   //    }
-   //
-   // }
-
 
     takepic() {
         Camera.getPicture({
@@ -59,6 +53,7 @@ export class CommentViewPage {
         });
     }
     deletepic() {
+      QuestionDataService.answerFiles[this.counter] = null;
         this.deleteButtonState = true;
     }
     goTo(type: String,counter:Number){
@@ -68,7 +63,7 @@ export class CommentViewPage {
               params: {pagecounter: counter}
             }]);
       }
-      if (type == "multipleChoiceQuestionDTOs"){
+      if (type == "multipleChoiceQuestions"){
         this.nav.setPages([{
               page: QuestionsPage,
               params: {pagecounter: counter}
@@ -86,10 +81,17 @@ export class CommentViewPage {
       ;}
     }
     saveText(text) {
-     QuestionDataService.textAnswers[this.counter] = document.getElementsByTagName('textarea').item(0).value;
+        QuestionDataService.addTextAnswer(this.counter, document.getElementsByTagName('textarea').item(0).value);
     }
 
     fillTextarea() {
-        return QuestionDataService.textAnswers[this.counter];
+        return QuestionDataService.getTextAnswer(this.counter);
+    }
+    getClass(pos){
+      var className = "navPassiv"
+      if (pos ==this.counter){
+        className = "navActiv"
+        }
+        return className
     }
   }
