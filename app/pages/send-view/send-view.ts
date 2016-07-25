@@ -1,5 +1,5 @@
-import { Page,NavController } from 'ionic-angular';
-import {QuestionDataService} from "../../global";
+import { Page,NavController,Alert } from 'ionic-angular';
+import {QuestionDataService, RequestError} from "../../global";
 import {CommentViewPage} from '../comment-view/comment-view';
 import {QuestionsPage} from '../questions/questions';
 import {CoursesPage} from '../choose-course/choose-course';
@@ -23,7 +23,15 @@ export class SendViewPage {
 	  this.pos = QuestionDataService.calulateNavigationPos("send-view",-1);
     }
     sendResult(){
-      QuestionDataService.sendAnswers()
+        QuestionDataService.sendAnswersFailedCallback = (errData: RequestError) => {
+            let alert = Alert.create({
+                title: "Error!", //String(errData.type),
+                subTitle: errData.message,
+                buttons: ['YEAH']
+            });
+            this.nav.present(alert);
+        };
+        QuestionDataService.sendAnswers()
     }
     goTo(type: String,counter:Number){
       if (type == "textQuestions"){

@@ -48,14 +48,14 @@ export class HomePage {
                          buttons: ['YEAH']
                      });
                      this.nav.present(alert);
-                 }
+                 };
                  QuestionDataService.getQuestionSucceedCallback = (survey: QuestionsDTO) => {
                    QuestionDataService.survey = survey;
                    this.nav.setPages([{
                            page: CoursesPage,
                            params: {pagecounter: -1}
                          }]);
-                 }
+                 };
                  QuestionDataService.getQuestion();
              }, (err) => {
                  // An error occurred
