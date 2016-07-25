@@ -34,7 +34,6 @@ export class CommentViewPage {
         this.deleteButtonState = true;
         this.QuestionDataService = QuestionDataService;
 		this.pos = QuestionDataService.calulateNavigationPos("textQuestions",this.counter);
-    console.log(this.commmentView_editText);
     }
 
     takepic() {
@@ -78,7 +77,7 @@ export class CommentViewPage {
       ;}
     }
     saveText(text) {
-        QuestionDataService.addTextAnswer(this.counter, document.getElementsByTagName('textarea').item(0).value);
+     QuestionDataService.addTextAnswer(this.counter,document.getElementsByTagName('textarea').item(0).value);
     }
 
     fillTextarea() {
