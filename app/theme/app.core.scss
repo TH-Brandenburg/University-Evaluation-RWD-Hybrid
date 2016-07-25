@@ -13,6 +13,7 @@
 @import "../pages/questions/questions";
 @import "../pages/choose-course/choose-course";
 
+
 .button {
   background: #E91F1F;
   color: #FFFFFF;
@@ -25,6 +26,13 @@
 
 .navPassiv {
   background: #ee5555;
+}
+
+.navCenterLeft{
+  margin-left: 50%;
+}
+.navCenterRight{
+  margin-right: 50%;
 }
 
 .ion-md-arrow-back{
