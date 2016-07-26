@@ -28,7 +28,12 @@ export class CommentViewPage {
         this.commmentView_editText = QuestionDataService.survey.textQuestions[this.counter].questionText;
         this.base64Image = QuestionDataService.answerFiles[this.counter];
         this.nav = nav;
-        this.deleteButtonState = true;
+        if (QuestionDataService.answerFiles[this.counter]){
+          this.deleteButtonState = false;
+        }
+        else{
+          this.deleteButtonState = true;
+        }
         this.QuestionDataService = QuestionDataService;
 		this.pos = QuestionDataService.calulateNavigationPos("textQuestions",this.counter);
     }
@@ -39,7 +44,7 @@ export class CommentViewPage {
             targetWidth: 1000,
             targetHeight: 1000
         }).then((imageData) => {
-            QuestionDataService.answerFiles.push("data:image/jpeg;base64," + imageData,this.commmentView_editText);
+            QuestionDataService.answerFiles[this.counter] = "data:image/jpeg;base64," + imageData,this.commmentView_editText;
             this.deleteButtonState = false;
         }, (err) => {
             console.log(err);
