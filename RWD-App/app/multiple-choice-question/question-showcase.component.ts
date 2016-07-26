@@ -32,12 +32,12 @@ export class QuestionComponent implements OnInit {
         this.sub.unsubscribe();
     }
 
-    checkIfAnswered(grade: number) {
+    checkIfAnswered(grade: number, answerText: string) {
       console.log('begin Element Focus');
       this.givenMCAnswers = this.dataService.getMultipleChoiceAnswers();
       for (var givenAnswer of this.givenMCAnswers) {
         if (givenAnswer.questionText === this.currentQuestion[this.id].question) {
-          if (givenAnswer.choice['grade'] == grade){
+          if (givenAnswer.choice['grade'] == grade && givenAnswer.choice['choiceText'] == answerText){
             return true;
           }
         }
