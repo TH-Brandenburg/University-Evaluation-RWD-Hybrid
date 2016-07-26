@@ -44,7 +44,7 @@ export class CommentViewPage {
             targetWidth: 1000,
             targetHeight: 1000
         }).then((imageData) => {
-            QuestionDataService.answerFiles[this.counter] = "data:image/jpeg;base64," + imageData,this.commmentView_editText;
+            QuestionDataService.answerFiles[this.counter] = this.base64Image = "data:image/jpeg;base64," + imageData,this.commmentView_editText;
             this.deleteButtonState = false;
         }, (err) => {
             console.log(err);
