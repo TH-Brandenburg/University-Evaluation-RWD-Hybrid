@@ -8,6 +8,7 @@ import {CoursesPage} from '../choose-course/choose-course';
 
 @Page({
     templateUrl: 'build/pages/home/home.html',
+    providers: [QuestionDataService]
 })
 export class HomePage {
     commentViewPage = CommentViewPage;
@@ -17,13 +18,23 @@ export class HomePage {
 
     debugMode: boolean = true;
 
-    constructor(private plt: Platform, private nav : NavController) {
+    constructor(private plt: Platform, private nav : NavController, private qService: QuestionDataService) {
     }
 
     onPageLoaded(){
       if(this.plt.is('core')||this.debugMode)
       {
         QuestionDataService.setTestData();
+
+        // getQuestion() -test:
+        // QuestionDataService.getQuestionFailedCallback = (data: RequestError) => {
+        //     console.log('getQuestion failed', data);
+        // };
+        // QuestionDataService.getQuestionSucceedCallback = (data: QuestionsDTO) => {
+        //     console.log('getQuestion succeed', data);
+        // };
+        // QuestionDataService.getQuestion();
+
         console.log(QuestionDataService.survey.multipleChoiceQuestionDTOs);
         console.log(QuestionDataService.survey.multipleChoiceQuestionDTOs.length)
         this.nav.setPages([{
@@ -50,7 +61,6 @@ export class HomePage {
                      this.nav.present(alert);
                  };
                  QuestionDataService.getQuestionSucceedCallback = (survey: QuestionsDTO) => {
-                   QuestionDataService.survey = survey;
                    this.nav.setPages([{
                            page: CoursesPage,
                            params: {pagecounter: -1}

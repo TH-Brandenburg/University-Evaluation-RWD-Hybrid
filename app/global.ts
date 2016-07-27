@@ -80,10 +80,11 @@ class Guid {
 	}
 }
 
+@Injectable()
 export class QuestionDataService{
 	// Private
-	private static voteToken = "38d84800-09f3-487e-820a-ffb76847819d"; // TODO: null setzen
-	private static deviceID = "123"; // TODO: null setzen
+	private static voteToken = "1dc30a83-392f-4c06-b114-0c8aa382949c"; // TODO: null setzen
+	private static deviceID = null;
 	private static address = 'http://localhost:8080'; // TODO: null setzen
 	private static studyPath = "Technologie- und Innovationsmanagement"; // TODO: null setzen
 	private static api = "v1";
@@ -100,6 +101,10 @@ export class QuestionDataService{
 	static sendAnswersFailedCallback: (data: RequestError) => void;
 	static sendAnswersSucceedCallback: (successMsg: String) => void; //TODO
 
+
+	constructor(private http:Http){
+		QuestionDataService.http = http;
+	}
 
 	static setStudyPath(studypath) {
 		QuestionDataService.studyPath = studypath;
@@ -125,10 +130,25 @@ export class QuestionDataService{
 		QuestionDataService.http.post(requestURI, body, { headers: headers })
 		.map(res => res.json())
 		.subscribe(
-		  data => QuestionDataService.getQuestionSucceedCallback(<QuestionsDTO>data),
+		  data => QuestionDataService.handleGetQuestionSuccess(data),
 		  err => QuestionDataService.handleGetQuestionError(err),
 		  () => console.log('Request questions completed')
 		);
+	}
+
+	private static  handleGetQuestionError(err) {
+		if (err._body instanceof Object) {
+			console.log('QuestionDataService.handleGetQuestionError()', err);
+			QuestionDataService.getQuestionFailedCallback(<RequestError>{"message": "Server not responding", "type": -1});
+			return;
+		}
+		let errData:RequestError = <RequestError>(JSON.parse(err._body));
+		QuestionDataService.getQuestionFailedCallback(errData);
+	}
+
+	private static  handleGetQuestionSuccess(data) {
+		QuestionDataService.survey = data;
+		QuestionDataService.getQuestionSucceedCallback(<QuestionsDTO>data);
 	}
 
 	static getQuestionTest(){
@@ -237,16 +257,6 @@ export class QuestionDataService{
 		if (multipleChoiceAnswer)
 			return multipleChoiceAnswer.choice.grade;
 		return null;
-	}
-
-	static  handleGetQuestionError(err) {
-		if (err._body instanceof Object) {
-			console.log('QuestionDataService.handleGetQuestionError()', err);
-			QuestionDataService.getQuestionFailedCallback(<RequestError>{"message": "Server not responding", "type": -1});
-			return;
-		}
-		let errData:RequestError = <RequestError>(JSON.parse(err._body));
-		QuestionDataService.getQuestionFailedCallback(errData);
 	}
 
   static convertImage(base64str,fileName){
