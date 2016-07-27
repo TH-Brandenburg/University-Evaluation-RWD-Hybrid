@@ -173,22 +173,41 @@ button {
 }
 
 .answer-4-false {
-  background-color: crimson;
+  background-color: firebrick;
 }
 .answer-4-true {
   background-color: white;
-  color: crimson;
-  border: 1px solid crimson;
+  color: firebrick;
+  border: 1px solid firebrick;
   font-weight: bold;
 }
 
 .answer-5-false {
-  background-color: darkred;
+  background-color: brown;
 }
 .answer-5-true {
   background-color: white;
+  color: brown;
+  border: 1px solid brown;
+  font-weight: bold;
+}
+
+.answer-6-false {
+  background-color: darkred;
+}
+.answer-6-true {
+  background-color: white;
   color: darkred;
   border: 1px solid darkred;
+  font-weight: bold;
+}
+.answer-7-false {
+  background-color: black;
+}
+.answer-7-true {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
   font-weight: bold;
 }
 .text-btn {
