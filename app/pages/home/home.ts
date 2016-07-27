@@ -22,11 +22,11 @@ export class HomePage {
     }
 
     onPageLoaded(){
-      if(this.plt.is('core')||this.debugMode)
+      if(this.plt.is('core'))
       {
         QuestionDataService.setTestData();
 
-        // getQuestion() -test:
+        // getQuestion() POST-Request test:
         // QuestionDataService.getQuestionFailedCallback = (data: RequestError) => {
         //     console.log('getQuestion failed', data);
         // };
@@ -36,7 +36,7 @@ export class HomePage {
         // QuestionDataService.getQuestion();
 
         console.log(QuestionDataService.survey.multipleChoiceQuestionDTOs);
-        console.log(QuestionDataService.survey.multipleChoiceQuestionDTOs.length)
+        console.log(QuestionDataService.survey.multipleChoiceQuestionDTOs.length);
         this.nav.setPages([{
                 page: CoursesPage,
                 params: {pagecounter: -1}
@@ -51,6 +51,14 @@ export class HomePage {
     scan() {
          this.plt.ready().then(() => {
              BarcodeScanner.scan().then((barcodeData) => {
+               if(this.debugMode){
+                   QuestionDataService.setTestData();
+                   this.nav.setPages([{
+                           page: CoursesPage,
+                           params: {pagecounter: -1}
+                         }]);
+               }
+               else{
                  QuestionDataService.setBarcodeData(barcodeData.text);
                  QuestionDataService.getQuestionFailedCallback = (errData: RequestError) => {
                      let alert = Alert.create({
@@ -67,6 +75,7 @@ export class HomePage {
                          }]);
                  };
                  QuestionDataService.getQuestion();
+               }
              }, (err) => {
                  // An error occurred
              });

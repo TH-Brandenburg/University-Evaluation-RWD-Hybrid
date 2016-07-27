@@ -3,6 +3,7 @@ import {QuestionDataService, RequestError} from "../../global";
 import {CommentViewPage} from '../comment-view/comment-view';
 import {QuestionsPage} from '../questions/questions';
 import {CoursesPage} from '../choose-course/choose-course';
+import {Platform} from 'ionic-angular';
 
 /*
   Generated class for the SendViewPage page.
@@ -17,9 +18,14 @@ export class SendViewPage {
     commentViewPage = CommentViewPage;
     QuestionDataService: any;
 	pos: number;
-  constructor(private nav: NavController) {
+  platform: any;
+
+
+
+  constructor(private nav: NavController,platform: Platform) {
     this.QuestionDataService = QuestionDataService;
 	  this.pos = QuestionDataService.calulateNavigationPos("send-view",-1);
+    this.platform = platform;
     }
     sendResult(){
         QuestionDataService.sendAnswersFailedCallback = (errData: RequestError) => {
@@ -30,7 +36,8 @@ export class SendViewPage {
             });
             this.nav.present(alert);
         };
-        QuestionDataService.sendAnswers()
+    //    QuestionDataService.sendAnswers();
+        this.platform.exitApp();
     }
     goTo(type: String,counter:Number){
       if (type == "textQuestions"){
