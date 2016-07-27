@@ -158,9 +158,6 @@ export class QuestionDataService{
 		let uploader = new MultipartUploader( {"url":url,"authToken":null} );
 		let multipartItem = new MultipartItem(uploader);
 		multipartItem.url = url;
-		var headers = new Headers();
-		headers.append('Content-Encoding', 'application/json');
-		multipartItem.headers
 
 		let body = JSON.stringify({"voteToken":QuestionDataService.voteToken, "studyPath":QuestionDataService.studyPath, "textAnswers":QuestionDataService.surveyAnswers.textAnswers, "mcAnswers":QuestionDataService.surveyAnswers.multipleChoiceAnswers, "deviceID":QuestionDataService.deviceID});
 		//test body:
