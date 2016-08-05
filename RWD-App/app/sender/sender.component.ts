@@ -22,41 +22,33 @@ export class SenderComponent {
     constructor(private dataService: QuestionDataService, private router: Router) {
     }
     onSubmit() {
+        var send:boolean=true;
         if (this.givenAnswers < this.currentSurvey) {
           if (confirm('Sie haben bisher nur ' + this.givenAnswers + ' von ' + this.currentSurvey + ' Fragen beantwortet. Sind sie sicher, dass sie die Evaluation abschließen wollen?')) {
-            console.log("send finished answers");
             this.inSending = true;
-            console.log(this.dataService.getMultipleChoiceAnswers());
-            console.log(this.dataService.getTextAnswers());
-              var requestItem = this.dataService.sendAnswers();
-              requestItem.onSuccess = this.onSuccess;
-              requestItem.onError = this.onError;
+              send = true;
           }
           else {
             console.log('Zu wenige Antworten gegeben');
+              send = false;
             }
         }
-        else {
-            console.log("send all answers");
+        if(send) {
+            console.log("send answers");
             this.inSending = true;
             console.log(this.dataService.getMultipleChoiceAnswers());
             console.log(this.dataService.getTextAnswers());
 
             var requestItem = this.dataService.sendAnswers();
-            requestItem.onSuccess = this.onSuccess;
-            requestItem.onError = this.onError;
+            requestItem.onSuccess = (response, status, headers) => {
+                console.log("Upload erfolgreich");
+                alert("Upload erfolgreich");
+                this.inSending = false;
+                this.router.navigate(['/']);}
+            requestItem.onError = (response, status, headers) => {
+                this.inSending = false;
+                alert("Upload fehlgeschlagen");
+                console.log("Upload fehlgeschlagen");}
         }
-    }
-    onSuccess = function(response, status, headers){
-        console.log("Upload erfolgreich");
-        alert("Upload erfolgreich");
-        this.inSending = false;
-        this.router.navigate(['/']);
-    }
-
-    onError = function(response, status, headers){
-      this.inSending = false;
-        alert("Upload fehlgeschlagen");
-        console.log("Upload fehlgeschlagen");
     }
 }
