@@ -24,19 +24,9 @@ export class HomePage {
     onPageLoaded(){
       if(this.plt.is('core'))
       {
-        QuestionDataService.setTestData();
+        //QuestionDataService.setTestData();
+        //QuestionDataService.testGetQuestionSendAnswers('950209f3-78fb-4c78-ad86-42e854dd75c6', 'http://localhost:8080');
 
-        // getQuestion() POST-Request test:
-        // QuestionDataService.getQuestionFailedCallback = (data: RequestError) => {
-        //     console.log('getQuestion failed', data);
-        // };
-        // QuestionDataService.getQuestionSucceedCallback = (data: QuestionsDTO) => {
-        //     console.log('getQuestion succeed', data);
-        // };
-        // QuestionDataService.getQuestion();
-
-        console.log(QuestionDataService.survey.multipleChoiceQuestionDTOs);
-        console.log(QuestionDataService.survey.multipleChoiceQuestionDTOs.length);
         this.nav.setPages([{
                 page: CoursesPage,
                 params: {pagecounter: -1}
@@ -59,22 +49,30 @@ export class HomePage {
                          }]);
                }
                else{
-                 QuestionDataService.setBarcodeData(barcodeData.text);
-                 QuestionDataService.getQuestionFailedCallback = (errData: RequestError) => {
+                 if(QuestionDataService.setBarcodeData(barcodeData.text)) {
+                     QuestionDataService.getQuestionsFailedCallback = (errData: RequestError) => {
+                         let alert = Alert.create({
+                             title: "Error!", //String(errData.type),
+                             subTitle: errData.message,
+                             buttons: ['OK']
+                         });
+                         this.nav.present(alert);
+                     };
+                     QuestionDataService.getQuestionsSucceedCallback = (survey: QuestionsDTO) => {
+                         this.nav.setPages([{
+                             page: CoursesPage,
+                             params: {pagecounter: -1}
+                         }]);
+                     };
+                     QuestionDataService.getQuestions();
+                 } else {
                      let alert = Alert.create({
-                         title: "Error!", //String(errData.type),
-                         subTitle: errData.message,
-                         buttons: ['YEAH']
+                         title: "Error!",
+                         subTitle: "QR-Code invalid!",
+                         buttons: ['OK']
                      });
                      this.nav.present(alert);
-                 };
-                 QuestionDataService.getQuestionSucceedCallback = (survey: QuestionsDTO) => {
-                   this.nav.setPages([{
-                           page: CoursesPage,
-                           params: {pagecounter: -1}
-                         }]);
-                 };
-                 QuestionDataService.getQuestion();
+                 }
                }
              }, (err) => {
                  // An error occurred

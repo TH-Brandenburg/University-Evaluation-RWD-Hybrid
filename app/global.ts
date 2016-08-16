@@ -115,9 +115,14 @@ export class QuestionDataService{
 	}
 
 	static setBarcodeData(barcodeString) {
-		var barcodeDTO = JSON.parse(barcodeString);
-		QuestionDataService.voteToken = barcodeDTO.voteToken;
-		QuestionDataService.address = barcodeDTO.host;
+		try {
+			var barcodeDTO = JSON.parse(barcodeString);
+			QuestionDataService.voteToken = barcodeDTO.voteToken;
+			QuestionDataService.address = barcodeDTO.host;
+			return true;
+		} catch(e) {
+			return false;
+		}
 	}
 
 	static getQuestions(){
@@ -151,7 +156,7 @@ export class QuestionDataService{
 		QuestionDataService.survey = questionsDTO;
 		QuestionDataService.getQuestionsSucceedCallback(questionsDTO);
 	}
-
+	
 	static sendAnswers(){
 		QuestionDataService.generateDeviceIdIfNotExists();
 		let url = QuestionDataService.address + "/" + QuestionDataService.api + "/answers";
@@ -159,9 +164,9 @@ export class QuestionDataService{
 		let multipartItem = new MultipartItem(uploader);
 		multipartItem.url = url;
 
-		let body = JSON.stringify({"voteToken":QuestionDataService.voteToken, "studyPath":QuestionDataService.studyPath, "textAnswers":QuestionDataService.surveyAnswers.textAnswers, "mcAnswers":QuestionDataService.surveyAnswers.multipleChoiceAnswers, "deviceID":QuestionDataService.deviceID});
+		//let body = JSON.stringify({"voteToken":QuestionDataService.voteToken, "studyPath":QuestionDataService.studyPath, "textAnswers":QuestionDataService.surveyAnswers.textAnswers, "mcAnswers":QuestionDataService.surveyAnswers.multipleChoiceAnswers, "deviceID":QuestionDataService.deviceID});
 		//test body:
-		//let body = '{"voteToken":"'+QuestionDataService.voteToken+'","studyPath":"Security Management","textAnswers":[{"questionID":0,"answerText":"HOLD THE DOOR!"},{"questionID":1,"answerText":"HODOR"}],"mcAnswers":[{"questionText":"Haben Sie die Veranstaltung regelmässig besucht?","choice":{"choiceText":"ja, immer","grade":1}},{"questionText":"Haben Sie Interesse an diesem Fach?","choice":{"choiceText":"durchaus","grade":2}},{"questionText":"Wie waren Sprache und Ausdrucksweise des Dozenten/der Dozentin?","choice":{"choiceText":"leise, eher undeutlich","grade":4}},{"questionText":"Kann er/sie schwierige Sachverhalte verständlich erklären?","choice":{"choiceText":"nein, nie","grade":5}},{"questionText":"Versuchte der/die Dozent(in) festzustellen, ob die Studenten der LV folgen können?","choice":{"choiceText":"keine Angabe","grade":0}},{"questionText":"Ging der/die Dozent(in) auf Fragen innerhalb der LV ein?","choice":{"choiceText":"ja, immer","grade":1}},{"questionText":"War er/sie auch ausserhalb der LV zu diesen Themen ansprechbar?","choice":{"choiceText":"ja, wenn Zeit war","grade":2}},{"questionText":"War der/die Dozent(in) gut vorbereitet?","choice":{"choiceText":"oft","grade":3}},{"questionText":"Welche Gesamtnote geben Sie dem/der Dozenten(in)?","choice":{"choiceText":"ungenügend","grade":5}},{"questionText":"Welche Gesamtnote geben Sie den Lehrunterlagen?","choice":{"choiceText":"k.A","grade":0}},{"questionText":"Wie war die Vorgehensweise und Stoffpräsentation in der LV?","choice":{"choiceText":"sehr klar","grade":1}},{"questionText":"Wie war die Stoffmenge im Verhältnis zur verfügbaren Zeit?","choice":{"choiceText":"viel Stoff","grade":2}},{"questionText":"Die Übung war nützlich. Sie war sehr gut geeignet, die Vorlesungsinhalte zu verdeutlichen und zu vertiefen.","choice":{"choiceText":"unentschieden","grade":3}},{"questionText":"Wie beurteilen Sie die Ausstattung des Übungs- oder Laborraumes?","choice":{"choiceText":"ausreichend","grade":4}},{"questionText":"Wie beurteilen Sie Ihren persönlichen Lernerfolg in dieser Lehrveranstaltung?","choice":{"choiceText":"habe etwas gelernt","grade":3}},{"questionText":"Welche Gesamtnote geben Sie der Lehrveranstaltung?","choice":{"choiceText":"befriedigend","grade":3}}],"deviceID":"'+QuestionDataService.deviceID+'"}';
+		let body = '{"voteToken":"'+QuestionDataService.voteToken+'","studyPath":"Security Management","textAnswers":[{"questionID":0,"answerText":"HOLD THE DOOR!"},{"questionID":1,"answerText":"HODOR"}],"mcAnswers":[{"questionText":"Haben Sie die Veranstaltung regelmässig besucht?","choice":{"choiceText":"ja, immer","grade":1}},{"questionText":"Haben Sie Interesse an diesem Fach?","choice":{"choiceText":"durchaus","grade":2}},{"questionText":"Wie waren Sprache und Ausdrucksweise des Dozenten/der Dozentin?","choice":{"choiceText":"leise, eher undeutlich","grade":4}},{"questionText":"Kann er/sie schwierige Sachverhalte verständlich erklären?","choice":{"choiceText":"nein, nie","grade":5}},{"questionText":"Versuchte der/die Dozent(in) festzustellen, ob die Studenten der LV folgen können?","choice":{"choiceText":"keine Angabe","grade":0}},{"questionText":"Ging der/die Dozent(in) auf Fragen innerhalb der LV ein?","choice":{"choiceText":"ja, immer","grade":1}},{"questionText":"War er/sie auch ausserhalb der LV zu diesen Themen ansprechbar?","choice":{"choiceText":"ja, wenn Zeit war","grade":2}},{"questionText":"War der/die Dozent(in) gut vorbereitet?","choice":{"choiceText":"oft","grade":3}},{"questionText":"Welche Gesamtnote geben Sie dem/der Dozenten(in)?","choice":{"choiceText":"ungenügend","grade":5}},{"questionText":"Welche Gesamtnote geben Sie den Lehrunterlagen?","choice":{"choiceText":"k.A","grade":0}},{"questionText":"Wie war die Vorgehensweise und Stoffpräsentation in der LV?","choice":{"choiceText":"sehr klar","grade":1}},{"questionText":"Wie war die Stoffmenge im Verhältnis zur verfügbaren Zeit?","choice":{"choiceText":"viel Stoff","grade":2}},{"questionText":"Die Übung war nützlich. Sie war sehr gut geeignet, die Vorlesungsinhalte zu verdeutlichen und zu vertiefen.","choice":{"choiceText":"unentschieden","grade":3}},{"questionText":"Wie beurteilen Sie die Ausstattung des Übungs- oder Laborraumes?","choice":{"choiceText":"ausreichend","grade":4}},{"questionText":"Wie beurteilen Sie Ihren persönlichen Lernerfolg in dieser Lehrveranstaltung?","choice":{"choiceText":"habe etwas gelernt","grade":3}},{"questionText":"Welche Gesamtnote geben Sie der Lehrveranstaltung?","choice":{"choiceText":"befriedigend","grade":3}}],"deviceID":"'+QuestionDataService.deviceID+'"}';
 		
 		let formData = new FormData();
 		formData.append("answers-dto", body);
