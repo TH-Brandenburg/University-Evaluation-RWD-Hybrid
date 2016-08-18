@@ -9,6 +9,8 @@ import {MultipartItem} from "./plugins/multipart-upload/multipart-item";
 import {MultipartUploader} from "./plugins/multipart-upload/multipart-uploader";
 import 'rxjs/add/operator/map';
 import {isUndefined} from "ionic-angular/util";
+declare var JSZip:any;
+
 
 export class Course {
     course: String;
@@ -156,33 +158,47 @@ export class QuestionDataService{
 		QuestionDataService.survey = questionsDTO;
 		QuestionDataService.getQuestionsSucceedCallback(questionsDTO);
 	}
-	
-	static sendAnswers(){
-		QuestionDataService.generateDeviceIdIfNotExists();
-		let url = QuestionDataService.address + "/" + QuestionDataService.api + "/answers";
-		let uploader = new MultipartUploader( {"url":url,"authToken":null} );
-		let multipartItem = new MultipartItem(uploader);
-		multipartItem.url = url;
 
-		let body = JSON.stringify({"voteToken":QuestionDataService.voteToken, "studyPath":QuestionDataService.studyPath, "textAnswers":QuestionDataService.surveyAnswers.textAnswers, "mcAnswers":QuestionDataService.surveyAnswers.multipleChoiceAnswers, "deviceID":QuestionDataService.deviceID});
-		//test body:
-		//let body = '{"voteToken":"'+QuestionDataService.voteToken+'","studyPath":"Security Management","textAnswers":[{"questionID":0,"answerText":"HOLD THE DOOR!"},{"questionID":1,"answerText":"HODOR"}],"mcAnswers":[{"questionText":"Haben Sie die Veranstaltung regelmässig besucht?","choice":{"choiceText":"ja, immer","grade":1}},{"questionText":"Haben Sie Interesse an diesem Fach?","choice":{"choiceText":"durchaus","grade":2}},{"questionText":"Wie waren Sprache und Ausdrucksweise des Dozenten/der Dozentin?","choice":{"choiceText":"leise, eher undeutlich","grade":4}},{"questionText":"Kann er/sie schwierige Sachverhalte verständlich erklären?","choice":{"choiceText":"nein, nie","grade":5}},{"questionText":"Versuchte der/die Dozent(in) festzustellen, ob die Studenten der LV folgen können?","choice":{"choiceText":"keine Angabe","grade":0}},{"questionText":"Ging der/die Dozent(in) auf Fragen innerhalb der LV ein?","choice":{"choiceText":"ja, immer","grade":1}},{"questionText":"War er/sie auch ausserhalb der LV zu diesen Themen ansprechbar?","choice":{"choiceText":"ja, wenn Zeit war","grade":2}},{"questionText":"War der/die Dozent(in) gut vorbereitet?","choice":{"choiceText":"oft","grade":3}},{"questionText":"Welche Gesamtnote geben Sie dem/der Dozenten(in)?","choice":{"choiceText":"ungenügend","grade":5}},{"questionText":"Welche Gesamtnote geben Sie den Lehrunterlagen?","choice":{"choiceText":"k.A","grade":0}},{"questionText":"Wie war die Vorgehensweise und Stoffpräsentation in der LV?","choice":{"choiceText":"sehr klar","grade":1}},{"questionText":"Wie war die Stoffmenge im Verhältnis zur verfügbaren Zeit?","choice":{"choiceText":"viel Stoff","grade":2}},{"questionText":"Die Übung war nützlich. Sie war sehr gut geeignet, die Vorlesungsinhalte zu verdeutlichen und zu vertiefen.","choice":{"choiceText":"unentschieden","grade":3}},{"questionText":"Wie beurteilen Sie die Ausstattung des Übungs- oder Laborraumes?","choice":{"choiceText":"ausreichend","grade":4}},{"questionText":"Wie beurteilen Sie Ihren persönlichen Lernerfolg in dieser Lehrveranstaltung?","choice":{"choiceText":"habe etwas gelernt","grade":3}},{"questionText":"Welche Gesamtnote geben Sie der Lehrveranstaltung?","choice":{"choiceText":"befriedigend","grade":3}}],"deviceID":"'+QuestionDataService.deviceID+'"}';
-		
-		let formData = new FormData();
-		formData.append("answers-dto", body);
-
-		if(QuestionDataService.answerFiles.length == 0){
-			formData.append("images",  new Blob());
-		}else{
-			for(let i = 0; i < QuestionDataService.answerFiles.length; i++){
-				formData.append("images",  QuestionDataService.convertImage(QuestionDataService.answerFiles[i],QuestionDataService.survey.textQuestions[i].questionText));
-			}
+  static generateMultipartItem(){
+		var uploader = new MultipartUploader(QuestionDataService.address);
+		var multipartItem = new MultipartItem(uploader);
+		uploader = new MultipartUploader(QuestionDataService.address + "/v1/answers");
+		uploader.url = QuestionDataService.address + "/v1/answers";
+		multipartItem = new MultipartItem(uploader);
+		multipartItem.url = QuestionDataService.address + "/v1/answers";
+		var body = JSON.stringify({"voteToken":QuestionDataService.voteToken, "studyPath":QuestionDataService.studyPath, "textAnswers":QuestionDataService.surveyAnswers.textAnswers, "mcAnswers":QuestionDataService.surveyAnswers.multipleChoiceAnswers, "deviceID":QuestionDataService.deviceID});
+		if (multipartItem == null){
+			multipartItem = new MultipartItem(uploader);
 		}
+		if (multipartItem.formData == null){
+			multipartItem.formData = new FormData();
+		}
+		multipartItem.formData.append("answers-dto",  body);
+		return multipartItem;
+}
 
-		multipartItem.callback = QuestionDataService.handleUploadCallback;
-		multipartItem.formData = formData;
-		multipartItem.upload();
-	}
+static sendAnswers(){
+  var multipartItem = QuestionDataService.generateMultipartItem();
+  if(QuestionDataService.answerFiles == null || QuestionDataService.answerFiles == undefined || QuestionDataService.answerFiles.length == 0){
+    var blob = new Blob();
+    multipartItem.formData.append("images",  blob);
+    multipartItem.upload();
+  }else{
+    var blob:Blob;
+    var zip = new JSZip();
+    var img = zip.folder("images");
+    for(let i = 0; i < QuestionDataService.answerFiles.length; i++){
+      img.file(i + ".png", QuestionDataService.answerFiles[i]);
+    }
+    zip.generateAsync({type : "blob"}).then(function(content){
+      var blob:Blob = content;
+      multipartItem.formData.append("images", blob);
+      multipartItem.upload();
+
+    });
+  }
+  return multipartItem;
+}
 
 	private static handleUploadCallback = (data) => {
 		//QuestionDataService.answerFiles = [];
@@ -265,16 +281,7 @@ export class QuestionDataService{
 			 view[i] = binary.charCodeAt(i);
 		}
 		let blob = new Blob( [view], { type: "application/pdf" });
-		let file = this.blobToFile(blob,fileName);
-		return file
-	}
-
-	private static blobToFile(blob: Blob, fileName:string): File {
-		let b: any = blob;
-		let f: File;
-		b.lastModifiedDate = new Date();
-		b.name = fileName;
-		return <File>blob;
+		return blob
 	}
 
 	static calulateNavigationPos(name,counter)
