@@ -5,14 +5,16 @@
 }
 
 .answer {
+  color: white;
   display: table;
   font-size: 20px;
   border-width: 2px;
-
+  border-color:black;
   border-style:solid;
   text-align:center;
 
   margin-bottom:10px;
+
 
 }
 
@@ -26,7 +28,8 @@
 }
 
 .enabled {
-  background-color:rgb(100,100,255);
+  background-color:rgba(100,100,255,0.5);
+  font-weight: bold;
 }
 
 .normalAnswer {
@@ -39,3 +42,38 @@
   width: 27%;
 }
 
+.answer-0 {
+  color:black;
+  background-color: rgb(224,224,224);
+
+}
+
+.answer-1 {
+  background-color: rgba(0,100,0,0.6);
+
+}
+
+.answer-2 {
+  background-color: rgba(34,139,34,0.5);
+}
+
+.answer-3 {
+  background-color: rgba(205,92,92,0.5);
+}
+
+.answer-4 {
+  background-color: rgba(178,34,34,0.7);
+
+}
+
+.answer-5 {
+  background-color: rgba(145,37,37,0.8);
+}
+
+.answer-6 {
+  background-color: rgba(139,0,0,0.8);
+}
+
+.answer-7 {
+  background-color: rgba(104,104,104,1.0);
+}

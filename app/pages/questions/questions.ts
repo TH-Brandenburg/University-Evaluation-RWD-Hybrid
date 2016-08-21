@@ -39,7 +39,7 @@ allQuestions: MultipleChoiceQuestionDTO[];
       if(grade == QuestionDataService.getMultipleChoiceAnswer(this.counter))
         classes = "answer enabled";
       else
-        classes = "answer disabled";
+        classes = "answer answer-" + grade;
 
       if(grade == 0){
           if(document.getElementById("button_answer0") != null)
@@ -58,9 +58,9 @@ allQuestions: MultipleChoiceQuestionDTO[];
            if(nextButtonNumber > this.currentQuestion.choices.length - 1)
                nextButtonNumber = nextButtonNumber - this.currentQuestion.choices.length;
            if(nextButtonNumber == 0)
-               document.getElementById("button_answer"+nextButtonNumber).className = "answer disabled right";
+               document.getElementById("button_answer"+nextButtonNumber).className = "answer answer-"+nextButtonNumber+" right";
            else
-               document.getElementById("button_answer"+nextButtonNumber).className = "answer disabled normalAnswer";
+               document.getElementById("button_answer"+nextButtonNumber).className = "answer answer-"+nextButtonNumber+" normalAnswer";
 
        }
    }
