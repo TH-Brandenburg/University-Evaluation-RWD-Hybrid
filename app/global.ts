@@ -17,8 +17,8 @@ export class Course {
     id: Number;
 }
 
-// HTTP Request Error Class
-export class RequestError {
+// HTTP Request Response Class
+export class RequestResponse {
 	message: string;
 	type: number;
 }
@@ -95,13 +95,13 @@ export class QuestionDataService{
 
 	// Public
 	static answerFiles: String[] = [];
-	static survey: QuestionsDTO;
+	static survey: QuestionsDTO = new QuestionsDTO();
 
 	// Callbacks
-	static getQuestionsFailedCallback: (data: RequestError) => void;
+	static getQuestionsFailedCallback: (data: RequestResponse) => void;
 	static getQuestionsSucceedCallback: (data: QuestionsDTO) => void;
-	static sendAnswersFailedCallback: (data: RequestError) => void;
-	static sendAnswersSucceedCallback: (successMsg: String) => void; //TODO
+	static sendAnswersFailedCallback: (data: RequestResponse) => void;
+	static sendAnswersSucceedCallback: (successMsg: RequestResponse) => void;
 
 
 	constructor(private http:Http){
@@ -145,12 +145,11 @@ export class QuestionDataService{
 
 	private static  handleGetQuestionError(err) {
 		if (err._body instanceof Object) {
-			console.log('QuestionDataService.handleGetQuestionError()', err);
-			QuestionDataService.getQuestionsFailedCallback(<RequestError>{"message": "Server not responding", "type": -1});
-			return;
+			QuestionDataService.getQuestionsFailedCallback(<RequestResponse>{"message": "Server not responding", "type": -1});
+		} else {
+			let errData:RequestResponse = <RequestResponse>(JSON.parse(err._body));
+			QuestionDataService.getQuestionsFailedCallback(errData);
 		}
-		let errData:RequestError = <RequestError>(JSON.parse(err._body));
-		QuestionDataService.getQuestionsFailedCallback(errData);
 	}
 
 	private static  handleGetQuestionSuccess(data) {
@@ -162,10 +161,11 @@ export class QuestionDataService{
   static generateMultipartItem(){
 		var uploader = new MultipartUploader(QuestionDataService.address);
 		var multipartItem = new MultipartItem(uploader);
-		uploader = new MultipartUploader(QuestionDataService.address + "/v1/answers");
-		uploader.url = QuestionDataService.address + "/v1/answers";
+	  	let url = QuestionDataService.address + "/" + QuestionDataService.api + "/answers";
+		uploader = new MultipartUploader(url);
+		uploader.url = url;
 		multipartItem = new MultipartItem(uploader);
-		multipartItem.url = QuestionDataService.address + "/v1/answers";
+		multipartItem.url = url;
 		var body = JSON.stringify({"voteToken":QuestionDataService.voteToken, "studyPath":QuestionDataService.studyPath, "textAnswers":QuestionDataService.surveyAnswers.textAnswers, "mcAnswers":QuestionDataService.surveyAnswers.multipleChoiceAnswers, "deviceID":QuestionDataService.deviceID});
 		if (multipartItem == null){
 			multipartItem = new MultipartItem(uploader);
@@ -173,6 +173,7 @@ export class QuestionDataService{
 		if (multipartItem.formData == null){
 			multipartItem.formData = new FormData();
 		}
+	  	multipartItem.callback = QuestionDataService.handleUploadCallback;
 		multipartItem.formData.append("answers-dto",  body);
 		return multipartItem;
 }
@@ -193,21 +194,24 @@ static sendAnswers(){
     zip.generateAsync({type : "blob"}).then(function(content){
       var blob:Blob = content;
       multipartItem.formData.append("images", blob);
+	  multipartItem.callback = (data) => { QuestionDataService.handleUploadCallback(data) };
       multipartItem.upload();
-
     });
   }
   return multipartItem;
 }
 
 	private static handleUploadCallback = (data) => {
-		//QuestionDataService.answerFiles = [];
+		console.log("handleUploadCallback:", data);
 		if (data){
-			console.log('handleUploadCallback', data);
-			let errData:RequestError = <RequestError>(JSON.parse(data));
-			QuestionDataService.sendAnswersFailedCallback(errData);
+			let response:RequestResponse = <RequestResponse>(JSON.parse(data));
+			if(response.type == 2) { //type 2 is de.thb.ue.dto.util.ErrorType.ANSWERS_SUCCESSFULLY_ADDED
+				QuestionDataService.sendAnswersSucceedCallback(response);
+			} else {
+				QuestionDataService.sendAnswersFailedCallback(response);
+			}
 		}else{
-			QuestionDataService.sendAnswersFailedCallback(<RequestError>{"message": "Server not responding", "type": -1});
+			QuestionDataService.sendAnswersFailedCallback(<RequestResponse>{"message": "Server not responding", "type": -1});
 		}
 	}
 
@@ -286,7 +290,7 @@ static sendAnswers(){
 
 	static calulateNavigationPos(name,counter)
 	{
-		var pos = 0
+		let pos = 0;
 		if (name == "course"){
 		  pos = 0
 		}
@@ -316,17 +320,17 @@ static sendAnswers(){
 		QuestionDataService.studyPath = "Technologie- und Innovationsmanagement";
 
 		// getQuestion() POST-Request test:
-		QuestionDataService.getQuestionsFailedCallback = (data: RequestError) => {
+		QuestionDataService.getQuestionsFailedCallback = (data: RequestResponse) => {
 			console.log('getQuestion failed', data);
 		};
 		QuestionDataService.getQuestionsSucceedCallback = (data: QuestionsDTO) => {
 			console.log('getQuestion succeed', data);
 			// sendAnswers() POST-Request test:
-			QuestionDataService.sendAnswersFailedCallback = (data: RequestError) => {
+			QuestionDataService.sendAnswersFailedCallback = (data: RequestResponse) => {
 				console.log('sendAnswers failed', data);
 			};
-			QuestionDataService.sendAnswersSucceedCallback = (successMsg: String) => {
-				console.log('sendAnswers succeed', successMsg);
+			QuestionDataService.sendAnswersSucceedCallback = (successMsg: RequestResponse) => {
+				console.log('sendAnswers succeed', successMsg.message);
 			};
 			QuestionDataService.sendAnswers();
 		};

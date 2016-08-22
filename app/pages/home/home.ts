@@ -3,7 +3,7 @@ import {CommentViewPage} from '../comment-view/comment-view';
 import {SendViewPage} from '../send-view/send-view';
 import {BarcodeScanner} from 'ionic-native';
 import {QuestionsPage} from '../questions/questions';
-import {QuestionsDTO, RequestError,QuestionDataService} from '../../global';
+import {QuestionsDTO, RequestResponse,QuestionDataService} from '../../global';
 import {CoursesPage} from '../choose-course/choose-course';
 
 @Page({
@@ -16,7 +16,7 @@ export class HomePage {
     questionsPage = QuestionsPage;
     coursesPage = CoursesPage;
 
-    debugMode: boolean = true;
+    debugMode: boolean = false;
 
     constructor(private plt: Platform, private nav : NavController, private qService: QuestionDataService) {
     }
@@ -25,7 +25,7 @@ export class HomePage {
       if(this.plt.is('core'))
       {
         //QuestionDataService.setTestData();
-        //QuestionDataService.testGetQuestionSendAnswers('950209f3-78fb-4c78-ad86-42e854dd75c6', 'http://localhost:8080');
+        //QuestionDataService.testGetQuestionSendAnswers('2d1e06ef-0cc4-4f0b-9003-9be76a5f1a31', 'http://localhost:8080');
 
         this.nav.setPages([{
                 page: CoursesPage,
@@ -50,7 +50,7 @@ export class HomePage {
                }
                else{
                  if(QuestionDataService.setBarcodeData(barcodeData.text)) {
-                     QuestionDataService.getQuestionsFailedCallback = (errData: RequestError) => {
+                     QuestionDataService.getQuestionsFailedCallback = (errData: RequestResponse) => {
                          let alert = Alert.create({
                              title: "Error!", //String(errData.type),
                              subTitle: errData.message,
@@ -72,6 +72,7 @@ export class HomePage {
                          buttons: ['OK']
                      });
                      this.nav.present(alert);
+                     BarcodeScanner.scan();
                  }
                }
              }, (err) => {
