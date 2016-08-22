@@ -25,7 +25,7 @@ export class HomePage {
       if(this.plt.is('core'))
       {
         //QuestionDataService.setTestData();
-        //QuestionDataService.testGetQuestionSendAnswers('2d1e06ef-0cc4-4f0b-9003-9be76a5f1a31', 'http://localhost:8080');
+        //QuestionDataService.testGetQuestionSendAnswers('2d1e06ef-0cc4-4f0b-9003-9be76a5f1a31', 'http://52.24.142.164:8080');
 
         this.nav.setPages([{
                 page: CoursesPage,
@@ -33,51 +33,68 @@ export class HomePage {
               }]);
       }
       else{
-        this.scan()
+          this.plt.ready().then(() => { this.scan(); });
       }
     }
 
 
     scan() {
-         this.plt.ready().then(() => {
-             BarcodeScanner.scan().then((barcodeData) => {
-               if(this.debugMode){
-                   QuestionDataService.setTestData();
-                   this.nav.setPages([{
-                           page: CoursesPage,
-                           params: {pagecounter: -1}
-                         }]);
-               }
-               else{
-                 if(QuestionDataService.setBarcodeData(barcodeData.text)) {
-                     QuestionDataService.getQuestionsFailedCallback = (errData: RequestResponse) => {
-                         let alert = Alert.create({
-                             title: "Error!", //String(errData.type),
-                             subTitle: errData.message,
-                             buttons: ['OK']
-                         });
-                         this.nav.present(alert);
-                     };
-                     QuestionDataService.getQuestionsSucceedCallback = (survey: QuestionsDTO) => {
-                         this.nav.setPages([{
-                             page: CoursesPage,
-                             params: {pagecounter: -1}
-                         }]);
-                     };
-                     QuestionDataService.getQuestions();
-                 } else {
+         BarcodeScanner.scan().then((barcodeData) => {
+           if(this.debugMode){
+               QuestionDataService.setTestData();
+               this.nav.setPages([{
+                       page: CoursesPage,
+                       params: {pagecounter: -1}
+                     }]);
+           } else {
+             if(QuestionDataService.setBarcodeData(barcodeData.text)) {
+                 QuestionDataService.getQuestionsFailedCallback = (errData: RequestResponse) => {
                      let alert = Alert.create({
-                         title: "Error!",
-                         subTitle: "QR-Code invalid!",
-                         buttons: ['OK']
+                         title: "Error!", //String(errData.type),
+                         subTitle: errData.message,
+                         buttons: [{
+                             text: 'RETRY',
+                             handler: () => {
+                                 this.scan();
+                             }
+                         }, {
+                             text: 'EXIT',
+                             handler: () => {
+                                 this.plt.exitApp();
+                             }
+                         }]
                      });
                      this.nav.present(alert);
-                     BarcodeScanner.scan();
-                 }
-               }
-             }, (err) => {
-                 // An error occurred
-             });
+                 };
+                 QuestionDataService.getQuestionsSucceedCallback = (survey: QuestionsDTO) => {
+                     this.nav.setPages([{
+                         page: CoursesPage,
+                         params: {pagecounter: -1}
+                     }]);
+                 };
+                 QuestionDataService.getQuestions();
+             } else {
+                 let alert = Alert.create({
+                     title: "Error!",
+                     subTitle: "QR-Code invalid!",
+                     buttons: [{
+                         text: 'RETRY',
+                         handler: () => {
+                             this.scan();
+                         }
+                     }, {
+                         text: 'EXIT',
+                         handler: () => {
+                             this.plt.exitApp();
+                         }
+                     }]
+                 });
+                 this.nav.present(alert);
+             }
+           }
+         }, (err) => {
+             // An error occurred
          });
-     }
+    }
+
  }

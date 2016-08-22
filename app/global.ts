@@ -135,6 +135,7 @@ export class QuestionDataService{
 		let requestURI = QuestionDataService.address + '/' + QuestionDataService.api + '/questions';
 
 		QuestionDataService.http.post(requestURI, body, { headers: headers })
+		.timeout(5000, new Error('getQuestions timed out!'))
 		.map(res => res.json())
 		.subscribe(
 		  data => QuestionDataService.handleGetQuestionSuccess(data),
@@ -144,11 +145,13 @@ export class QuestionDataService{
 	}
 
 	private static  handleGetQuestionError(err) {
-		if (err._body instanceof Object) {
-			QuestionDataService.getQuestionsFailedCallback(<RequestResponse>{"message": "Server not responding", "type": -1});
-		} else {
-			let errData:RequestResponse = <RequestResponse>(JSON.parse(err._body));
+		//console.log(err._body.constructor.name);
+		let errBody = err._body;
+		if (typeof errBody == 'string' || errBody instanceof String) {
+			let errData:RequestResponse = <RequestResponse>(JSON.parse(errBody));
 			QuestionDataService.getQuestionsFailedCallback(errData);
+		} else {
+			QuestionDataService.getQuestionsFailedCallback(<RequestResponse>{"message": "Server not responding?", "type": -1});
 		}
 	}
 
@@ -164,6 +167,7 @@ export class QuestionDataService{
 	  	let url = QuestionDataService.address + "/" + QuestionDataService.api + "/answers";
 		uploader = new MultipartUploader(url);
 		uploader.url = url;
+		uploader.timeout = 5000;
 		multipartItem = new MultipartItem(uploader);
 		multipartItem.url = url;
 		var body = JSON.stringify({"voteToken":QuestionDataService.voteToken, "studyPath":QuestionDataService.studyPath, "textAnswers":QuestionDataService.surveyAnswers.textAnswers, "mcAnswers":QuestionDataService.surveyAnswers.multipleChoiceAnswers, "deviceID":QuestionDataService.deviceID});

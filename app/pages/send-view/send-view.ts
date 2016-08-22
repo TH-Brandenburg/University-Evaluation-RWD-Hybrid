@@ -32,7 +32,17 @@ export class SendViewPage {
             let alert = Alert.create({
                 title: "Error!", //String(errData.type),
                 subTitle: errData.message,
-                buttons: ['OK']
+                buttons: [{
+                    text: 'RETRY',
+                    handler: () => {
+                        this.sendResult();
+                    }
+                }, {
+                    text: 'EXIT',
+                    handler: () => {
+                        this.platform.exitApp();
+                    }
+                }]
             });
             this.nav.present(alert);
         };
@@ -40,10 +50,14 @@ export class SendViewPage {
             let alert = Alert.create({
                 title: "Success!",
                 subTitle: successMsg.message,
-                buttons: ['OK']
+                buttons: [{
+                    text: 'EXIT',
+                    handler: () => {
+                        this.platform.exitApp();
+                    }
+                }]
             });
             this.nav.present(alert);
-            this.platform.exitApp();
         };
         QuestionDataService.sendAnswers();
     }
