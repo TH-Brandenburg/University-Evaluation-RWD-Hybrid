@@ -106,7 +106,7 @@ export class QuestionDataService{
 			var a = true;
 			var i = 0;
 			while(i < this.surveyAnswers.multipleChoiceAnswers.length) {
-				if (this.surveyAnswers.multipleChoiceAnswers[0] == null) a = false;
+				if (this.surveyAnswers.multipleChoiceAnswers[i] == null) a = false;
 				i++;
 			}
 		 	return a;
