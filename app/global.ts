@@ -100,6 +100,19 @@ export class QuestionDataService{
 	constructor(private http:Http){
 		QuestionDataService.http = http;
 	}
+	
+	static getAllAnswered(){
+		if(this.survey.multipleChoiceQuestionDTOs.length === this.surveyAnswers.multipleChoiceAnswers.length){
+			var a = true;
+			var i = 0;
+			while(i < this.surveyAnswers.multipleChoiceAnswers.length) {
+				if (this.surveyAnswers.multipleChoiceAnswers[0] == null) a = false;
+				i++;
+			}
+		 	return a;
+		 }
+		 return false;
+	}
 
 	static setStudyPath(studypath) {
 		QuestionDataService.studyPath = studypath;

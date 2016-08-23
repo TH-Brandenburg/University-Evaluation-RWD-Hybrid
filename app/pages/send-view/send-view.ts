@@ -27,6 +27,36 @@ export class SendViewPage {
 	  this.pos = QuestionDataService.calulateNavigationPos("send-view",-1);
     this.platform = platform;
     }
+
+    checkSend(){
+        alert(QuestionDataService.getAllAnswered());
+        if(QuestionDataService.getAllAnswered() == false) {
+            let alert = Alert.create({
+                title: "Achtung!", //String(errData.type),
+                subTitle: "Sie haben nicht alle Fragen beantwortet!",
+                buttons: [{
+                    text: 'Trotzdem senden',
+                    handler: () => {
+                        this.sendResult();
+                    }
+                }, {
+                    text: 'Nicht senden',
+                    handler: () => {
+                        this.nav.setPages([{
+                            page: SendViewPage,
+                            params: {pagecounter: 0}
+                        }]);
+                    }
+                }]
+            });
+            this.nav.present(alert);
+        }
+        else {
+            this.sendResult();
+        }
+
+    }
+
     sendResult(){
         QuestionDataService.sendAnswersFailedCallback = (errData: RequestResponse) => {
             let alert = Alert.create({
