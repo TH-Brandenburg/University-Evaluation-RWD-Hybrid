@@ -6,8 +6,8 @@ import 'rxjs/add/operator/map';
 declare var JSZip:any;
 
 export class Course {
-    course: String;
-    id: Number;
+    course: string;
+    id: number;
 }
 
 // HTTP Request Response Class
@@ -34,13 +34,13 @@ export class TextQuestionDTO {
 
 // Multiple Choice Question
 export class MultipleChoiceQuestionDTO {
-	question: String;
+	question: string;
 	choices: ChoiceDTO[];
 }
 
 // Answer / Choice
 export class ChoiceDTO {
-	choiceText: String;
+	choiceText: string;
 	grade: number;
 }
 
