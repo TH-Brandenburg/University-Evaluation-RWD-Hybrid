@@ -13,15 +13,17 @@ export class QuestionsPage{
 allQuestions: MultipleChoiceQuestionDTO[];
     currentQuestion: MultipleChoiceQuestionDTO;
     currentQuestionID: number;
+    classes: string[]= [];
 
     commentViewPage = CommentViewPage;
     sendViewPage = SendViewPage;
     QuestionDataService: any;
 
-
     type : String;
     counter : number;
 	   pos: number;
+
+    i: number = 0;
 
     constructor(private navParams: NavParams,private nav : NavController) {
         this.counter = navParams.get('pagecounter')-1;
@@ -30,6 +32,40 @@ allQuestions: MultipleChoiceQuestionDTO[];
         console.log("Question",this.currentQuestion)
         this.currentQuestionID = this.counter;
 		this.pos = QuestionDataService.calulateNavigationPos("multipleChoiceQuestionDTOs",this.counter)+1;
+
+        
+        while(this.i < QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices.length){
+            //var dieserGrad = QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[i].grade;
+            if(QuestionDataService.getMultipleChoiceAnswer(this.counter) == null){
+                if(QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade == 0) {
+                    this.classes[QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade] = "answer right answer-" + QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade;
+                }
+                else {
+                    this.classes[QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade] = "normalAnswer answer answer-" + QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade;
+                }
+            }
+            else {
+                if(QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade == QuestionDataService.getMultipleChoiceAnswer(this.counter))
+                {
+                    if(QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade == 0) {
+                        this.classes[QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade] = "answer enabled right";
+                    }
+                    else {
+                        this.classes[QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade] = "normalAnswer answer enabled";
+                    }
+                }
+                else {
+                    if(QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade == 0) {
+                        this.classes[QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade] = "answer right answer-" + QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade;
+                    }
+                    else {
+                        this.classes[QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade] = "normalAnswer answer answer-" + QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade;
+                    }
+                }
+            }
+            this.i++;
+        }
+
     console.log(this.currentQuestion.choices)
     }
 

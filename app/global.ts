@@ -41,7 +41,7 @@ export class MultipleChoiceQuestionDTO {
 // Answer / Choice
 export class ChoiceDTO {
 	choiceText: String;
-	grade: Number;
+	grade: number;
 }
 
 // Survey Answer
