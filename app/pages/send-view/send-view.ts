@@ -29,7 +29,7 @@ export class SendViewPage {
     }
 
     checkSend(){
-        alert(QuestionDataService.getAllAnswered());
+        //alert(QuestionDataService.getAllAnswered());
         if(QuestionDataService.getAllAnswered() == false) {
             let alert = Alert.create({
                 title: "Achtung!", //String(errData.type),
