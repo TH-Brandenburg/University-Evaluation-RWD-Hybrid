@@ -33,9 +33,9 @@ allQuestions: MultipleChoiceQuestionDTO[];
         this.currentQuestionID = this.counter;
 		this.pos = QuestionDataService.calulateNavigationPos("multipleChoiceQuestionDTOs",this.counter)+1;
 
-        
+        //alert(QuestionDataService.getMultipleChoiceAnswer(this.counter));
         while(this.i < QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices.length){
-            //var dieserGrad = QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[i].grade;
+
             if(QuestionDataService.getMultipleChoiceAnswer(this.counter) == null){
                 if(QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade == 0) {
                     this.classes[QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade] = "answer right answer-" + QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade;
@@ -107,6 +107,7 @@ allQuestions: MultipleChoiceQuestionDTO[];
        else
            document.getElementById("button_answer"+number).className = "answer enabled normalAnswer";
        this.DisableOtherAnswers(number);
+       //alert(this.currentQuestionID + "   " + number);
        QuestionDataService.addMultipleChoiceAnswer(this.currentQuestionID, number);
     }
 
