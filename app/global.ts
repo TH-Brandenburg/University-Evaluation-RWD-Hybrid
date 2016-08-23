@@ -329,6 +329,21 @@ static sendAnswers(){
 	}
 
 	// TEST METHOD
+	static testGetQuestion(voteToken, address) {
+		QuestionDataService.voteToken = voteToken;
+		QuestionDataService.address = address;
+		// getQuestion() POST-Request test:
+		QuestionDataService.getQuestionsFailedCallback = (data: RequestResponse) => {
+			console.log('getQuestion failed', data);
+		};
+		QuestionDataService.getQuestionsSucceedCallback = (data: QuestionsDTO) => {
+			console.log('getQuestion succeed', data);
+			QuestionDataService.studyPath = QuestionDataService.survey.studyPaths[0];
+		};
+		QuestionDataService.getQuestions();
+	}
+
+	// TEST METHOD
 	static testGetQuestionSendAnswers(voteToken, address) {
 		QuestionDataService.voteToken = voteToken;
 		QuestionDataService.address = address;
