@@ -260,13 +260,7 @@ static sendAnswers(){
 				choiceText = choice.choiceText;
 			}
 		}
-		//erase entry if question is answered a second time
-		for (let givenAnswer of QuestionDataService.surveyAnswers.multipleChoiceAnswers) {
-			if (givenAnswer['questionText'] === questionText) {
-				let index = QuestionDataService.surveyAnswers.multipleChoiceAnswers.indexOf(givenAnswer);
-				QuestionDataService.surveyAnswers.multipleChoiceAnswers.splice(index, 1);
-			}
-		}
+
 		QuestionDataService.surveyAnswers.multipleChoiceAnswers[index]= <MultipleChoiceAnswerDTO>{"questionText":questionText, "choice":<ChoiceDTO>{"choiceText":choiceText,"grade":grade}};
 	}
 
