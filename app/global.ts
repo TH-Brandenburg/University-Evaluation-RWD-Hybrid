@@ -225,26 +225,16 @@ static sendAnswers(){
 		//get question id
 		let questionID = QuestionDataService.survey.textQuestions[index].questionID;
 
-		//erase array entry if the question is answered a second time
-		for (let givenAnswer of QuestionDataService.surveyAnswers.textAnswers) {
-			if (givenAnswer['questionID'] === questionID) {
-				let index = QuestionDataService.surveyAnswers.textAnswers.indexOf(givenAnswer);
-				QuestionDataService.surveyAnswers.textAnswers.splice(index, 1);
-			}
-		}
-
-		QuestionDataService.surveyAnswers.textAnswers.push(<TextAnswerDTO>{"questionID":questionID, "questionText":questionText, "answerText":answerText});
+		QuestionDataService.surveyAnswers.textAnswers[index] = <TextAnswerDTO>{
+			"questionID":questionID, "questionText":questionText, "answerText":answerText
+		};
 	}
 
 	static getTextAnswer(index: number){
-		return QuestionDataService.surveyAnswers.textAnswers[index].answerText;
-
-		// for (let givenAnswer of QuestionDataService.surveyAnswers.textAnswers) {
-		// 	if (givenAnswer['questionID'] === questionID) {
-		// 		let index = QuestionDataService.surveyAnswers.textAnswers.indexOf(givenAnswer);
-		// 		return QuestionDataService.surveyAnswers.textAnswers[index].answerText;
-		// 	}
-		// }
+		if(QuestionDataService.surveyAnswers.textAnswers[index])
+			return QuestionDataService.surveyAnswers.textAnswers[index].answerText;
+		else
+			return "";
 	}
 
 	static addMultipleChoiceAnswer(index: number, grade:number) {
