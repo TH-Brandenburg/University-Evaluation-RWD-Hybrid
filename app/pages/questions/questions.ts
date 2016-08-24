@@ -94,9 +94,9 @@ allQuestions: MultipleChoiceQuestionDTO[];
            if(nextButtonNumber > this.currentQuestion.choices.length - 1)
                nextButtonNumber = nextButtonNumber - this.currentQuestion.choices.length;
            if(nextButtonNumber == 0)
-               document.getElementById("button_answer"+nextButtonNumber).className = this.classes[nextButtonNumber];
+               document.getElementById("button_answer"+nextButtonNumber).className = "answer answer-"+QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[nextButtonNumber].grade+" right";
            else
-               document.getElementById("button_answer"+nextButtonNumber).className = this.classes[nextButtonNumber];
+               document.getElementById("button_answer"+nextButtonNumber).className = "answer answer-"+QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[nextButtonNumber].grade+" normalAnswer";
 
        }
    }
