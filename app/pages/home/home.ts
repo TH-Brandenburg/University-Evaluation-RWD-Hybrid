@@ -3,7 +3,7 @@ import {CommentViewPage} from '../comment-view/comment-view';
 import {SendViewPage} from '../send-view/send-view';
 import {BarcodeScanner} from 'ionic-native';
 import {QuestionsPage} from '../questions/questions';
-import {QuestionsDTO, RequestResponse,QuestionDataService} from '../../global';
+import {QuestionsDTO, RequestResponse, QuestionDataService, debugMode} from '../../global';
 import {CoursesPage} from '../choose-course/choose-course';
 
 @Page({
@@ -16,8 +16,6 @@ export class HomePage {
     questionsPage = QuestionsPage;
     coursesPage = CoursesPage;
 
-    debugMode: boolean = false;
-
     constructor(private plt: Platform, private nav : NavController, private qService: QuestionDataService) {
     }
 
@@ -25,7 +23,8 @@ export class HomePage {
       if(this.plt.is('core'))
       {
         //QuestionDataService.setTestData();
-        //QuestionDataService.testGetQuestionSendAnswers('2d1e06ef-0cc4-4f0b-9003-9be76a5f1a31', 'http://52.24.142.164:8080');
+        //QuestionDataService.testGetQuestionSendAnswers('c9998352-3fed-4399-a6fb-aaae3d06f380', 'http://52.88.89.29:8080');
+        //QuestionDataService.testGetQuestion('ba4d6b45-418b-4c32-921e-26656eff591a', 'http://52.36.71.138:8080');
 
         this.nav.setPages([{
                 page: CoursesPage,
@@ -40,7 +39,7 @@ export class HomePage {
 
     scan() {
          BarcodeScanner.scan().then((barcodeData) => {
-           if(this.debugMode){
+           if(debugMode){
                QuestionDataService.setTestData();
                this.nav.setPages([{
                        page: CoursesPage,

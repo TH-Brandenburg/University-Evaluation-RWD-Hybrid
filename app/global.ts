@@ -3,7 +3,11 @@ import {Http, Headers, Response} from '@angular/http';
 import {MultipartItem} from "./plugins/multipart-upload/multipart-item";
 import {MultipartUploader} from "./plugins/multipart-upload/multipart-uploader";
 import 'rxjs/add/operator/map';
+
+//ref index.html to www/build/js/jszip.min.js
 declare var JSZip:any;
+//global debug mode flag
+declare var debugMode:boolean = false;
 
 export class Course {
     course: string;
@@ -97,6 +101,7 @@ export class QuestionDataService{
 	static sendAnswersSucceedCallback: (successMsg: RequestResponse) => void;
 
 
+
 	constructor(private http:Http){
 		QuestionDataService.http = http;
 	}
@@ -151,7 +156,6 @@ export class QuestionDataService{
 	}
 
 	private static  handleGetQuestionError(err) {
-		//console.log(err._body.constructor.name);
 		let errBody = err._body;
 		if (typeof errBody == 'string' || errBody instanceof String) {
 			let errData:RequestResponse = <RequestResponse>(JSON.parse(errBody));
@@ -162,6 +166,7 @@ export class QuestionDataService{
 	}
 
 	private static  handleGetQuestionSuccess(data) {
+		if(debugMode) console.log("handleGetQuestionSuccess: ",JSON.stringify(data));
 		let questionsDTO = <QuestionsDTO>data;
 		QuestionDataService.survey = questionsDTO;
 		QuestionDataService.getQuestionsSucceedCallback(questionsDTO);
@@ -177,7 +182,7 @@ export class QuestionDataService{
 		multipartItem = new MultipartItem(uploader);
 		multipartItem.url = url;
 		var body = JSON.stringify({"voteToken":QuestionDataService.voteToken, "studyPath":QuestionDataService.studyPath, "textAnswers":QuestionDataService.surveyAnswers.textAnswers, "mcAnswers":QuestionDataService.surveyAnswers.multipleChoiceAnswers, "deviceID":QuestionDataService.deviceID});
-	  	//console.log(body);
+	  	if(debugMode) console.log("generateMultipartItem: ",body);
 		if (multipartItem == null){
 			multipartItem = new MultipartItem(uploader);
 		}
@@ -213,7 +218,7 @@ static sendAnswers(){
 }
 
 	private static handleUploadCallback = (data) => {
-		console.log("handleUploadCallback:", data);
+		if(debugMode) console.log("handleUploadCallback:", data);
 		if (data){
 			let response:RequestResponse = <RequestResponse>(JSON.parse(data));
 			if(response.type == 2) { //type 2 is de.thb.ue.dto.util.ErrorType.ANSWERS_SUCCESSFULLY_ADDED
