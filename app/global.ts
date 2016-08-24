@@ -255,18 +255,15 @@ static sendAnswers(){
 			return "";
 	}
 
-	static addMultipleChoiceAnswer(index: number, grade:number) {
-		//get question text
-		let questionText = QuestionDataService.survey.multipleChoiceQuestionDTOs[index].question;
-		//get choice text
-		let choiceText;
-		for (let choice of QuestionDataService.survey.multipleChoiceQuestionDTOs[index].choices) {
-			if (choice['grade'] === grade) {
-				choiceText = choice.choiceText;
-			}
-		}
+	static addMultipleChoiceAnswer(questionIndex:number ,choiceIndex: number) {
+		let questionText = QuestionDataService.survey.multipleChoiceQuestionDTOs[questionIndex].question;
+		let choiceText = QuestionDataService.survey.multipleChoiceQuestionDTOs[questionIndex].choices[choiceIndex].choiceText;
+		let grade = QuestionDataService.survey.multipleChoiceQuestionDTOs[questionIndex].choices[choiceIndex].grade;
 
-		QuestionDataService.surveyAnswers.multipleChoiceAnswers[index]= <MultipleChoiceAnswerDTO>{"questionText":questionText, "choice":<ChoiceDTO>{"choiceText":choiceText,"grade":grade}};
+		if(debugMode) console.log("addMultipleChoiceAnswer: ",questionIndex,choiceIndex,questionText,choiceText,grade);
+		QuestionDataService.surveyAnswers.multipleChoiceAnswers[questionIndex]= <MultipleChoiceAnswerDTO>{
+			"questionText":questionText, "choice":<ChoiceDTO>{"choiceText":choiceText,"grade":grade}
+		};
 	}
 
 	static getMultipleChoiceAnswer(index: number) {

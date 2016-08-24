@@ -17,7 +17,7 @@
 
 <ion-content class="questions" padding>
     <h1>{{currentQuestion.question}}</h1>
-    <div class="{{classes[answer.grade]}}" *ngFor="let answer of currentQuestion.choices" id="button_answer{{answer.grade}}" (click)=onClickAnswer(answer.grade)>
+    <div class="{{classes[i]}}" *ngFor="let answer of currentQuestion.choices; let i = index" id="button_answer{{i}}" (click)=onClickAnswer(i)>
         <div class="answerText">{{ answer.choiceText }}</div>
 </div>
 </ion-content>
