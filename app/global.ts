@@ -195,6 +195,7 @@ export class QuestionDataService{
 }
 
 static sendAnswers(){
+  QuestionDataService.filterNullAnswers();
   var multipartItem = QuestionDataService.generateMultipartItem();
   if(QuestionDataService.answerFiles.length == 0){
     var blob = new Blob();
@@ -216,6 +217,13 @@ static sendAnswers(){
   }
   return multipartItem;
 }
+	//prevents sending null answers
+	private static filterNullAnswers() {
+		QuestionDataService.surveyAnswers.textAnswers = QuestionDataService.surveyAnswers.textAnswers
+			.filter((answ)=>{return answ != undefined || answ != null});
+		QuestionDataService.surveyAnswers.multipleChoiceAnswers = QuestionDataService.surveyAnswers.multipleChoiceAnswers
+			.filter((answ)=>{return answ != undefined || answ != null});
+	}
 
 	private static handleUploadCallback = (data) => {
 		if(debugMode) console.log("handleUploadCallback:", data);
