@@ -38,28 +38,28 @@ allQuestions: MultipleChoiceQuestionDTO[];
 
             if(QuestionDataService.getMultipleChoiceAnswer(this.counter) == null){
                 if(QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade == 0) {
-                    this.classes[QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade] = "answer right answer-" + QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade;
+                    this.classes[this.i] = "answer right answer-" + QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade;
                 }
                 else {
-                    this.classes[QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade] = "normalAnswer answer answer-" + QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade;
+                    this.classes[this.i] = "normalAnswer answer answer-" + QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade;
                 }
             }
             else {
-                if(QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade == QuestionDataService.getMultipleChoiceAnswer(this.counter))
+                if(QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].choiceText == QuestionDataService.getMultipleChoiceAnswer(this.counter))
                 {
                     if(QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade == 0) {
-                        this.classes[QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade] = "answer enabled right";
+                        this.classes[this.i] = "answer enabled right";
                     }
                     else {
-                        this.classes[QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade] = "normalAnswer answer enabled";
+                        this.classes[this.i] = "normalAnswer answer enabled";
                     }
                 }
                 else {
                     if(QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade == 0) {
-                        this.classes[QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade] = "answer right answer-" + QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade;
+                        this.classes[this.i] = "answer right answer-" + QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade;
                     }
                     else {
-                        this.classes[QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade] = "normalAnswer answer answer-" + QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade;
+                        this.classes[this.i] = "normalAnswer answer answer-" + QuestionDataService.survey.multipleChoiceQuestionDTOs[this.counter].choices[this.i].grade;
                     }
                 }
             }
@@ -69,22 +69,22 @@ allQuestions: MultipleChoiceQuestionDTO[];
     console.log(this.currentQuestion.choices)
     }
 
-    GetClass(grade: number){
-
-      var classes = "";
-      if(grade == QuestionDataService.getMultipleChoiceAnswer(this.counter))
-        classes = "answer enabled";
-      else
-        classes = "answer answer-" + grade;
-
-      if(grade == 0){
-          if(document.getElementById("button_answer0") != null)
-            document.getElementById("button_answer0").style.height = ((this.currentQuestion.choices.length - 1) * 50 + (this.currentQuestion.choices.length - 2) * 10) + "px";
-          return classes += " right";
-      }
-      else
-        return classes += " normalAnswer";
-    }
+    // GetClass(grade: number){
+    //
+    //   var classes = "";
+    //   if(grade == QuestionDataService.getMultipleChoiceAnswer(this.counter))
+    //     classes = "answer enabled";
+    //   else
+    //     classes = "answer answer-" + grade;
+    //
+    //   if(grade == 0){
+    //       if(document.getElementById("button_answer0") != null)
+    //         document.getElementById("button_answer0").style.height = ((this.currentQuestion.choices.length - 1) * 50 + (this.currentQuestion.choices.length - 2) * 10) + "px";
+    //       return classes += " right";
+    //   }
+    //   else
+    //     return classes += " normalAnswer";
+    // }
 
     DisableOtherAnswers(number){
        var nextButtonNumber = number;
@@ -94,9 +94,9 @@ allQuestions: MultipleChoiceQuestionDTO[];
            if(nextButtonNumber > this.currentQuestion.choices.length - 1)
                nextButtonNumber = nextButtonNumber - this.currentQuestion.choices.length;
            if(nextButtonNumber == 0)
-               document.getElementById("button_answer"+nextButtonNumber).className = "answer answer-"+nextButtonNumber+" right";
+               document.getElementById("button_answer"+nextButtonNumber).className = this.classes[nextButtonNumber];
            else
-               document.getElementById("button_answer"+nextButtonNumber).className = "answer answer-"+nextButtonNumber+" normalAnswer";
+               document.getElementById("button_answer"+nextButtonNumber).className = this.classes[nextButtonNumber];
 
        }
    }

@@ -268,8 +268,10 @@ static sendAnswers(){
 
 	static getMultipleChoiceAnswer(index: number) {
 		let multipleChoiceAnswer = QuestionDataService.surveyAnswers.multipleChoiceAnswers[index];
-		if (multipleChoiceAnswer)
-			return multipleChoiceAnswer.choice.grade;
+		if (multipleChoiceAnswer){
+			//return multipleChoiceAnswer.choice.grade;
+			return multipleChoiceAnswer.choice.choiceText;
+		}
 		return null;
 	}
 
