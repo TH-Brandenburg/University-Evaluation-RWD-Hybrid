@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 //ref index.html to www/build/js/jszip.min.js
 declare var JSZip:any;
 //global debug mode flag
-declare var debugMode:boolean = false;
+export var debugMode:boolean = false;
 
 export class Course {
     course: string;
