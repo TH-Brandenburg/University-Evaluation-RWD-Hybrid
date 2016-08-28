@@ -22,7 +22,7 @@ export class ChooseCourseComponent implements OnInit {
       this.dataService.setVoteToken(scannerData.voteToken);
 
       // rausnehmen
-      this.dataService.setQuestions(this.dataService.getQuestionTest());
+      //this.dataService.setQuestions(this.dataService.getQuestionTest());
 
       let questions = this.dataService.getQuestions();
       if(questions == "{}") {
